@@ -8,8 +8,8 @@
     <changeSet id="1" author="Alexey Zuevsky">
         <comment>1.0.version. Create ENUM category_name</comment>
         <sql>
-            CREATE TYPE category_name AS ENUM( 'Application & Services', 'Benefits & Paper Work', 'Hardware & Software',
-            'People Management', 'Security & Access', 'Workplaces & Facilities' );
+            CREATE TYPE category_name AS ENUM( 'Application and Services', 'Benefits and Paper Work', 'Hardware and Software',
+            'People Management', 'Security and Access', 'Workplaces and Facilities' );
         </sql>
         <rollback>DROP TYPE category_name;</rollback>
     </changeSet>
