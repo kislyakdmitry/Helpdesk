@@ -1,1 +1,2 @@
-Команда для поднятия БД в Docker: sudo docker run --name helpdesk-postgres2 -p 5433:5432 -e POSTGRES_USER=helpdesk-user -e POSTGRES_PASSWORD=1234qwerty -e POSTGRES_DB=helpdeskdb -d postgres:14.1
+Command for deploying database in Docker: 
+sudo docker run --name helpdesk-postgres2 -p 5433:5432 -e POSTGRES_USER=helpdesk-user -e POSTGRES_PASSWORD=1234qwerty -e POSTGRES_DB=helpdeskdb -d postgres:14.1
