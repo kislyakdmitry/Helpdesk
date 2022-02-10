@@ -6,22 +6,27 @@
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
     <changeSet id="1" author="Alexey Zuevsky">
-        <comment>1.0.version. Create ENUM category_name</comment>
-        <sql>
-            CREATE TYPE category_name AS ENUM( 'Application and Services', 'Benefits and Paper Work', 'Hardware and Software',
-            'People Management', 'Security and Access', 'Workplaces and Facilities' );
-        </sql>
-        <rollback>DROP TYPE category_name;</rollback>
-    </changeSet>
-
-    <changeSet id="2" author="Alexey Zuevsky">
         <comment>1.0.version. Create table Category</comment>
         <sql>
             CREATE TABLE Category
             (
             id    SERIAL PRIMARY KEY,
-            name  category_name NOT NULL
+            name  VARCHAR( 50 ) NOT NULL
             );
+        </sql>
+        <rollback>DROP TABLE Category;</rollback>
+    </changeSet>
+
+    <changeSet id="2" author="Alexey Zuevsky">
+        <comment>1.0.version. Filling table Category</comment>
+        <sql>
+            INSERT INTO Category (name)
+            VALUES( 'Application and Services' ),
+            ( 'Benefits and Paper Work' ),
+            ( 'Hardware and Software' ),
+            ( 'People Management' ),
+            ( 'Security and Access' ),
+            ( 'Workplaces and Facilities' );
         </sql>
         <rollback>DROP TABLE Category;</rollback>
     </changeSet>
@@ -42,7 +47,7 @@
             id          SERIAL PRIMARY KEY,
             first_name  VARCHAR( 20 ) NOT NULL,
             last_name   VARCHAR( 25 ) NOT NULL,
-            role_id     user_role_id,
+            role_id     user_role_id NOT NULL,
             email       VARCHAR( 100 ) NOT NULL UNIQUE,
             password    VARCHAR( 20 ) NOT NULL
             );
@@ -78,9 +83,9 @@
             desired_resolution_date  DATE NOT NULL,
             assignee_id              INT NOT NULL,
             owner_id                 INT NOT NULL,
-            state_id                 ticket_state_id,
+            state_id                 ticket_state_id NOT NULL,
             category_id              INT NOT NULL,
-            urgency_id               ticket_urgency_id,
+            urgency_id               ticket_urgency_id NOT NULL,
             approver_id              INT NOT NULL
             );
         </sql>
@@ -92,12 +97,12 @@
         <sql>
             CREATE TABLE Feedback
             (
-            id          SERIAL PRIMARY KEY,
-            user_id INT NOT NULL,
-            rate SMALLINT NOT NULL,
-            date DATE NOT NULL,
-            text VARCHAR( 1000 ),
-            ticket_id INT NOT NULL
+            id         SERIAL PRIMARY KEY,
+            user_id    INT NOT NULL,
+            rate       SMALLINT NOT NULL,
+            date       DATE NOT NULL,
+            text       VARCHAR( 1000 ),
+            ticket_id  INT NOT NULL
             );
         </sql>
         <rollback>DROP TABLE Feedback;</rollback>
@@ -246,5 +251,6 @@
         </sql>
         <rollback>ALTER TABLE Comment DROP FOREIGN KEY fk_comment_ticket_id;</rollback>
     </changeSet>
+    
 
 </databaseChangeLog>
