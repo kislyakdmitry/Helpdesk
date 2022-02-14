@@ -6,22 +6,27 @@
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
     <changeSet id="1" author="Alexey Zuevsky">
-        <comment>1.0.version. Create ENUM category_name</comment>
-        <sql>
-            CREATE TYPE category_name AS ENUM( 'Application and Services', 'Benefits and Paper Work', 'Hardware and Software',
-            'People Management', 'Security and Access', 'Workplaces and Facilities' );
-        </sql>
-        <rollback>DROP TYPE category_name;</rollback>
-    </changeSet>
-
-    <changeSet id="2" author="Alexey Zuevsky">
         <comment>1.0.version. Create table Category</comment>
         <sql>
             CREATE TABLE Category
             (
-            id    SERIAL PRIMARY KEY,
-            name  category_name NOT NULL
+                id    SERIAL PRIMARY KEY,
+                name  VARCHAR( 50 ) NOT NULL
             );
+        </sql>
+        <rollback>DROP TABLE Category;</rollback>
+    </changeSet>
+
+    <changeSet id="2" author="Alexey Zuevsky">
+        <comment>1.0.version. Filling table Category</comment>
+        <sql>
+            INSERT INTO Category (name)
+            VALUES( 'Application and Services' ),
+                  ( 'Benefits and Paper Work' ),
+                  ( 'Hardware and Software' ),
+                  ( 'People Management' ),
+                  ( 'Security and Access' ),
+                  ( 'Workplaces and Facilities' );
         </sql>
         <rollback>DROP TABLE Category;</rollback>
     </changeSet>
@@ -39,12 +44,12 @@
         <sql>
             CREATE TABLE UserCard
             (
-            id          SERIAL PRIMARY KEY,
-            first_name  VARCHAR( 20 ) NOT NULL,
-            last_name   VARCHAR( 25 ) NOT NULL,
-            role_id     user_role_id,
-            email       VARCHAR( 100 ) NOT NULL UNIQUE,
-            password    VARCHAR( 20 ) NOT NULL
+                id          SERIAL PRIMARY KEY,
+                first_name  VARCHAR( 20 ) NOT NULL,
+                last_name   VARCHAR( 25 ) NOT NULL,
+                role_id     user_role_id NOT NULL,
+                email       VARCHAR( 100 ) NOT NULL UNIQUE,
+                password    VARCHAR( 20 ) NOT NULL
             );
         </sql>
         <rollback>DROP TABLE UserCard;</rollback>
@@ -71,17 +76,17 @@
         <sql>
             CREATE TABLE Ticket
             (
-            id                       SERIAL PRIMARY KEY,
-            name                     VARCHAR( 100 ) NOT NULL,
-            description              VARCHAR( 500 ) NOT NULL,
-            created_on               TIMESTAMP NOT NULL,
-            desired_resolution_date  DATE NOT NULL,
-            assignee_id              INT NOT NULL,
-            owner_id                 INT NOT NULL,
-            state_id                 ticket_state_id,
-            category_id              INT NOT NULL,
-            urgency_id               ticket_urgency_id,
-            approver_id              INT NOT NULL
+                id                       SERIAL PRIMARY KEY,
+                name                     VARCHAR( 100 ) NOT NULL,
+                description              VARCHAR( 500 ) NOT NULL,
+                created_on               DATE NOT NULL,
+                desired_resolution_date  DATE NOT NULL,
+                assignee_id              INT NOT NULL,
+                owner_id                 INT NOT NULL,
+                state_id                 ticket_state_id NOT NULL,
+                category_id              INT NOT NULL,
+                urgency_id               ticket_urgency_id NOT NULL,
+                approver_id              INT NOT NULL
             );
         </sql>
         <rollback>DROP TABLE Ticket;</rollback>
@@ -92,12 +97,12 @@
         <sql>
             CREATE TABLE Feedback
             (
-            id          SERIAL PRIMARY KEY,
-            user_id INT NOT NULL,
-            rate SMALLINT NOT NULL,
-            date DATE NOT NULL,
-            text VARCHAR( 1000 ),
-            ticket_id INT NOT NULL
+                id         SERIAL PRIMARY KEY,
+                user_id    INT NOT NULL,
+                rate       SMALLINT NOT NULL,
+                date       DATE NOT NULL,
+                text       VARCHAR( 1000 ),
+                ticket_id  INT NOT NULL
             );
         </sql>
         <rollback>DROP TABLE Feedback;</rollback>
@@ -108,10 +113,10 @@
         <sql>
             CREATE TABLE Attachment
             (
-            id         SERIAL PRIMARY KEY,
-            blob       VARCHAR( 150 ) NOT NULL,
-            ticket_id  INT NOT NULL,
-            name       VARCHAR( 100 ) NOT NULL
+                id         SERIAL PRIMARY KEY,
+                blob       VARCHAR( 150 ) NOT NULL,
+                ticket_id  INT NOT NULL,
+                name       VARCHAR( 100 ) NOT NULL
             );
         </sql>
         <rollback>DROP TABLE Attachment;</rollback>
@@ -122,12 +127,12 @@
         <sql>
             CREATE TABLE History
             (
-            id           SERIAL PRIMARY KEY,
-            ticket_id    INT NOT NULL,
-            date         DATE NOT NULL,
-            action       VARCHAR( 300 ) NOT NULL,
-            user_id      INT NOT NULL,
-            description  VARCHAR( 500 )
+                id           SERIAL PRIMARY KEY,
+                ticket_id    INT NOT NULL,
+                date         DATE NOT NULL,
+                action       VARCHAR( 300 ) NOT NULL,
+                user_id      INT NOT NULL,
+                description  VARCHAR( 500 )
             );
         </sql>
         <rollback>DROP TABLE History;</rollback>
@@ -138,11 +143,11 @@
         <sql>
             CREATE TABLE Comment
             (
-            id         SERIAL PRIMARY KEY,
-            user_id    INT NOT NULL,
-            text       VARCHAR( 1000 ) NOT NULL,
-            date       DATE NOT NULL,
-            ticket_id  INT NOT NULL
+                id         SERIAL PRIMARY KEY,
+                user_id    INT NOT NULL,
+                text       VARCHAR( 1000 ) NOT NULL,
+                date       DATE NOT NULL,
+                ticket_id  INT NOT NULL
             );
         </sql>
         <rollback>DROP TABLE Comment;</rollback>
@@ -152,7 +157,7 @@
         <comment>1.0.version. Create fk_ticket_assignee_id to Ticket</comment>
         <sql>
             ALTER TABLE Ticket
-            ADD CONSTRAINT fk_ticket_assignee_id FOREIGN KEY (assignee_id) REFERENCES UserCard (id) ON DELETE RESTRICT;
+                ADD CONSTRAINT fk_ticket_assignee_id FOREIGN KEY (assignee_id) REFERENCES UserCard (id) ON DELETE RESTRICT;
         </sql>
         <rollback>ALTER TABLE Ticket DROP FOREIGN KEY fk_ticket_assignee_id;</rollback>
     </changeSet>
@@ -161,7 +166,7 @@
         <comment>1.0.version. Create fk_ticket_owner_id to Ticket</comment>
         <sql>
             ALTER TABLE Ticket
-            ADD CONSTRAINT fk_ticket_owner_id FOREIGN KEY (owner_id) REFERENCES UserCard (id) ON DELETE RESTRICT;
+                ADD CONSTRAINT fk_ticket_owner_id FOREIGN KEY (owner_id) REFERENCES UserCard (id) ON DELETE RESTRICT;
         </sql>
         <rollback>ALTER TABLE Ticket DROP FOREIGN KEY fk_ticket_owner_id;</rollback>
     </changeSet>
@@ -170,7 +175,7 @@
         <comment>1.0.version. Create fk_ticket_approver_id to Ticket</comment>
         <sql>
             ALTER TABLE Ticket
-            ADD CONSTRAINT fk_ticket_approver_id FOREIGN KEY (approver_id) REFERENCES UserCard (id) ON DELETE RESTRICT;
+                ADD CONSTRAINT fk_ticket_approver_id FOREIGN KEY (approver_id) REFERENCES UserCard (id) ON DELETE RESTRICT;
         </sql>
         <rollback>ALTER TABLE Ticket DROP FOREIGN KEY fk_ticket_approver_id;</rollback>
     </changeSet>
@@ -179,7 +184,7 @@
         <comment>1.0.version. Create fk_ticket_category_id to Ticket</comment>
         <sql>
             ALTER TABLE Ticket
-            ADD CONSTRAINT fk_ticket_category_id FOREIGN KEY (category_id) REFERENCES Category (id) ON DELETE RESTRICT;
+                ADD CONSTRAINT fk_ticket_category_id FOREIGN KEY (category_id) REFERENCES Category (id) ON DELETE RESTRICT;
         </sql>
         <rollback>ALTER TABLE Ticket DROP FOREIGN KEY fk_ticket_category_id;</rollback>
     </changeSet>
@@ -188,7 +193,7 @@
         <comment>1.0.version. Create fk_feedback_user_id to Feedback</comment>
         <sql>
             ALTER TABLE Feedback
-            ADD CONSTRAINT fk_feedback_user_id FOREIGN KEY (user_id) REFERENCES UserCard (id) ON DELETE RESTRICT;
+                ADD CONSTRAINT fk_feedback_user_id FOREIGN KEY (user_id) REFERENCES UserCard (id) ON DELETE RESTRICT;
         </sql>
         <rollback>ALTER TABLE Feedback DROP FOREIGN KEY fk_feedback_user_id;</rollback>
     </changeSet>
@@ -197,7 +202,7 @@
         <comment>1.0.version. Create fk_feedback_ticket_id to Feedback</comment>
         <sql>
             ALTER TABLE Feedback
-            ADD CONSTRAINT fk_feedback_ticket_id FOREIGN KEY (ticket_id) REFERENCES Ticket (id) ON DELETE CASCADE;
+                ADD CONSTRAINT fk_feedback_ticket_id FOREIGN KEY (ticket_id) REFERENCES Ticket (id) ON DELETE CASCADE;
         </sql>
         <rollback>ALTER TABLE Feedback DROP FOREIGN KEY fk_feedback_ticket_id;</rollback>
     </changeSet>
@@ -206,7 +211,7 @@
         <comment>1.0.version. Create fk_attachment_ticket_id to Attachment</comment>
         <sql>
             ALTER TABLE Attachment
-            ADD CONSTRAINT fk_attachment_ticket_id FOREIGN KEY (ticket_id) REFERENCES Ticket (id) ON DELETE CASCADE;
+                ADD CONSTRAINT fk_attachment_ticket_id FOREIGN KEY (ticket_id) REFERENCES Ticket (id) ON DELETE CASCADE;
         </sql>
         <rollback>ALTER TABLE Attachment DROP FOREIGN KEY fk_attachment_ticket_id;</rollback>
     </changeSet>
@@ -215,7 +220,7 @@
         <comment>1.0.version. Create fk_history_ticket_id to History</comment>
         <sql>
             ALTER TABLE History
-            ADD CONSTRAINT fk_history_ticket_id FOREIGN KEY (ticket_id) REFERENCES Ticket (id) ON DELETE CASCADE;
+                ADD CONSTRAINT fk_history_ticket_id FOREIGN KEY (ticket_id) REFERENCES Ticket (id) ON DELETE CASCADE;
         </sql>
         <rollback>ALTER TABLE History DROP FOREIGN KEY fk_history_ticket_id;</rollback>
     </changeSet>
@@ -224,7 +229,7 @@
         <comment>1.0.version. Create fk_history_user_id to History</comment>
         <sql>
             ALTER TABLE History
-            ADD CONSTRAINT fk_history_user_id FOREIGN KEY (user_id) REFERENCES UserCard (id) ON DELETE RESTRICT;
+                ADD CONSTRAINT fk_history_user_id FOREIGN KEY (user_id) REFERENCES UserCard (id) ON DELETE RESTRICT;
         </sql>
         <rollback>ALTER TABLE History DROP FOREIGN KEY fk_history_user_id;</rollback>
     </changeSet>
@@ -233,7 +238,7 @@
         <comment>1.0.version. Create fk_comment_user_id to Comment</comment>
         <sql>
             ALTER TABLE Comment
-            ADD CONSTRAINT fk_comment_user_id FOREIGN KEY (user_id) REFERENCES UserCard (id) ON DELETE RESTRICT;
+                ADD CONSTRAINT fk_comment_user_id FOREIGN KEY (user_id) REFERENCES UserCard (id) ON DELETE RESTRICT;
         </sql>
         <rollback>ALTER TABLE Comment DROP FOREIGN KEY fk_comment_user_id;</rollback>
     </changeSet>
@@ -242,9 +247,10 @@
         <comment>1.0.version. Create fk_comment_ticket_id to Comment</comment>
         <sql>
             ALTER TABLE Comment
-            ADD CONSTRAINT fk_comment_ticket_id FOREIGN KEY (ticket_id) REFERENCES Ticket (id) ON DELETE CASCADE;
+                ADD CONSTRAINT fk_comment_ticket_id FOREIGN KEY (ticket_id) REFERENCES Ticket (id) ON DELETE CASCADE;
         </sql>
         <rollback>ALTER TABLE Comment DROP FOREIGN KEY fk_comment_ticket_id;</rollback>
     </changeSet>
+
 
 </databaseChangeLog>

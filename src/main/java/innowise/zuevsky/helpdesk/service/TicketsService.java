@@ -16,7 +16,10 @@ public class TicketsService {
     public List<TicketDto> getTickets() {
         var tickets = ticketsRepository.findAll();
         return tickets.stream()
-                .map(t -> TicketDto.builder().id(t.getId()).name(t.getName()).build())
+                .map(t -> TicketDto.builder()
+                        .id(t.getId())
+                        .name(t.getName())
+                        .build())
                 .toList();
     }
 }

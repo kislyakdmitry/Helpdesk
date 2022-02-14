@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="4" author="Alexey Zuevsky">
+        <comment>1.1.version. Changing table Ticket(state_id): type ENUM -> varchar</comment>
+        <sql>
+            ALTER TABLE Ticket
+                ALTER COLUMN state_id SET DATA TYPE varchar( 40 );
+        </sql>
+    </changeSet>
+
+    <changeSet id="5" author="Alexey Zuevsky">
+        <comment>1.1.version. Creating constraint for Ticket(state_id): CHECK </comment>
+        <sql>
+            ALTER TABLE Ticket
+            ALTER COLUMN state_id ADD CHECK (state_id = 'Draft' OR state_id = 'New' OR state_id = 'Approved' OR state_id = 'Declined'
+                    OR state_id = 'In Progress' OR state_id = 'Done' OR state_id = 'Canceled');
+        </sql>
+    </changeSet>
+
+    <changeSet id="6" author="Alexey Zuevsky">
+        <comment>1.1.version. Changing table Ticket(urgency_id): type ENUM -> varchar</comment>
+        <sql>
+            ALTER TABLE Ticket
+                ALTER COLUMN urgency_id SET DATA TYPE varchar( 40 );
+        </sql>
+    </changeSet>
+
+    <changeSet id="7" author="Alexey Zuevsky">
+        <comment>1.1.version. Creating constraint for Ticket(urgency_id): CHECK </comment>
+        <sql>
+            ALTER TABLE Ticket
+            ALTER COLUMN urgency_id ADD CHECK (urgency_id = 'Critical' OR urgency_id = 'High' OR urgency_id = 'Average' OR urgency_id = 'Low');
+        </sql>
+    </changeSet>
+
+    <changeSet id="8" author="Alexey Zuevsky">
+        <comment>1.1.version. Changing table UserCard(role_id): type ENUM -> varchar</comment>
+        <sql>
+            ALTER TABLE UserCard
+                ALTER COLUMN role_id SET DATA TYPE varchar( 40 );
+        </sql>
+    </changeSet>
+
+    <changeSet id="9" author="Alexey Zuevsky">
+        <comment>1.1.version. Creating constraint for UserCard(role_id): CHECK </comment>
+        <sql>
+            ALTER TABLE UserCard
+            ALTER COLUMN role_id ADD CHECK (role_id = 'Employee' OR role_id = 'Manager' OR role_id = 'Engineer');
+        </sql>
+    </changeSet>
+
+
+
+
+
+    <changeSet id="1" author="Alexey Zuevsky">
+        <comment>1.1.version. Drop ENUM ticket_state_id</comment>
+        <sql>
+            DROP TYPE ticket_state_id;
+        </sql>
+    </changeSet>
+
+    <changeSet id="2" author="Alexey Zuevsky">
+        <comment>1.1.version. Drop ENUM ticket_urgency_id</comment>
+        <sql>
+            DROP TYPE ticket_urgency_id;
+        </sql>
+    </changeSet>
+
+    <changeSet id="3" author="Alexey Zuevsky">
+        <comment>1.1.version. Drop ENUM user_role_id</comment>
+        <sql>
+            DROP TYPE user_role_id;
+        </sql>
+    </changeSet>
+
+
+
+</databaseChangeLog>
