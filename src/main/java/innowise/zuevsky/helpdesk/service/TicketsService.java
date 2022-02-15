@@ -2,18 +2,16 @@ package innowise.zuevsky.helpdesk.service;
 
 import innowise.zuevsky.helpdesk.dto.TicketDto;
 import innowise.zuevsky.helpdesk.repository.TicketsRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class TicketsService {
 
     private final TicketsRepository ticketsRepository;
-
-    public TicketsService(TicketsRepository ticketsRepository) {
-        this.ticketsRepository = ticketsRepository;
-    }
 
     public List<TicketDto> getTickets() {
         var tickets = ticketsRepository.findAll();

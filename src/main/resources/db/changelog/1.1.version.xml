@@ -5,7 +5,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="4" author="Alexey Zuevsky">
+    <changeSet id="1" author="Alexey Zuevsky">
         <comment>1.1.version. Changing table Ticket(state_id): type ENUM -> varchar</comment>
         <sql>
             ALTER TABLE Ticket
@@ -13,7 +13,7 @@
         </sql>
     </changeSet>
 
-    <changeSet id="5" author="Alexey Zuevsky">
+    <changeSet id="2" author="Alexey Zuevsky">
         <comment>1.1.version. Creating constraint for Ticket(state_id): CHECK </comment>
         <sql>
             ALTER TABLE Ticket
@@ -22,7 +22,7 @@
         </sql>
     </changeSet>
 
-    <changeSet id="6" author="Alexey Zuevsky">
+    <changeSet id="3" author="Alexey Zuevsky">
         <comment>1.1.version. Changing table Ticket(urgency_id): type ENUM -> varchar</comment>
         <sql>
             ALTER TABLE Ticket
@@ -30,7 +30,7 @@
         </sql>
     </changeSet>
 
-    <changeSet id="7" author="Alexey Zuevsky">
+    <changeSet id="4" author="Alexey Zuevsky">
         <comment>1.1.version. Creating constraint for Ticket(urgency_id): CHECK </comment>
         <sql>
             ALTER TABLE Ticket
@@ -38,7 +38,7 @@
         </sql>
     </changeSet>
 
-    <changeSet id="8" author="Alexey Zuevsky">
+    <changeSet id="5" author="Alexey Zuevsky">
         <comment>1.1.version. Changing table UserCard(role_id): type ENUM -> varchar</comment>
         <sql>
             ALTER TABLE UserCard
@@ -46,7 +46,7 @@
         </sql>
     </changeSet>
 
-    <changeSet id="9" author="Alexey Zuevsky">
+    <changeSet id="6" author="Alexey Zuevsky">
         <comment>1.1.version. Creating constraint for UserCard(role_id): CHECK </comment>
         <sql>
             ALTER TABLE UserCard
@@ -54,31 +54,25 @@
         </sql>
     </changeSet>
 
-
-
-
-
-    <changeSet id="1" author="Alexey Zuevsky">
+    <changeSet id="7" author="Alexey Zuevsky">
         <comment>1.1.version. Drop ENUM ticket_state_id</comment>
         <sql>
             DROP TYPE ticket_state_id;
         </sql>
     </changeSet>
 
-    <changeSet id="2" author="Alexey Zuevsky">
+    <changeSet id="8" author="Alexey Zuevsky">
         <comment>1.1.version. Drop ENUM ticket_urgency_id</comment>
         <sql>
             DROP TYPE ticket_urgency_id;
         </sql>
     </changeSet>
 
-    <changeSet id="3" author="Alexey Zuevsky">
+    <changeSet id="9" author="Alexey Zuevsky">
         <comment>1.1.version. Drop ENUM user_role_id</comment>
         <sql>
             DROP TYPE user_role_id;
         </sql>
     </changeSet>
-
-
 
 </databaseChangeLog>
