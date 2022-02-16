@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -18,12 +19,12 @@ public class TicketsController {
     private final TicketsService ticketsService;
 
     @GetMapping("/api/tickets")
-    public List<TicketDto> getTickets() {
-        return ticketsService.getTickets();
+    public TicketDto getTicket(Long id) {
+        return ticketsService.getTicket(id);
     }
 
     @PostMapping("/api/tickets")
-    public void saveTicket(@RequestBody TicketSaveDto saveDto) {
-        System.out.println();
+    public void saveTicket(@Valid @RequestBody TicketSaveDto saveDto) {
+        ticketsService.saveTicket(saveDto);
     }
 }
