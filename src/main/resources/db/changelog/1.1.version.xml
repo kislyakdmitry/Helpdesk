@@ -17,7 +17,7 @@
         <comment>1.1.version. Creating constraint for Ticket(state_id): CHECK </comment>
         <sql>
             ALTER TABLE Ticket
-            ALTER COLUMN state_id ADD CONSTRAINT state_id_enum CHECK ( state_id IN ( 'DRAFT', 'NEW', 'APPROVED', 'DECLINED', 'IN_PROGRESS', 'DONE', 'CANCELED' ) );
+            ADD CONSTRAINT state_id_enum CHECK ( state_id IN ( 'DRAFT', 'NEW', 'APPROVED', 'DECLINED', 'IN_PROGRESS', 'DONE', 'CANCELED' ) );
         </sql>
     </changeSet>
 
@@ -33,7 +33,7 @@
         <comment>1.1.version. Creating constraint for Ticket(urgency_id): CHECK </comment>
         <sql>
             ALTER TABLE Ticket
-            ALTER COLUMN urgency_id ADD CONSTRAINT urgency_id_enum CHECK ( urgency_id IN ( 'CRITICAL', 'HIGH', 'AVERAGE', 'LOW' ) );
+            ADD CONSTRAINT urgency_id_enum CHECK ( urgency_id IN ( 'CRITICAL', 'HIGH', 'AVERAGE', 'LOW' ) );
         </sql>
     </changeSet>
 
@@ -49,7 +49,7 @@
         <comment>1.1.version. Creating constraint for UserCard(role_id): CHECK </comment>
         <sql>
             ALTER TABLE UserCard
-            ALTER COLUMN role_id ADD CONSTRAINT role_id_enum CHECK ( role_id IN ( 'EMPLOYEE', 'MANAGER', 'ENGINEER' ) );
+            ADD CONSTRAINT role_id_enum CHECK ( role_id IN ( 'EMPLOYEE', 'MANAGER', 'ENGINEER' ) );
         </sql>
     </changeSet>
 

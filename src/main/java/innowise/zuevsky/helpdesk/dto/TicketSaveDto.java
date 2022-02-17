@@ -2,24 +2,50 @@ package innowise.zuevsky.helpdesk.dto;
 
 import innowise.zuevsky.helpdesk.domain.enums.State;
 import innowise.zuevsky.helpdesk.domain.enums.Urgency;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 
 @Data
-@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class TicketSaveDto {
-    private Long id;
+
+    @NotBlank
+    @Pattern(regexp = "^[a-z0-9~.\"(),:;<>@\\[\\]!#$%&'*+\\-/=?^_`{|} ]{2,100}$")
     private String name;
+
+    @NotBlank
+    @Pattern(regexp = "^[A-Za-z0-9~.\"(),:;<>@\\[\\]!#$%&'*+\\-/=?^_`{|} ]{2,500}$")
     private String description;
+
+    @NotNull
+    @FutureOrPresent
     private LocalDate desiredResolutionDate;
+
+    @NotNull
     private Long assigneeId;
+
+    @NotNull
     private Long ownerId;
+
+    @NotNull
     private State state;
+
+    @NotNull
     private int categoryId;
+
+    @NotNull
     private Urgency urgency;
+
+    @NotNull
     private Long approverId;
 }

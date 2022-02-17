@@ -3,13 +3,15 @@ package innowise.zuevsky.helpdesk.mapper;
 import innowise.zuevsky.helpdesk.domain.Ticket;
 import innowise.zuevsky.helpdesk.dto.TicketDto;
 import innowise.zuevsky.helpdesk.dto.TicketSaveDto;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
+@Component
 public class TicketMapper {
+
     public Ticket mapTicketSaveDtoInTicket(TicketSaveDto saveDto) {
         return Ticket.builder()
-                .id(saveDto.getId())
                 .name(saveDto.getName())
                 .description(saveDto.getDescription())
                 .createdOn(LocalDate.now())
