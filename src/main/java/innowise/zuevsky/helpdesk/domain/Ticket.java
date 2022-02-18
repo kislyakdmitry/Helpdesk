@@ -54,7 +54,7 @@ public class Ticket {
     private State state;
 
     @Column(name = "category_id")
-    private int categoryId;
+    private Integer categoryId;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "urgency_id")

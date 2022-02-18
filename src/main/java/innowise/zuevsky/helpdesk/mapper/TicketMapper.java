@@ -5,8 +5,6 @@ import innowise.zuevsky.helpdesk.dto.TicketDto;
 import innowise.zuevsky.helpdesk.dto.TicketSaveDto;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
-
 @Component
 public class TicketMapper {
 
@@ -14,7 +12,6 @@ public class TicketMapper {
         return Ticket.builder()
                 .name(saveDto.getName())
                 .description(saveDto.getDescription())
-                .createdOn(LocalDate.now())
                 .desiredResolutionDate(saveDto.getDesiredResolutionDate())
                 .assigneeId(saveDto.getAssigneeId())
                 .ownerId(saveDto.getOwnerId())
