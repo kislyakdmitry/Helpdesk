@@ -6,12 +6,12 @@ import innowise.zuevsky.helpdesk.dto.TicketSaveDto;
 import innowise.zuevsky.helpdesk.util.TicketUtil;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 
 class TicketMapperTest {
 
-    private final TicketMapper ticketMapper = new TicketMapper();
+    private TicketMapper ticketMapper = new TicketMapper();
 
     @Test
     void mapTicketSaveDtoInTicketShouldMapIfNumberOfFieldsIsRight() {
@@ -25,7 +25,6 @@ class TicketMapperTest {
     @Test
     void mapTicketInTicketDtoShouldMapIfNumberOfFieldsIsRight() {
         Ticket ticket = TicketUtil.createTicket();
-        ticket.setId(TicketUtil.TICKET_ID);
         TicketDto ticketDto = TicketUtil.createTicketDto();
         assertThat(ticketDto)
                 .usingRecursiveComparison()
