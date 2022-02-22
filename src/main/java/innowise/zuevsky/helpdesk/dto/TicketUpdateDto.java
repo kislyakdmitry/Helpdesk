@@ -1,7 +1,6 @@
 package innowise.zuevsky.helpdesk.dto;
 
 import innowise.zuevsky.helpdesk.domain.Attachment;
-import innowise.zuevsky.helpdesk.domain.enums.State;
 import innowise.zuevsky.helpdesk.domain.enums.Urgency;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TicketSaveDto {
+public class TicketUpdateDto {
 
     @NotBlank
     @Pattern(regexp = "^[a-z0-9~.\"(),:;<>@\\[\\]!#$%&'*+\\-/=?^_`{|} ]{2,100}$")
@@ -34,22 +33,10 @@ public class TicketSaveDto {
     private LocalDate desiredResolutionDate;
 
     @NotNull
-    private Long assigneeId;
-
-    @NotNull
-    private Long ownerId;
-
-    @NotNull
-    private State state;
-
-    @NotNull
     private int categoryId;
 
     @NotNull
     private Urgency urgency;
-
-    @NotNull
-    private Long approverId;
 
     @NotNull
     private List<Attachment> attachments;

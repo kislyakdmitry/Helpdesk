@@ -74,4 +74,20 @@
         </sql>
     </changeSet>
 
+    <changeSet id="10" author="Alexey Zuevsky">
+        <comment>1.1.version. Changing table Ticket(created_on): type date -> timestamp</comment>
+        <sql>
+            ALTER TABLE Ticket
+                ALTER COLUMN created_on SET DATA TYPE timestamp;
+        </sql>
+    </changeSet>
+
+    <changeSet id="11" author="Alexey Zuevsky">
+        <comment>1.1.version. Changing table Attachment(blob): name -> link</comment>
+        <sql>
+            ALTER TABLE Attachment
+                RENAME COLUMN blob TO link;
+        </sql>
+    </changeSet>
+
 </databaseChangeLog>

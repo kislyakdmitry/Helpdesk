@@ -7,17 +7,22 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -36,9 +41,9 @@ public class Ticket {
 
     private String description;
 
-    @NotNull
     @Column(name = "created_on")
-    private LocalDate createdOn;
+    @CreationTimestamp
+    private LocalDateTime createdOn;
 
     @Column(name = "desired_resolution_date")
     private LocalDate desiredResolutionDate;
@@ -62,4 +67,12 @@ public class Ticket {
 
     @Column(name = "approver_id")
     private Long approverId;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ticket_id")
+    private List<Attachment> attachments;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ticket_id")
+    private List<Comment> comments;
 }

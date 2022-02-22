@@ -19,13 +19,24 @@ public class TicketMapper {
                 .categoryId(saveDto.getCategoryId())
                 .urgency(saveDto.getUrgency())
                 .approverId(saveDto.getApproverId())
+                .attachments(saveDto.getAttachments())
                 .build();
     }
 
     public TicketDto mapTicketInTicketDto(Ticket ticket) {
         return TicketDto.builder()
-                .id(ticket.getId())
                 .name(ticket.getName())
+                .createdOn(ticket.getCreatedOn())
+                .state(ticket.getState())
+                .categoryId(ticket.getCategoryId())
+                .urgency(ticket.getUrgency())
+                .description(ticket.getDescription())
+                .desiredResolutionDate(ticket.getDesiredResolutionDate())
+                .ownerId(ticket.getOwnerId())
+                .approverId(ticket.getApproverId())
+                .assigneeId(ticket.getAssigneeId())
+                .attachments(ticket.getAttachments())
+                .comments(ticket.getComments())
                 .build();
     }
 }
