@@ -10,7 +10,6 @@ import innowise.zuevsky.helpdesk.dto.TicketSaveDto;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 public class TicketUtil {
