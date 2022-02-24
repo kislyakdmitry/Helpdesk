@@ -5,7 +5,6 @@ import innowise.zuevsky.helpdesk.dto.TicketDto;
 import innowise.zuevsky.helpdesk.dto.TicketSaveDto;
 import innowise.zuevsky.helpdesk.dto.TicketUpdateDto;
 import innowise.zuevsky.helpdesk.mapper.TicketMapper;
-import innowise.zuevsky.helpdesk.mapper.TicketUpdateMapper;
 import innowise.zuevsky.helpdesk.repository.TicketsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,10 +15,9 @@ public class TicketsService {
 
     private final TicketsRepository ticketsRepository;
     private final TicketMapper ticketMapper;
-    private final TicketUpdateMapper ticketUpdateMapper;
 
     public TicketDto getTicket(Long id) {
-        return ticketMapper.mapTicketInTicketDto(ticketsRepository.getById(id));
+        return ticketMapper.mapTicketInTicketDto(ticketsRepository.findById(id).orElseThrow());
     }
 
     public void saveTicket(TicketSaveDto saveDto) {
@@ -27,8 +25,13 @@ public class TicketsService {
     }
 
     public void updateTicket(TicketUpdateDto updateDto, Long id) {
-        Ticket ticket = ticketsRepository.getById(id);
-        ticketUpdateMapper.updateTicketFromTicketUpdateDto(updateDto, ticket);
+        Ticket ticket = ticketsRepository.findById(id).orElseThrow();
+        ticket.setName(updateDto.getName());
+        ticket.setDescription(updateDto.getDescription());
+        ticket.setDesiredResolutionDate(updateDto.getDesiredResolutionDate());
+        ticket.setCategoryId(updateDto.getCategoryId());
+        ticket.setUrgency(updateDto.getUrgency());
+        ticket.setAttachments(updateDto.getAttachments());
         ticketsRepository.save(ticket);
     }
 }

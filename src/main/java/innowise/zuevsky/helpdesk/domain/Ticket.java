@@ -37,21 +37,22 @@ public class Ticket {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Column(name = "name", updatable = false)
     private String name;
 
     private String description;
 
-    @Column(name = "created_on")
+    @Column(name = "created_on", updatable = false)
     @CreationTimestamp
     private LocalDateTime createdOn;
 
     @Column(name = "desired_resolution_date")
     private LocalDate desiredResolutionDate;
 
-    @Column(name = "assignee_id")
+    @Column(name = "assignee_id", updatable = false)
     private Long assigneeId;
 
-    @Column(name = "owner_id")
+    @Column(name = "owner_id", updatable = false)
     private Long ownerId;
 
     @Enumerated(EnumType.STRING)
@@ -65,7 +66,7 @@ public class Ticket {
     @Column(name = "urgency_id")
     private Urgency urgency;
 
-    @Column(name = "approver_id")
+    @Column(name = "approver_id", updatable = false)
     private Long approverId;
 
     @OneToMany(fetch = FetchType.LAZY)
