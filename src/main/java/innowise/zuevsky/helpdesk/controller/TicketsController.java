@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/tickets")
@@ -25,6 +26,21 @@ public class TicketsController {
     @GetMapping("/{ticketId}")
     public TicketDto getTicket(@PathVariable Long ticketId) {
         return ticketsService.getTicket(ticketId);
+    }
+
+    @GetMapping("/byOwnerId/{ownerId}")
+    public List<TicketDto> getTicketsByOwnerId(@PathVariable Long ownerId) {
+        return ticketsService.getTicketsByOwnerId(ownerId);
+    }
+
+    @GetMapping
+    public List<TicketDto> getTicketsByEmployeeIdListInStateNew(){
+        return ticketsService.getTicketsByOwnerIdListInStateNew(List.of(1L));
+    }
+
+    @GetMapping("/my")
+    public List<TicketDto> getTicketsByApproverIdInSpecificState() {
+        return ticketsService.getTicketsByApproverIdInSpecificState(2L);
     }
 
     @PostMapping

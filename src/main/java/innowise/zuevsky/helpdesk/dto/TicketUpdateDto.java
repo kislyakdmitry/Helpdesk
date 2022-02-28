@@ -1,7 +1,6 @@
 package innowise.zuevsky.helpdesk.dto;
 
 import innowise.zuevsky.helpdesk.domain.Attachment;
-import innowise.zuevsky.helpdesk.domain.enums.State;
 import innowise.zuevsky.helpdesk.domain.enums.Urgency;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
