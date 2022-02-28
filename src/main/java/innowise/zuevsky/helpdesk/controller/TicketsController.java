@@ -40,7 +40,7 @@ public class TicketsController {
 
     @GetMapping("/my")
     public List<TicketDto> getTicketsByApproverIdInSpecificState() {
-        return ticketsService.getTicketsByApproverIdInSpecificState(2L);
+        return ticketsService.getTicketsByApproverIdInSpecificState();
     }
 
     @PostMapping

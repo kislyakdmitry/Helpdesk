@@ -1,6 +1,7 @@
 package innowise.zuevsky.helpdesk.service;
 
 import innowise.zuevsky.helpdesk.domain.Ticket;
+import innowise.zuevsky.helpdesk.domain.User;
 import innowise.zuevsky.helpdesk.domain.enums.State;
 import innowise.zuevsky.helpdesk.dto.TicketDto;
 import innowise.zuevsky.helpdesk.dto.TicketSaveDto;
@@ -19,6 +20,7 @@ public class TicketsService {
 
     private final TicketsRepository ticketsRepository;
     private final TicketMapper ticketMapper;
+    private final UserService userService;
 
     public TicketDto getTicket(Long id) {
         return ticketMapper.mapTicketInTicketDto(ticketsRepository.findById(id).orElseThrow());
@@ -34,11 +36,13 @@ public class TicketsService {
                 ticketsRepository.getTicketsByOwnerIdListInStateNew(ownersId));
     }
 
-    public List<TicketDto> getTicketsByApproverIdInSpecificState(Long approverId) {
+    public List<TicketDto> getTicketsByApproverIdInSpecificState() {
+        User user = userService.getCurrentUser();
+
         Set<State> targetStates = Set.of(State.APPROVED, State.DECLINED, State.IN_PROGRESS, State.CANCELED, State.DONE);
 
         return ticketMapper.mapTicketListInTicketDtoList(
-                ticketsRepository.getTicketsForApproverInStates(approverId, targetStates));
+                ticketsRepository.getTicketsForApproverInStates(user.getId(), targetStates));
 
     }
 
