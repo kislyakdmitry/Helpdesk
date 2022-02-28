@@ -11,7 +11,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class TicketMapperTest {
 
-    private TicketMapper ticketMapper = new TicketMapper();
+    private final TicketMapper ticketMapper = new TicketMapper();
 
     @Test
     void mapTicketSaveDtoInTicketShouldMapIfNumberOfFieldsIsRight() {

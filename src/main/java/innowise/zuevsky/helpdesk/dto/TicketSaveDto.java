@@ -51,6 +51,5 @@ public class TicketSaveDto {
     @NotNull
     private Long approverId;
 
-    @NotNull
     private List<Attachment> attachments;
 }

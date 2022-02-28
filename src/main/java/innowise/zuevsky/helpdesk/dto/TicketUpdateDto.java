@@ -38,6 +38,5 @@ public class TicketUpdateDto {
     @NotNull
     private Urgency urgency;
 
-    @NotNull
     private List<Attachment> attachments;
 }
