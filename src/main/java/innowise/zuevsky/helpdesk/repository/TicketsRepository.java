@@ -17,5 +17,5 @@ public interface TicketsRepository extends JpaRepository<Ticket, Long> {
     List<Ticket> getTicketsByOwnerIdListInStateNew(List<Long> ownersId);
 
     @Query("SELECT t FROM Ticket t WHERE t.approverId = :approverId AND t.state IN :states")
-    List<Ticket> getTicketsForApproverInStates(Long approverId, Collection<State> states);
+    List<Ticket> getTicketsByApproverIdInStates(Long approverId, Collection<State> states);
 }

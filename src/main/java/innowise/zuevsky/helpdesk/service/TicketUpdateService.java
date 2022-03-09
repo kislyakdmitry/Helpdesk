@@ -7,11 +7,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class TicketUpdateService {
 
+    private TicketUpdateService() {
+
+    }
+
     public static Ticket updateTicket(TicketUpdateDto updateDto, Ticket ticket) {
         ticket.setName(updateDto.getName());
         ticket.setDescription(updateDto.getDescription());
         ticket.setDesiredResolutionDate(updateDto.getDesiredResolutionDate());
-        ticket.setCategoryId(updateDto.getCategoryId());
+        ticket.setCategory(updateDto.getCategory());
         ticket.setUrgency(updateDto.getUrgency());
         ticket.setAttachments(updateDto.getAttachments());
         return ticket;

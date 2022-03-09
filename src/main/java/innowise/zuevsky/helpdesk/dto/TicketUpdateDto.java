@@ -1,6 +1,7 @@
 package innowise.zuevsky.helpdesk.dto;
 
 import innowise.zuevsky.helpdesk.domain.Attachment;
+import innowise.zuevsky.helpdesk.domain.enums.Category;
 import innowise.zuevsky.helpdesk.domain.enums.Urgency;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,7 +34,7 @@ public class TicketUpdateDto {
     private LocalDate desiredResolutionDate;
 
     @NotNull
-    private int categoryId;
+    private Category category;
 
     @NotNull
     private Urgency urgency;

@@ -42,7 +42,7 @@ public class TicketsService {
         Set<State> targetStates = Set.of(State.APPROVED, State.DECLINED, State.IN_PROGRESS, State.CANCELED, State.DONE);
 
         return ticketMapper.mapTicketListInTicketDtoList(
-                ticketsRepository.getTicketsForApproverInStates(user.getId(), targetStates));
+                ticketsRepository.getTicketsByApproverIdInStates(user.getId(), targetStates));
 
     }
 

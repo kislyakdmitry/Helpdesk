@@ -20,10 +20,10 @@ import java.time.LocalDate;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "comment")
+@Table(name = "comments")
 public class Comment {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "comment_id_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "comments_id_seq")
     @Column(name = "id", nullable = false)
     private Long id;
 

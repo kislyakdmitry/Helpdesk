@@ -19,10 +19,10 @@ import javax.persistence.Table;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "attachment")
+@Table(name = "attachments")
 public class Attachment {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "attachment_id_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "attachments_id_seq")
     @Column(name = "id", nullable = false)
     private Long id;
 

@@ -5,6 +5,7 @@ import innowise.zuevsky.helpdesk.dto.TicketSaveDto;
 import innowise.zuevsky.helpdesk.dto.TicketUpdateDto;
 import innowise.zuevsky.helpdesk.service.TicketsService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,26 +24,28 @@ public class TicketsController {
 
     private final TicketsService ticketsService;
 
+    @PreAuthorize("hasAuthority('ticket:get')")
     @GetMapping("/{ticketId}")
     public TicketDto getTicket(@PathVariable Long ticketId) {
         return ticketsService.getTicket(ticketId);
     }
 
     @GetMapping("/byOwnerId/{ownerId}")
-    public List<TicketDto> getTicketsByOwnerId(@PathVariable Long ownerId) {
+    public List<TicketDto> getTicketsByOwner(@PathVariable Long ownerId) {
         return ticketsService.getTicketsByOwnerId(ownerId);
     }
 
     @GetMapping
-    public List<TicketDto> getTicketsByEmployeeIdListInStateNew(){
+    public List<TicketDto> getTicketsByEmployeeListInStateNew() {
         return ticketsService.getTicketsByOwnerIdListInStateNew(List.of(1L));
     }
 
     @GetMapping("/my")
-    public List<TicketDto> getTicketsByApproverIdInSpecificState() {
+    public List<TicketDto> getTicketsByApproverInSpecificState() {
         return ticketsService.getTicketsByApproverIdInSpecificState();
     }
 
+    @PreAuthorize("hasAuthority('ticket:post')")
     @PostMapping
     public void saveTicket(@Valid @RequestBody TicketSaveDto saveDto) {
         ticketsService.saveTicket(saveDto);

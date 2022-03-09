@@ -1,6 +1,7 @@
 package innowise.zuevsky.helpdesk.dto;
 
 import innowise.zuevsky.helpdesk.domain.Attachment;
+import innowise.zuevsky.helpdesk.domain.enums.Category;
 import innowise.zuevsky.helpdesk.domain.enums.State;
 import innowise.zuevsky.helpdesk.domain.enums.Urgency;
 import lombok.AllArgsConstructor;
@@ -43,7 +44,7 @@ public class TicketSaveDto {
     private State state;
 
     @NotNull
-    private int categoryId;
+    private Category category;
 
     @NotNull
     private Urgency urgency;

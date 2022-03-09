@@ -1,5 +1,6 @@
 package innowise.zuevsky.helpdesk.domain;
 
+import innowise.zuevsky.helpdesk.domain.enums.Category;
 import innowise.zuevsky.helpdesk.domain.enums.State;
 import innowise.zuevsky.helpdesk.domain.enums.Urgency;
 import lombok.AllArgsConstructor;
@@ -30,16 +31,17 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "ticket")
+@Table(name = "tickets")
 public class Ticket {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ticket_id_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tickets_id_seq")
     @Column(name = "id", nullable = false)
     private Long id;
 
     @Column(name = "name", updatable = false)
     private String name;
 
+    @Column(name = "description")
     private String description;
 
     @Column(name = "created_on", updatable = false)
@@ -56,14 +58,14 @@ public class Ticket {
     private Long ownerId;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "state_id")
+    @Column(name = "state")
     private State state;
 
-    @Column(name = "category_id")
-    private Integer categoryId;
+    @Column(name = "category")
+    private Category category;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "urgency_id")
+    @Column(name = "urgency")
     private Urgency urgency;
 
     @Column(name = "approver_id", updatable = false)
