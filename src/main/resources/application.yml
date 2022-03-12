@@ -16,4 +16,8 @@ spring:
           use_jdbc_metadata_defaults: false
   liquibase:
     change-log: classpath:/db/changelog/db.changelog.xml
+jwt:
+  header: Authorization
+  secret: helpdeskhelpdeskhelpdeskhelpdesk
+  expiration: 604800
 
