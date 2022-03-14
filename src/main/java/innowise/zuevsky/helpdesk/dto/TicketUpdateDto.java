@@ -1,34 +1,43 @@
 package innowise.zuevsky.helpdesk.dto;
 
 import innowise.zuevsky.helpdesk.domain.Attachment;
-import innowise.zuevsky.helpdesk.domain.Comment;
 import innowise.zuevsky.helpdesk.domain.enums.Category;
-import innowise.zuevsky.helpdesk.domain.enums.State;
 import innowise.zuevsky.helpdesk.domain.enums.Urgency;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TicketDto {
+public class TicketUpdateDto {
+
+    @NotBlank
+    @Pattern(regexp = "^[a-z0-9~.\"(),:;<>@\\[\\]!#$%&'*+\\-/=?^_`{|} ]{2,100}$")
     private String name;
-    private LocalDateTime createdOn;
-    private State state;
-    private Category category;
-    private Urgency urgency;
+
+    @NotBlank
+    @Pattern(regexp = "^[A-Za-z0-9~.\"(),:;<>@\\[\\]!#$%&'*+\\-/=?^_`{|} ]{2,500}$")
     private String description;
+
+    @NotNull
+    @FutureOrPresent
     private LocalDate desiredResolutionDate;
-    private Long ownerId;
-    private Long approverId;
-    private Long assigneeId;
+
+    @NotNull
+    private Category category;
+
+    @NotNull
+    private Urgency urgency;
+
     private List<Attachment> attachments;
-    private List<Comment> comments;
 }
