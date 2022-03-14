@@ -1,4 +1,4 @@
-package innowise.zuevsky.helpdesk.security;
+package innowise.zuevsky.helpdesk.exception;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;

@@ -24,7 +24,7 @@ public class TicketsController {
 
     private final TicketsService ticketsService;
 
-    @PreAuthorize("hasAuthority('ticket:get')")
+    @PreAuthorize("hasAuthority('EMPLOYEE')")
     @GetMapping("/{ticketId}")
     public TicketDto getTicket(@PathVariable Long ticketId) {
         return ticketsService.getTicket(ticketId);
@@ -45,7 +45,7 @@ public class TicketsController {
         return ticketsService.getTicketsByApproverIdInSpecificState();
     }
 
-    @PreAuthorize("hasAuthority('ticket:post')")
+    @PreAuthorize("hasAuthority('MANAGER')")
     @PostMapping
     public void saveTicket(@Valid @RequestBody TicketSaveDto saveDto) {
         ticketsService.saveTicket(saveDto);

@@ -19,5 +19,5 @@ spring:
 jwt:
   header: Authorization
   secret: helpdeskhelpdeskhelpdeskhelpdesk
-  expiration: 604800
+  expiration: 3600
 
