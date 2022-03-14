@@ -2,19 +2,17 @@ package innowise.zuevsky.helpdesk.security;
 
 import innowise.zuevsky.helpdesk.domain.User;
 import innowise.zuevsky.helpdesk.repository.UsersRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service("userDetailsServiceImpl")
+@AllArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final UsersRepository usersRepository;
-
-    public UserDetailsServiceImpl(UsersRepository usersRepository) {
-        this.usersRepository = usersRepository;
-    }
 
     @Override
     public UserDetails loadUserByUsername(String email) {

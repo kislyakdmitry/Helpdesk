@@ -6,6 +6,7 @@ import innowise.zuevsky.helpdesk.domain.enums.State;
 import innowise.zuevsky.helpdesk.dto.TicketDto;
 import innowise.zuevsky.helpdesk.dto.TicketSaveDto;
 import innowise.zuevsky.helpdesk.dto.TicketUpdateDto;
+import innowise.zuevsky.helpdesk.exception.TicketNotFoundException;
 import innowise.zuevsky.helpdesk.mapper.TicketMapper;
 import innowise.zuevsky.helpdesk.repository.TicketsRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +23,11 @@ public class TicketsService {
     private final TicketMapper ticketMapper;
     private final UserService userService;
 
+    private final TicketUpdateService ticketUpdateService;
+
     public TicketDto getTicket(Long id) {
-        return ticketMapper.mapTicketInTicketDto(ticketsRepository.findById(id).orElseThrow());
+        return ticketMapper.mapTicketInTicketDto(ticketsRepository.findById(id).orElseThrow(() ->
+                new TicketNotFoundException("Ticket doesn't exist!")));
     }
 
     public List<TicketDto> getTicketsByOwnerId(Long id) {
@@ -53,6 +57,6 @@ public class TicketsService {
     public void updateTicket(TicketUpdateDto updateDto, Long id) {
         Ticket ticket = ticketsRepository.findById(id).orElseThrow();
 
-        ticketsRepository.save(TicketUpdateService.updateTicket(updateDto, ticket));
+        ticketsRepository.save(ticketUpdateService.updateTicket(updateDto, ticket));
     }
 }

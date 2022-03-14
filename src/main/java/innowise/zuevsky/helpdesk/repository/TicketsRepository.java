@@ -11,6 +11,7 @@ import java.util.List;
 
 @Repository
 public interface TicketsRepository extends JpaRepository<Ticket, Long> {
+    @Query("SELECT t FROM Ticket t WHERE t.ownerId = :id")
     List<Ticket> findTicketsByOwnerId(Long id);
 
     @Query("SELECT t FROM Ticket t WHERE t.ownerId IN :ownersId")
