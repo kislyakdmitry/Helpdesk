@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="1" author="Alexey Zuevsky">
+        <comment>1.1.version. Changing table Tickets(state): type ENUM -> varchar</comment>
+        <sql>
+            ALTER TABLE Tickets
+                ALTER COLUMN state SET DATA TYPE varchar( 40 );
+        </sql>
+    </changeSet>
+
+    <changeSet id="2" author="Alexey Zuevsky">
+        <comment>1.1.version. Creating constraint for Tickets(state): CHECK </comment>
+        <sql>
+            ALTER TABLE Tickets
+            ADD CONSTRAINT state_enum CHECK ( state IN ( 'DRAFT', 'NEW', 'APPROVED', 'DECLINED', 'IN_PROGRESS', 'DONE', 'CANCELED' ) );
+        </sql>
+    </changeSet>
+
+    <changeSet id="3" author="Alexey Zuevsky">
+        <comment>1.1.version. Changing table Tickets(urgency): type ENUM -> varchar</comment>
+        <sql>
+            ALTER TABLE Tickets
+                ALTER COLUMN urgency SET DATA TYPE varchar( 40 );
+        </sql>
+    </changeSet>
+
+    <changeSet id="4" author="Alexey Zuevsky">
+        <comment>1.1.version. Creating constraint for Tickets(urgency): CHECK </comment>
+        <sql>
+            ALTER TABLE Tickets
+            ADD CONSTRAINT urgency_enum CHECK ( urgency IN ( 'CRITICAL', 'HIGH', 'AVERAGE', 'LOW' ) );
+        </sql>
+    </changeSet>
+
+    <changeSet id="5" author="Alexey Zuevsky">
+        <comment>1.1.version. Changing table Users(role): type ENUM -> varchar</comment>
+        <sql>
+            ALTER TABLE Users
+                ALTER COLUMN role SET DATA TYPE varchar( 40 );
+        </sql>
+    </changeSet>
+
+    <changeSet id="6" author="Alexey Zuevsky">
+        <comment>1.1.version. Creating constraint for Users(role): CHECK </comment>
+        <sql>
+            ALTER TABLE Users
+            ADD CONSTRAINT role_enum CHECK ( role IN ( 'EMPLOYEE', 'MANAGER', 'ENGINEER' ) );
+        </sql>
+    </changeSet>
+
+    <changeSet id="7" author="Alexey Zuevsky">
+        <comment>1.1.version. Drop ENUM ticket_state</comment>
+        <sql>
+            DROP TYPE ticket_state;
+        </sql>
+    </changeSet>
+
+    <changeSet id="8" author="Alexey Zuevsky">
+        <comment>1.1.version. Drop ENUM ticket_urgency</comment>
+        <sql>
+            DROP TYPE ticket_urgency;
+        </sql>
+    </changeSet>
+
+    <changeSet id="9" author="Alexey Zuevsky">
+        <comment>1.1.version. Drop ENUM user_role</comment>
+        <sql>
+            DROP TYPE user_role;
+        </sql>
+    </changeSet>
+
+    <changeSet id="10" author="Alexey Zuevsky">
+        <comment>1.1.version. Changing table Tickets(created_on): type date -> timestamp</comment>
+        <sql>
+            ALTER TABLE Tickets
+                ALTER COLUMN created_on SET DATA TYPE timestamp;
+        </sql>
+    </changeSet>
+
+    <changeSet id="11" author="Alexey Zuevsky">
+        <comment>1.1.version. Changing table Attachments(blob): name -> link</comment>
+        <sql>
+            ALTER TABLE Attachments
+                RENAME COLUMN blob TO link;
+        </sql>
+    </changeSet>
+
+    <changeSet id="12" author="Alexey Zuevsky">
+        <comment>1.1.version. Changing table Tickets(category): type ENUM -> varchar</comment>
+        <sql>
+            ALTER TABLE Tickets
+                ALTER COLUMN category SET DATA TYPE varchar( 40 );
+        </sql>
+    </changeSet>
+
+    <changeSet id="13" author="Alexey Zuevsky">
+        <comment>1.1.version. Creating constraint for Tickets(category): CHECK</comment>
+        <sql>
+            ALTER TABLE Tickets
+                ADD CONSTRAINT category_enum CHECK ( category IN ( 'APPLICATION_AND_SERVICES', 'BENEFITS_AND_PAPER_WORK',
+                                                                  'HARDWARE_AND_SOFTWARE', 'PEOPLE_MANAGEMENT', 'SECURITY_AND_ACCESS',
+                                                                 'WORKPLACES_AND_FACILITIES') );
+        </sql>
+    </changeSet>
+
+    <changeSet id="14" author="Alexey Zuevsky">
+        <comment>1.1.version. Drop ENUM ticket_category</comment>
+        <sql>
+            DROP TYPE ticket_category;
+        </sql>
+    </changeSet>
+
+    <changeSet id="15" author="Alexey Zuevsky">
+        <comment>1.1.version. Changing table Users: creating new column: status</comment>
+        <sql>
+            ALTER TABLE Users
+                ADD COLUMN status varchar( 40 ) NOT NULL;
+        </sql>
+    </changeSet>
+
+    <changeSet id="16" author="Alexey Zuevsky">
+        <comment>1.1.version. Creating constraint for Users(status): CHECK</comment>
+        <sql>
+            ALTER TABLE Users
+                ADD CONSTRAINT status_enum CHECK ( status IN ( 'ACTIVE', 'BANNED' ) );
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
