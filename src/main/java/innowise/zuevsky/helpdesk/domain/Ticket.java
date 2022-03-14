@@ -61,6 +61,7 @@ public class Ticket {
     @Column(name = "state")
     private State state;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "category")
     private Category category;
 

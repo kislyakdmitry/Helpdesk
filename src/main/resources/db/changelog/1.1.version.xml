@@ -131,4 +131,12 @@
         </sql>
     </changeSet>
 
+    <changeSet id="17" author="Alexey Zuevsky">
+        <comment>1.1.version. Changing table Users(password): type varchar( 20 ) -> varchar( 255 )</comment>
+        <sql>
+            ALTER TABLE Users
+                ALTER COLUMN password SET DATA TYPE varchar( 255 );
+        </sql>
+    </changeSet>
+
 </databaseChangeLog>
