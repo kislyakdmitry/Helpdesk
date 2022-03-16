@@ -139,4 +139,20 @@
         </sql>
     </changeSet>
 
+    <changeSet id="18" author="Alexey Zuevsky">
+        <comment>1.1.version. Drop constraint role_enum</comment>
+        <sql>
+            ALTER TABLE Users
+                DROP CONSTRAINT role_enum;
+        </sql>
+    </changeSet>
+
+    <changeSet id="19" author="Alexey Zuevsky">
+        <comment>1.1.version. Creating constraint for Users(role): CHECK </comment>
+        <sql>
+            ALTER TABLE Users
+                ADD CONSTRAINT role_enum CHECK ( role IN ( 'ROLE_EMPLOYEE', 'ROLE_MANAGER', 'ROLE_ENGINEER' ) );
+        </sql>
+    </changeSet>
+
 </databaseChangeLog>

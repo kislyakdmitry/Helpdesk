@@ -24,33 +24,36 @@ public class TicketsController {
 
     private final TicketsService ticketsService;
 
-    @PreAuthorize("hasAuthority('EMPLOYEE')")
+    @PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER', 'ENGINEER')")
     @GetMapping("/{ticketId}")
     public TicketDto getTicket(@PathVariable Long ticketId) {
         return ticketsService.getTicket(ticketId);
     }
 
+    @PreAuthorize("hasRole('EMPLOYEE')")
     @GetMapping("/byOwnerId/{ownerId}")
     public List<TicketDto> getTicketsByOwner(@PathVariable Long ownerId) {
-        return ticketsService.getTicketsByOwnerId(ownerId);
+        return ticketsService.getTicketsByOwner(ownerId);
     }
 
-    @GetMapping
-    public List<TicketDto> getTicketsByEmployeeListInStateNew() {
-        return ticketsService.getTicketsByOwnerIdListInStateNew(List.of(1L));
+    @PreAuthorize("hasRole('MANAGER')")
+    @GetMapping("/byAllEmployeesInNew")
+    public List<TicketDto> getTicketsByAllEmployeesInNew() {
+        return ticketsService.getTicketsByOwnersInNew(List.of(1L));
     }
 
-    @GetMapping("/my")
-    public List<TicketDto> getTicketsByApproverInSpecificState() {
-        return ticketsService.getTicketsByApproverIdInSpecificState();
+    @GetMapping("/byApproverInStates")
+    public List<TicketDto> getTicketsByApproverInStates() {
+        return ticketsService.getTicketsByApproverInStates();
     }
 
-    @PreAuthorize("hasAuthority('MANAGER')")
+    @PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER', 'ENGINEER')")
     @PostMapping
-    public void saveTicket(@Valid @RequestBody TicketSaveDto saveDto) {
-        ticketsService.saveTicket(saveDto);
+    public void createTicket(@Valid @RequestBody TicketSaveDto saveDto) {
+        ticketsService.createTicket(saveDto);
     }
 
+    @PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER', 'ENGINEER')")
     @PutMapping("/{ticketId}")
     public void updateTicket(@Valid @RequestBody TicketUpdateDto updateDto, @PathVariable Long ticketId) {
         ticketsService.updateTicket(updateDto, ticketId);

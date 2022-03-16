@@ -30,17 +30,17 @@ public class TicketsService {
                 new TicketNotFoundException("Ticket doesn't exist!")));
     }
 
-    public List<TicketDto> getTicketsByOwnerId(Long id) {
+    public List<TicketDto> getTicketsByOwner(Long ownerId) {
         return ticketMapper.mapTicketListInTicketDtoList(
-                ticketsRepository.findTicketsByOwnerId(id));
+                ticketsRepository.findTicketsByOwnerId(ownerId));
     }
 
-    public List<TicketDto> getTicketsByOwnerIdListInStateNew(List<Long> ownersId) {
+    public List<TicketDto> getTicketsByOwnersInNew(List<Long> ownersId) {
         return ticketMapper.mapTicketListInTicketDtoList(
                 ticketsRepository.getTicketsByOwnerIdListInStateNew(ownersId));
     }
 
-    public List<TicketDto> getTicketsByApproverIdInSpecificState() {
+    public List<TicketDto> getTicketsByApproverInStates() {
         User user = userService.getCurrentUser();
 
         Set<State> targetStates = Set.of(State.APPROVED, State.DECLINED, State.IN_PROGRESS, State.CANCELED, State.DONE);
@@ -50,7 +50,7 @@ public class TicketsService {
 
     }
 
-    public void saveTicket(TicketSaveDto saveDto) {
+    public void createTicket(TicketSaveDto saveDto) {
         ticketsRepository.save(ticketMapper.mapTicketSaveDtoInTicket(saveDto));
     }
 
