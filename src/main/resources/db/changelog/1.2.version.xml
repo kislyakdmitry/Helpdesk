@@ -8,12 +8,12 @@
         <comment>Add users</comment>
         <sql>
             INSERT INTO users (first_name, last_name, role, email, password, status)
-            values ('user1','user1','EMPLOYEE','user1_mogilev@yopmail.com','$2a$12$UBXPkMHbwkC5ZFUWrInSKu65ba.joR3ZsVv2BoMhHH.GXtFsHR4p2','ACTIVE'),
-                   ('user2','user2','EMPLOYEE','user2_mogilev@yopmail.com','$2a$12$UBXPkMHbwkC5ZFUWrInSKu65ba.joR3ZsVv2BoMhHH.GXtFsHR4p2','ACTIVE'),
-                   ('manager1','manager1','MANAGER','manager1_mogilev@yopmail.com','$2a$12$UBXPkMHbwkC5ZFUWrInSKu65ba.joR3ZsVv2BoMhHH.GXtFsHR4p2','ACTIVE'),
-                   ('manager2','manager2','MANAGER','manager2_mogilev@yopmail.com','$2a$12$UBXPkMHbwkC5ZFUWrInSKu65ba.joR3ZsVv2BoMhHH.GXtFsHR4p2','ACTIVE'),
-                   ('engineer1','engineer1','ENGINEER','engineer1_mogilev@yopmail.com','$2a$12$UBXPkMHbwkC5ZFUWrInSKu65ba.joR3ZsVv2BoMhHH.GXtFsHR4p2','ACTIVE'),
-                   ('engineer2','engineer2','ENGINEER','engineer2_mogilev@yopmail.com','$2a$12$UBXPkMHbwkC5ZFUWrInSKu65ba.joR3ZsVv2BoMhHH.GXtFsHR4p2','ACTIVE');
+            values ('user1','user1','ROLE_EMPLOYEE','user1_mogilev@yopmail.com','$2a$12$UBXPkMHbwkC5ZFUWrInSKu65ba.joR3ZsVv2BoMhHH.GXtFsHR4p2','ACTIVE'),
+                   ('user2','user2','ROLE_EMPLOYEE','user2_mogilev@yopmail.com','$2a$12$UBXPkMHbwkC5ZFUWrInSKu65ba.joR3ZsVv2BoMhHH.GXtFsHR4p2','ACTIVE'),
+                   ('manager1','manager1','ROLE_MANAGER','manager1_mogilev@yopmail.com','$2a$12$UBXPkMHbwkC5ZFUWrInSKu65ba.joR3ZsVv2BoMhHH.GXtFsHR4p2','ACTIVE'),
+                   ('manager2','manager2','ROLE_MANAGER','manager2_mogilev@yopmail.com','$2a$12$UBXPkMHbwkC5ZFUWrInSKu65ba.joR3ZsVv2BoMhHH.GXtFsHR4p2','ACTIVE'),
+                   ('engineer1','engineer1','ROLE_ENGINEER','engineer1_mogilev@yopmail.com','$2a$12$UBXPkMHbwkC5ZFUWrInSKu65ba.joR3ZsVv2BoMhHH.GXtFsHR4p2','ACTIVE'),
+                   ('engineer2','engineer2','ROLE_ENGINEER','engineer2_mogilev@yopmail.com','$2a$12$UBXPkMHbwkC5ZFUWrInSKu65ba.joR3ZsVv2BoMhHH.GXtFsHR4p2','ACTIVE');
         </sql>
     </changeSet>
     <changeSet id="2" author="Svetlana Shishaeva">
