@@ -11,12 +11,17 @@ import java.util.List;
 
 @Repository
 public interface TicketsRepository extends JpaRepository<Ticket, Long> {
-    @Query("SELECT t FROM Ticket t WHERE t.ownerId = :id")
+    @Query("SELECT t FROM Ticket AS t WHERE t.ownerId = :id")
     List<Ticket> findTicketsByOwnerId(Long id);
 
-    @Query("SELECT t FROM Ticket t WHERE t.ownerId IN :ownersId")
-    List<Ticket> getTicketsByOwnerIdListInStateNew(List<Long> ownersId);
+    @Query("")
+    List<Ticket> findTicketsForManager(Long id);
 
-    @Query("SELECT t FROM Ticket t WHERE t.approverId = :approverId AND t.state IN :states")
-    List<Ticket> getTicketsByApproverIdInStates(Long approverId, Collection<State> states);
+    /*SELECT * FROM tickets AS t
+    JOIN users AS o ON o.id = t.owner_id
+    JOIN users AS a ON a.id = t.approver_id
+    WHERE t.owner_id = :ownerId
+    OR (o.role = 'ROLE_EMPLOYEE' AND t.state = 'NEW')
+    OR (t.approver_id = :ownerId AND t.state IN ('APPROVED', 'DECLINED', 'CANCELLED', 'IN_PROGRESS', 'DONE'))
+    ORDER BY t.state;*/
 }

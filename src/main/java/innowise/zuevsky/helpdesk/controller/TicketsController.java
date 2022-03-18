@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/tickets")
@@ -37,24 +36,14 @@ public class TicketsController {
     @PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER')")
     @GetMapping("/my/{ownerId}")
     public List<TicketDto> getMyTickets(@PathVariable Long ownerId) {
-        return ticketsService.getTicketsByOwner(ownerId);
+        return ticketsService.getMyTickets(ownerId);
     }
 
+    @PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER', 'ENGINEER')")
     @GetMapping("/all")
-    public List<TicketDto> getAllTickets() {
-        User user = userService.getCurrentUser();
+    public User getAllTickets() {
+        userService.getCurrentUser();
         return null;
-    }
-
-    @PreAuthorize("hasRole('MANAGER')")
-    @GetMapping("/byAllEmployeesInNew")
-    public List<TicketDto> getTicketsByAllEmployeesInNew() {
-        return ticketsService.getTicketsByOwnersInNew(List.of(1L));
-    }
-
-    @GetMapping("/byApproverInStates")
-    public List<TicketDto> getTicketsByApproverInStates() {
-        return ticketsService.getTicketsByApproverInStates();
     }
 
     @PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER')")

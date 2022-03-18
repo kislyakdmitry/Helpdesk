@@ -1,7 +1,6 @@
 package innowise.zuevsky.helpdesk.service;
 
 import innowise.zuevsky.helpdesk.domain.Ticket;
-import innowise.zuevsky.helpdesk.domain.User;
 import innowise.zuevsky.helpdesk.domain.enums.State;
 import innowise.zuevsky.helpdesk.dto.TicketDto;
 import innowise.zuevsky.helpdesk.dto.TicketSaveDto;
@@ -30,23 +29,14 @@ public class TicketsService {
                 new TicketNotFoundException("Ticket doesn't exist!")));
     }
 
-    public List<TicketDto> getTicketsByOwner(Long ownerId) {
+    public List<TicketDto> getMyTickets(Long ownerId) {
         return ticketMapper.mapTicketListInTicketDtoList(
                 ticketsRepository.findTicketsByOwnerId(ownerId));
     }
 
-    public List<TicketDto> getTicketsByOwnersInNew(List<Long> ownersId) {
+    public List<TicketDto> getTicketsForManager(Long ownersId) {
         return ticketMapper.mapTicketListInTicketDtoList(
-                ticketsRepository.getTicketsByOwnerIdListInStateNew(ownersId));
-    }
-
-    public List<TicketDto> getTicketsByApproverInStates() {
-        //User user = userService.getCurrentUser();
-
-        Set<State> targetStates = Set.of(State.APPROVED, State.DECLINED, State.IN_PROGRESS, State.CANCELED, State.DONE);
-
-        return null;
-
+                ticketsRepository.findTicketsForManager(ownersId));
     }
 
     public void createTicket(TicketSaveDto saveDto) {
@@ -54,7 +44,8 @@ public class TicketsService {
     }
 
     public void updateTicket(TicketUpdateDto updateDto, Long id) {
-        Ticket ticket = ticketsRepository.findById(id).orElseThrow();
+        Ticket ticket = ticketsRepository.findById(id).orElseThrow(() ->
+                new TicketNotFoundException("Ticket doesn't exist!"));
 
         ticketsRepository.save(ticketUpdateService.updateTicket(updateDto, ticket));
     }
