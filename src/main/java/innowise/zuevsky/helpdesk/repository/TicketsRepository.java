@@ -11,17 +11,29 @@ import java.util.List;
 
 @Repository
 public interface TicketsRepository extends JpaRepository<Ticket, Long> {
-    @Query("SELECT t FROM Ticket AS t WHERE t.ownerId = :id")
+    @Query("""
+            SELECT t FROM Ticket AS t WHERE t.ownerId = :id
+            ORDER BY t.urgency DESC, t.desiredResolutionDate DESC
+            """)
     List<Ticket> findTicketsByOwnerId(Long id);
 
-    @Query("")
-    List<Ticket> findTicketsForManager(Long id);
+    @Query("""
+            SELECT t FROM Ticket AS t
+            JOIN User AS o ON o.id = t.ownerId
+            JOIN User AS a ON a.id = t.approverId
+            WHERE t.ownerId = :id
+            OR (o.role = 'ROLE_EMPLOYEE' AND t.state = 1)
+            OR (t.approverId = :id AND t.state IN :statesOfManagerApprover)
+            ORDER BY t.urgency DESC, t.desiredResolutionDate DESC
+            """)
+    List<Ticket> findTicketsForManager(Long id, Collection<State> statesOfManagerApprover);
 
-    /*SELECT * FROM tickets AS t
-    JOIN users AS o ON o.id = t.owner_id
-    JOIN users AS a ON a.id = t.approver_id
-    WHERE t.owner_id = :ownerId
-    OR (o.role = 'ROLE_EMPLOYEE' AND t.state = 'NEW')
-    OR (t.approver_id = :ownerId AND t.state IN ('APPROVED', 'DECLINED', 'CANCELLED', 'IN_PROGRESS', 'DONE'))
-    ORDER BY t.state;*/
+    @Query("""
+            SELECT t FROM Ticket AS t
+            JOIN User AS o ON o.id = t.ownerId
+            WHERE o.role IN ('ROLE_EMPLOYEE', 'ROLE_MANAGER') AND t.state = 2
+            OR (t.assigneeId = :id AND t.state IN :statesOfEngineerAssignee)
+            ORDER BY t.urgency DESC, t.desiredResolutionDate DESC
+            """)
+    List<Ticket> findTicketsForEngineer(Long id, Collection<State> statesOfEngineerAssignee);
 }

@@ -2,8 +2,6 @@ package innowise.zuevsky.helpdesk.service;
 
 import innowise.zuevsky.helpdesk.domain.User;
 import innowise.zuevsky.helpdesk.exception.AuthenticationTokenNotFoundException;
-import innowise.zuevsky.helpdesk.exception.JwtAuthenticationException;
-import innowise.zuevsky.helpdesk.exception.TicketNotFoundException;
 import innowise.zuevsky.helpdesk.exception.UserNotFoundException;
 import innowise.zuevsky.helpdesk.repository.UsersRepository;
 import lombok.AllArgsConstructor;
@@ -12,11 +10,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 @AllArgsConstructor
-public class UserService {
+public class UsersService {
 
     private UsersRepository usersRepository;
 

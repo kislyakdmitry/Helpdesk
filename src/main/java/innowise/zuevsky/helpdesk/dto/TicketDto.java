@@ -19,6 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class TicketDto {
+    private Long id;
     private String name;
     private LocalDateTime createdOn;
     private State state;

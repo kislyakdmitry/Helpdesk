@@ -27,6 +27,7 @@ public class TicketMapper {
 
     public TicketDto mapTicketInTicketDto(Ticket ticket) {
         return TicketDto.builder()
+                .id(ticket.getId())
                 .name(ticket.getName())
                 .createdOn(ticket.getCreatedOn())
                 .state(ticket.getState())

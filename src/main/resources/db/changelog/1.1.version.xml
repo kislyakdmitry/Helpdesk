@@ -155,4 +155,52 @@
         </sql>
     </changeSet>
 
+    <changeSet id="20" author="Alexey Zuevsky">
+        <comment>1.1.version. Dropping constraint for Tickets(state): CHECK </comment>
+        <sql>
+            ALTER TABLE Tickets
+                DROP CONSTRAINT state_enum;
+        </sql>
+    </changeSet>
+
+    <changeSet id="21" author="Alexey Zuevsky">
+        <comment>1.1.version. Dropping constraint for Tickets(category): CHECK </comment>
+        <sql>
+            ALTER TABLE Tickets
+            DROP CONSTRAINT category_enum;
+        </sql>
+    </changeSet>
+
+    <changeSet id="22" author="Alexey Zuevsky">
+        <comment>1.1.version. Dropping constraint for Tickets(urgency): CHECK </comment>
+        <sql>
+            ALTER TABLE Tickets
+            DROP CONSTRAINT urgency_enum;
+        </sql>
+    </changeSet>
+
+    <changeSet id="23" author="Alexey Zuevsky">
+        <comment>1.1.version. Changing table Tickets(state): type varchar( 40 ) -> integer</comment>
+        <sql>
+            ALTER TABLE Tickets
+                ALTER COLUMN state TYPE INT USING (state::integer);
+        </sql>
+    </changeSet>
+
+    <changeSet id="24" author="Alexey Zuevsky">
+        <comment>1.1.version. Changing table Tickets(category): type varchar( 40 ) -> integer</comment>
+        <sql>
+            ALTER TABLE Tickets
+                ALTER COLUMN category TYPE INT USING (category::integer);
+        </sql>
+    </changeSet>
+
+    <changeSet id="25" author="Alexey Zuevsky">
+        <comment>1.1.version. Changing table Tickets(urgency): type varchar( 40 ) -> integer</comment>
+        <sql>
+            ALTER TABLE Tickets
+                ALTER COLUMN urgency TYPE INT USING (urgency::integer);
+        </sql>
+    </changeSet>
+
 </databaseChangeLog>

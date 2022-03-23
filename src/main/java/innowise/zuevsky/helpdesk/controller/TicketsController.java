@@ -1,11 +1,10 @@
 package innowise.zuevsky.helpdesk.controller;
 
-import innowise.zuevsky.helpdesk.domain.User;
 import innowise.zuevsky.helpdesk.dto.TicketDto;
 import innowise.zuevsky.helpdesk.dto.TicketSaveDto;
 import innowise.zuevsky.helpdesk.dto.TicketUpdateDto;
 import innowise.zuevsky.helpdesk.service.TicketsService;
-import innowise.zuevsky.helpdesk.service.UserService;
+import innowise.zuevsky.helpdesk.service.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +24,7 @@ import java.util.List;
 public class TicketsController {
 
     private final TicketsService ticketsService;
-    private final UserService userService;
+    private final UsersService usersService;
 
     @PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER', 'ENGINEER')")
     @GetMapping("/{ticketId}")
@@ -34,16 +33,15 @@ public class TicketsController {
     }
 
     @PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER')")
-    @GetMapping("/my/{ownerId}")
-    public List<TicketDto> getMyTickets(@PathVariable Long ownerId) {
-        return ticketsService.getMyTickets(ownerId);
+    @GetMapping("/my")
+    public List<TicketDto> getMyTickets() {
+        return ticketsService.getMyTickets(usersService.getCurrentUser());
     }
 
     @PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER', 'ENGINEER')")
     @GetMapping("/all")
-    public User getAllTickets() {
-        userService.getCurrentUser();
-        return null;
+    public List<TicketDto> getAllTickets() {
+        return ticketsService.getAllTickets(usersService.getCurrentUser());
     }
 
     @PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER')")
