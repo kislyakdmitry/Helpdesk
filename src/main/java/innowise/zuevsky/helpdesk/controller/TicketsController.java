@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -26,24 +27,6 @@ public class TicketsController {
     private final TicketsService ticketsService;
     private final UsersService usersService;
 
-    @PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER', 'ENGINEER')")
-    @GetMapping("/{ticketId}")
-    public TicketDto getTicket(@PathVariable Long ticketId) {
-        return ticketsService.getTicket(ticketId);
-    }
-
-    @PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER')")
-    @GetMapping("/my")
-    public List<TicketDto> getMyTickets() {
-        return ticketsService.getMyTickets(usersService.getCurrentUser());
-    }
-
-    @PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER', 'ENGINEER')")
-    @GetMapping("/all")
-    public List<TicketDto> getAllTickets() {
-        return ticketsService.getAllTickets(usersService.getCurrentUser());
-    }
-
     @PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER')")
     @PostMapping
     public void createTicket(@Valid @RequestBody TicketSaveDto saveDto) {
@@ -54,5 +37,23 @@ public class TicketsController {
     @PutMapping("/{ticketId}")
     public void updateTicket(@Valid @RequestBody TicketUpdateDto updateDto, @PathVariable Long ticketId) {
         ticketsService.updateTicket(updateDto, ticketId);
+    }
+
+    @PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER', 'ENGINEER')")
+    @GetMapping("/{ticketId}")
+    public TicketDto getTicket(@PathVariable Long ticketId) {
+        return ticketsService.getTicket(ticketId);
+    }
+
+    @PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER')")
+    @GetMapping("/my")
+    public List<TicketDto> getMyTickets(@RequestParam(defaultValue = "urgency") String sortBy, @RequestParam(defaultValue = "DESC") String orderBy) {
+        return ticketsService.getMyTickets(usersService.getCurrentUser());
+    }
+
+    @PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER', 'ENGINEER')")
+    @GetMapping("/all")
+    public List<TicketDto> getAllTickets() {
+        return ticketsService.getAllTickets(usersService.getCurrentUser());
     }
 }

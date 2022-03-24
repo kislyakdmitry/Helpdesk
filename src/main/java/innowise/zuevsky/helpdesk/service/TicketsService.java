@@ -21,12 +21,24 @@ public class TicketsService {
 
     private final TicketsRepository ticketsRepository;
     private final TicketMapper ticketMapper;
-
     private final TicketUpdateService ticketUpdateService;
+    private final List<State> statesOfManagerApprover = List.of(State.APPROVED, State.DECLINED,
+            State.CANCELED, State.IN_PROGRESS, State.DONE);
+    private final List<State> statesOfEngineerAssignee = List.of(State.IN_PROGRESS, State.DONE);
 
     public TicketDto getTicket(Long id) {
         return ticketMapper.mapTicketInTicketDto(ticketsRepository.findById(id).orElseThrow(() ->
                 new TicketNotFoundException("Ticket doesn't exist!")));
+    }
+
+    public void createTicket(TicketSaveDto saveDto) {
+        ticketsRepository.save(ticketMapper.mapTicketSaveDtoInTicket(saveDto));
+    }
+
+    public void updateTicket(TicketUpdateDto updateDto, Long id) {
+        Ticket ticket = ticketsRepository.findById(id).orElseThrow(() ->
+                new TicketNotFoundException("Ticket doesn't exist!"));
+        ticketsRepository.save(ticketUpdateService.updateTicket(updateDto, ticket));
     }
 
     public List<TicketDto> getAllTickets(User user) {
@@ -45,26 +57,12 @@ public class TicketsService {
     }
 
     public List<TicketDto> getTicketsForManager(User user) {
-        List<State> statesOfManagerApprover = List.of(State.APPROVED, State.DECLINED,
-                State.CANCELED, State.IN_PROGRESS, State.DONE);
         return ticketMapper.mapTicketListInTicketDtoList(
                 ticketsRepository.findTicketsForManager(user.getId(), statesOfManagerApprover));
     }
 
     public List<TicketDto> getTicketsForEngineer(User user) {
-        List<State> statesOfEngineerAssignee = List.of(State.IN_PROGRESS, State.DONE);
         return ticketMapper.mapTicketListInTicketDtoList(
                 ticketsRepository.findTicketsForEngineer(user.getId(), statesOfEngineerAssignee));
-    }
-
-    public void createTicket(TicketSaveDto saveDto) {
-        ticketsRepository.save(ticketMapper.mapTicketSaveDtoInTicket(saveDto));
-    }
-
-    public void updateTicket(TicketUpdateDto updateDto, Long id) {
-        Ticket ticket = ticketsRepository.findById(id).orElseThrow(() ->
-                new TicketNotFoundException("Ticket doesn't exist!"));
-
-        ticketsRepository.save(ticketUpdateService.updateTicket(updateDto, ticket));
     }
 }
