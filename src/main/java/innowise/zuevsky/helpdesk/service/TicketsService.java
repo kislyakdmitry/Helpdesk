@@ -10,9 +10,10 @@ import innowise.zuevsky.helpdesk.exception.TicketNotFoundException;
 import innowise.zuevsky.helpdesk.mapper.TicketMapper;
 import innowise.zuevsky.helpdesk.repository.TicketsRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -41,28 +42,25 @@ public class TicketsService {
         ticketsRepository.save(ticketUpdateService.updateTicket(updateDto, ticket));
     }
 
-    public List<TicketDto> getAllTickets(User user) {
-        List<TicketDto> allTickets = new ArrayList<>();
-        switch (user.getRole()) {
-            case ROLE_EMPLOYEE -> allTickets.addAll(getMyTickets(user));
-            case ROLE_MANAGER -> allTickets.addAll(getTicketsForManager(user));
-            case ROLE_ENGINEER -> allTickets.addAll(getTicketsForEngineer(user));
-        }
-        return allTickets;
+    public Page<TicketDto> getAllTickets(User user, Pageable pageable) {
+        return switch (user.getRole()) {
+            case ROLE_EMPLOYEE -> getMyTickets(user, pageable);
+            case ROLE_MANAGER -> getTicketsForManager(user, pageable);
+            case ROLE_ENGINEER -> getTicketsForEngineer(user, pageable);
+        };
     }
 
-    public List<TicketDto> getMyTickets(User user) {
-        return ticketMapper.mapTicketListInTicketDtoList(
-                ticketsRepository.findTicketsByOwnerId(user.getId()));
+    public Page<TicketDto> getMyTickets(User user, Pageable pageable) {
+        return ticketsRepository.findTicketsByOwnerId(user.getId(), pageable).map(ticketMapper::mapTicketInTicketDto);
     }
 
-    public List<TicketDto> getTicketsForManager(User user) {
-        return ticketMapper.mapTicketListInTicketDtoList(
-                ticketsRepository.findTicketsForManager(user.getId(), statesOfManagerApprover));
+    public Page<TicketDto> getTicketsForManager(User user, Pageable pageable) {
+        return ticketsRepository.findTicketsForManager(
+                user.getId(), statesOfManagerApprover, pageable).map(ticketMapper::mapTicketInTicketDto);
     }
 
-    public List<TicketDto> getTicketsForEngineer(User user) {
-        return ticketMapper.mapTicketListInTicketDtoList(
-                ticketsRepository.findTicketsForEngineer(user.getId(), statesOfEngineerAssignee));
+    public Page<TicketDto> getTicketsForEngineer(User user, Pageable pageable) {
+        return ticketsRepository.findTicketsForEngineer(
+                user.getId(), statesOfEngineerAssignee, pageable).map(ticketMapper::mapTicketInTicketDto);
     }
 }
