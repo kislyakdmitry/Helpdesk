@@ -1,5 +1,6 @@
 package innowise.zuevsky.helpdesk.controller;
 
+import innowise.zuevsky.helpdesk.domain.User;
 import innowise.zuevsky.helpdesk.dto.TicketDto;
 import innowise.zuevsky.helpdesk.dto.TicketSaveDto;
 import innowise.zuevsky.helpdesk.dto.TicketUpdateDto;

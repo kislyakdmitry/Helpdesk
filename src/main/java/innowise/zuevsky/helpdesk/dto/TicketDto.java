@@ -30,6 +30,4 @@ public class TicketDto {
     private Long ownerId;
     private Long approverId;
     private Long assigneeId;
-    private List<Attachment> attachments;
-    private List<Comment> comments;
 }

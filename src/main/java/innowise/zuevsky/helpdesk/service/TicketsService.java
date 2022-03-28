@@ -3,18 +3,25 @@ package innowise.zuevsky.helpdesk.service;
 import innowise.zuevsky.helpdesk.domain.Ticket;
 import innowise.zuevsky.helpdesk.domain.User;
 import innowise.zuevsky.helpdesk.domain.enums.State;
+import innowise.zuevsky.helpdesk.domain.enums.Urgency;
 import innowise.zuevsky.helpdesk.dto.TicketDto;
 import innowise.zuevsky.helpdesk.dto.TicketSaveDto;
 import innowise.zuevsky.helpdesk.dto.TicketUpdateDto;
 import innowise.zuevsky.helpdesk.exception.TicketNotFoundException;
 import innowise.zuevsky.helpdesk.mapper.TicketMapper;
 import innowise.zuevsky.helpdesk.repository.TicketsRepository;
+import innowise.zuevsky.helpdesk.specification.TicketFilterSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static innowise.zuevsky.helpdesk.specification.TicketFilterSpecification.hasOwnerId;
+import static innowise.zuevsky.helpdesk.specification.TicketFilterSpecification.hasUrgency;
+import static org.springframework.data.jpa.domain.Specification.where;
 
 @Service
 @RequiredArgsConstructor
@@ -51,7 +58,8 @@ public class TicketsService {
     }
 
     public Page<TicketDto> getMyTickets(User user, Pageable pageable) {
-        return ticketsRepository.findTicketsByOwnerId(user.getId(), pageable).map(ticketMapper::mapTicketInTicketDto);
+        return ticketsRepository.findAll(where(hasOwnerId(user.getId())).and(hasUrgency(List.of(Urgency.AVERAGE))), pageable)
+                .map(ticketMapper::mapTicketInTicketDto);
     }
 
     public Page<TicketDto> getTicketsForManager(User user, Pageable pageable) {

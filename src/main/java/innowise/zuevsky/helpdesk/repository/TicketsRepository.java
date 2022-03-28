@@ -5,18 +5,14 @@ import innowise.zuevsky.helpdesk.domain.enums.State;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 
 @Repository
-public interface TicketsRepository extends JpaRepository<Ticket, Long> {
-    @Query("""
-            SELECT t FROM Ticket AS t WHERE t.ownerId = :id
-            """)
-    Page<Ticket> findTicketsByOwnerId(Long id, Pageable pageable);
-
+public interface TicketsRepository extends JpaRepository<Ticket, Long>, JpaSpecificationExecutor<Ticket> {
     @Query("""
             SELECT t FROM Ticket AS t
             JOIN User AS o ON o.id = t.ownerId

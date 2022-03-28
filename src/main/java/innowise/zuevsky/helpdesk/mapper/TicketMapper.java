@@ -38,8 +38,6 @@ public class TicketMapper {
                 .ownerId(ticket.getOwnerId())
                 .approverId(ticket.getApproverId())
                 .assigneeId(ticket.getAssigneeId())
-                .attachments(ticket.getAttachments())
-                .comments(ticket.getComments())
                 .build();
     }
 
