@@ -1,5 +1,7 @@
 package innowise.zuevsky.helpdesk.domain;
 import lombok.*;
+import org.hibernate.annotations.GeneratorType;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -13,7 +15,7 @@ import java.time.LocalDateTime;
 public class Feedback {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "feedbacks_id_seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "feedbacks_id_seq")
     @Column(name = "id", nullable = false)
     private Long id;
 

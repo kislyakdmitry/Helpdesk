@@ -12,7 +12,6 @@ import javax.validation.constraints.*;
 @NoArgsConstructor
 @Builder
 public class FeedbackSaveDto {
-
     @Min(value = 1, message = "Rate should not be less than 1")
     @Max(value = 5, message = "Rate should not be greater than 5")
     private Integer rate;

@@ -79,4 +79,6 @@ public class Ticket {
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "ticket_id")
     private List<Comment> comments;
+
+
 }
