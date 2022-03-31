@@ -6,6 +6,7 @@ pipeline {
         jdk 'JDK_17'
       }
       steps {
+        sh 'ls'
         sh './gradlew clean build'
       }
     }
