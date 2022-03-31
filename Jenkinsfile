@@ -1,7 +1,7 @@
 pipeline {
   agent {
     node {
-      label 'help_desk'
+      label 'built-in'
     }
 
   }
@@ -15,7 +15,7 @@ pipeline {
         sh '''
 java -version
 echo $JAVA_HOME'''
-        sh './gradlew clean build'
+        sh './gradlew clean build -Dorg.gradle.java.home=/var/lib/jenkins/tools/hudson.model.JDK/JDK_17'
       }
     }
 
