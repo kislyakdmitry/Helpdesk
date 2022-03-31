@@ -23,5 +23,6 @@ pipeline {
   }
   tools {
     jdk 'JDK_17'
+    gradle "Gradle 7.3.3"
   }
 }
