@@ -2,6 +2,7 @@ package innowise.zuevsky.helpdesk.util;
 
 import innowise.zuevsky.helpdesk.domain.Attachment;
 import innowise.zuevsky.helpdesk.domain.Ticket;
+import innowise.zuevsky.helpdesk.domain.enums.Category;
 import innowise.zuevsky.helpdesk.domain.enums.State;
 import innowise.zuevsky.helpdesk.domain.enums.Urgency;
 import innowise.zuevsky.helpdesk.dto.TicketDto;
@@ -25,8 +26,8 @@ public class TicketUtil {
     public static final Long ASSIGNEE_ID = 666L;
     public static final Long APPROVER_ID = 666L;
     public static final State STATE = State.NEW;
-    public static final Integer CATEGORY_ID = 666;
-    public static final Integer UPDATED_CATEGORY_ID = 777;
+    public static final Category CATEGORY = Category.PEOPLE_MANAGEMENT;
+    public static final Category UPDATED_CATEGORY = Category.HARDWARE_AND_SOFTWARE;
     public static final Urgency URGENCY = Urgency.LOW;
     public static final Urgency UPDATED_URGENCY = Urgency.CRITICAL;
     public static final List<Attachment> ATTACHMENTS = Collections.emptyList();
@@ -39,7 +40,7 @@ public class TicketUtil {
                 .assigneeId(ASSIGNEE_ID)
                 .ownerId(OWNER_ID)
                 .state(STATE)
-                .categoryId(CATEGORY_ID)
+                .category(CATEGORY)
                 .urgency(URGENCY)
                 .approverId(APPROVER_ID)
                 .attachments(ATTACHMENTS)
@@ -50,7 +51,7 @@ public class TicketUtil {
         return TicketDto.builder()
                 .name(TICKET_NAME)
                 .state(STATE)
-                .categoryId(CATEGORY_ID)
+                .category(CATEGORY)
                 .urgency(URGENCY)
                 .description(TICKET_DESCRIPTION)
                 .desiredResolutionDate(DESIRED_DATE)
@@ -74,7 +75,7 @@ public class TicketUtil {
                 .name(TICKET_UPDATED_NAME)
                 .description(TICKET_UPDATED_DESCRIPTION)
                 .desiredResolutionDate(DESIRED_UPDATED_DATE)
-                .categoryId(UPDATED_CATEGORY_ID)
+                .category(UPDATED_CATEGORY)
                 .urgency(UPDATED_URGENCY)
                 .attachments(ATTACHMENTS)
                 .build();
@@ -89,7 +90,7 @@ public class TicketUtil {
                 .assigneeId(ASSIGNEE_ID)
                 .ownerId(OWNER_ID)
                 .state(STATE)
-                .categoryId(CATEGORY_ID)
+                .category(CATEGORY)
                 .urgency(URGENCY)
                 .approverId(APPROVER_ID)
                 .attachments(ATTACHMENTS)
