@@ -9,9 +9,7 @@ pipeline {
     stage('build') {
       agent any
       steps {
-        sh '''export GRADLE_HOME=/opt/gradle/latest
-export PATH=${GRADLE_HOME}/bin:${PATH}'''
-        sh 'gradle clean build'
+        sh 'gradle -v'
       }
     }
 
