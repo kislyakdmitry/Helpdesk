@@ -6,7 +6,14 @@ pipeline {
         jdk 'JDK_17'
       }
       steps {
-        sh 'ls'
+        sh './gradlew clean build'
+      }
+    }
+
+    stage('test') {
+      steps {
+        sh './gradle test'
+        junit 'Results'
       }
     }
 
