@@ -1,10 +1,4 @@
 pipeline {
-  agent {
-    node {
-      label 'built-in'
-    }
-
-  }
   stages {
     stage('build') {
       agent any
@@ -12,17 +6,19 @@ pipeline {
         sh './gradlew clean build --no-daemon'
       }
     }
-
     stage('test') {
       steps {
         sh './gradlew test --no-daemon'
         junit 'Results'
       }
     }
-
   }
   tools {
     jdk 'JDK_17'
-    gradle 'Gradle 7.3.3'
+  }
+  post {
+    always {
+        junit 'build/test-results/**/*.xml'
+    }
   }
 }
