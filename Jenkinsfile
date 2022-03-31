@@ -9,8 +9,8 @@ pipeline {
     stage('build') {
       agent any
       steps {
-        sh '''env | grep -e PATH -e JAVA_HOME -e GRADLE_HOME
-            '''
+        sh '''export GRADLE_HOME=/opt/gradle/latest
+export PATH=${GRADLE_HOME}/bin:${PATH}'''
         sh 'gradle clean build'
       }
     }
@@ -25,9 +25,5 @@ pipeline {
   }
   tools {
     jdk 'JDK_17'
-  }
-  environment {
-    GRADLE_HOME = '/opt/gradle/latest'
-    PATH = '${GRADLE_HOME}/bin:${PATH}'
   }
 }
