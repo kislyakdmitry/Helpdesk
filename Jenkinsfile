@@ -11,10 +11,7 @@ pipeline {
       steps {
         sh '''env | grep -e PATH -e JAVA_HOME
             '''
-        withGradle() {
-          sh 'gradle clean build'
-        }
-
+        sh 'gradle clean build'
       }
     }
 
