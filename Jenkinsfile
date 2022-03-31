@@ -9,7 +9,7 @@ pipeline {
     stage('build') {
       agent any
       steps {
-        sh 'gradle -v'
+        sh './gradlew -v'
       }
     }
 
