@@ -2,8 +2,12 @@ pipeline {
   agent any
   stages {
     stage('build') {
+      agent any
       tools {
         jdk 'JDK_17'
+      }
+      environment {
+        PATH = '/root/jdk-17.0.2/bin;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'
       }
       steps {
         sh './gradlew clean build'
