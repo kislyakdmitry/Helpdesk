@@ -9,13 +9,13 @@ pipeline {
     stage('build') {
       agent any
       steps {
-        sh './gradlew -v'
+        sh './gradlew clean build'
       }
     }
 
     stage('test') {
       steps {
-        sh './gradle test'
+        sh './gradlew test'
         junit 'Results'
       }
     }
@@ -23,6 +23,6 @@ pipeline {
   }
   tools {
     jdk 'JDK_17'
-    gradle "Gradle 7.3.3"
+    gradle 'Gradle 7.3.3'
   }
 }
