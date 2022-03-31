@@ -10,7 +10,6 @@ pipeline {
       agent any
       steps {
         sh '''env | grep -e PATH -e JAVA_HOME
-which java
             '''
         sh './gradlew clean build'
       }
