@@ -15,7 +15,7 @@ pipeline {
         sh '''
 java -version
 echo $JAVA_HOME'''
-        sh './gradlew clean build -Dorg.gradle.java.home=/var/lib/jenkins/tools/hudson.model.JDK/JDK_17'
+        sh 'JAVA_HOME=/var/lib/jenkins/tools/hudson.model.JDK/JDK_17 ./gradlew clean build'
       }
     }
 
