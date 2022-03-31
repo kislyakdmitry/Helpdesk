@@ -8,7 +8,4 @@ pipeline {
     }
 
   }
-  environment {
-    JAVA_HOME = '/root/jdk-17.0.2'
-  }
 }
