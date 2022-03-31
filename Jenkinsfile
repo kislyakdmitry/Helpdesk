@@ -9,13 +9,13 @@ pipeline {
     stage('build') {
       agent any
       steps {
-        sh './gradlew clean build'
+        sh './gradlew clean build --no-daemon'
       }
     }
 
     stage('test') {
       steps {
-        sh './gradlew test'
+        sh './gradlew test --no-daemon'
         junit 'Results'
       }
     }
