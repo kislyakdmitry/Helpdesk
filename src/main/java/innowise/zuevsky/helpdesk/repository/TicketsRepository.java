@@ -10,7 +10,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
@@ -24,7 +23,7 @@ public interface TicketsRepository extends JpaRepository<Ticket, Long>, JpaSpeci
             JOIN User AS a ON a.id = t.approverId
             WHERE ((t.ownerId = :userId) OR (o.role = 'ROLE_EMPLOYEE' AND t.state = 1) OR (t.approverId = :userId AND t.state IN :statesOfManagerApprover))
             AND ((:ticketId IS NULL) OR (t.id = :ticketId))
-            AND ((:ticketName IS NULL) OR (t.name = : ticketName))
+            AND ((:ticketName IS NULL) OR (t.name = :ticketName))
             AND ((:ticketDesiredDate IS NULL) OR (t.desiredResolutionDate = :ticketDesiredDate))
             AND (t.state IN :ticketStates)
             AND (t.urgency IN :ticketUrgencies)
