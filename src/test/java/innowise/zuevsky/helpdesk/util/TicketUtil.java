@@ -61,7 +61,6 @@ public class TicketUtil {
                 .ownerId(OWNER_ID)
                 .approverId(APPROVER_ID)
                 .assigneeId(ASSIGNEE_ID)
-                .attachments(ATTACHMENTS)
                 .build();
     }
 

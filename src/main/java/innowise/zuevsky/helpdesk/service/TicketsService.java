@@ -56,7 +56,7 @@ public class TicketsService {
         return switch (user.getRole()) {
             case ROLE_EMPLOYEE -> getMyTickets(user, pageable, filterParams);
             case ROLE_MANAGER -> getTicketsForManager(user, pageable, filterParams);
-            case ROLE_ENGINEER -> getTicketsForEngineer(user, pageable);
+            case ROLE_ENGINEER -> getTicketsForEngineer(user, pageable, filterParams);
         };
     }
 
@@ -86,10 +86,15 @@ public class TicketsService {
                 .map(ticketMapper::mapTicketInTicketDto);
     }
 
-    public Page<TicketDto> getTicketsForEngineer(User user, Pageable pageable) {
+    public Page<TicketDto> getTicketsForEngineer(User user, Pageable pageable, FilterParamsDto filterParams) {
         return ticketsRepository.findTicketsForEngineer(
                         user.getId(),
                         TicketServiceUtil.statesOfEngineerAssignee,
+                        filterParams.getId(),
+                        filterParams.getName(),
+                        filterParams.getDesiredDate(),
+                        filterParams.getStates().isEmpty() ? Arrays.stream(State.values()).toList() : filterParams.getStates(),
+                        filterParams.getUrgencies().isEmpty() ? Arrays.stream(Urgency.values()).toList() : filterParams.getUrgencies(),
                         pageable)
                 .map(ticketMapper::mapTicketInTicketDto);
     }

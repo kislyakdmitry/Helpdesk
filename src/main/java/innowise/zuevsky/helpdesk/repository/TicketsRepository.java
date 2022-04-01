@@ -24,7 +24,7 @@ public interface TicketsRepository extends JpaRepository<Ticket, Long>, JpaSpeci
             WHERE ((t.ownerId = :userId) OR (o.role = 'ROLE_EMPLOYEE' AND t.state = 1) OR (t.approverId = :userId AND t.state IN :statesOfManagerApprover))
             AND (:ticketId IS NULL OR t.id = :ticketId)
             AND (:ticketName IS NULL OR t.name = :ticketName)
-            AND (CAST(:ticketDesiredDate as date) IS NULL OR t.desiredResolutionDate = :ticketDesiredDate)
+            AND ((CAST(:ticketDesiredDate as date) IS NULL) OR (t.desiredResolutionDate = :ticketDesiredDate))
             AND (t.state IN :ticketStates)
             AND (t.urgency IN :ticketUrgencies)
             """)
@@ -35,8 +35,14 @@ public interface TicketsRepository extends JpaRepository<Ticket, Long>, JpaSpeci
     @Query("""
             SELECT t FROM Ticket AS t
             JOIN User AS o ON o.id = t.ownerId
-            WHERE o.role IN ('ROLE_EMPLOYEE', 'ROLE_MANAGER') AND t.state = 2
-            OR (t.assigneeId = :userId AND t.state IN :statesOfEngineerAssignee)
+            WHERE ((o.role IN ('ROLE_EMPLOYEE', 'ROLE_MANAGER') AND t.state = 2) OR (t.assigneeId = :userId AND t.state IN :statesOfEngineerAssignee))
+            AND (:ticketId IS NULL OR t.id = :ticketId)
+            AND (:ticketName IS NULL OR t.name = :ticketName)
+            AND ((CAST(:ticketDesiredDate as date) IS NULL) OR (t.desiredResolutionDate = :ticketDesiredDate))
+            AND (t.state IN :ticketStates)
+            AND (t.urgency IN :ticketUrgencies)
             """)
-    Page<Ticket> findTicketsForEngineer(Long userId, Collection<State> statesOfEngineerAssignee, Pageable pageable);
+    Page<Ticket> findTicketsForEngineer(Long userId, Collection<State> statesOfEngineerAssignee, Long ticketId,
+                                        String ticketName, LocalDate ticketDesiredDate, List<State> ticketStates,
+                                        List<Urgency> ticketUrgencies, Pageable pageable);
 }

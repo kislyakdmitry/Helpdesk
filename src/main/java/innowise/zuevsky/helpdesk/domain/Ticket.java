@@ -38,7 +38,7 @@ public class Ticket {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "name", updatable = false)
+    @Column(name = "name")
     private String name;
 
     @Column(name = "description")
