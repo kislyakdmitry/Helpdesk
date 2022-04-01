@@ -1,6 +1,7 @@
 package innowise.zuevsky.helpdesk.controller;
 
-import innowise.zuevsky.helpdesk.domain.User;
+import innowise.zuevsky.helpdesk.domain.enums.State;
+import innowise.zuevsky.helpdesk.domain.enums.Urgency;
 import innowise.zuevsky.helpdesk.dto.TicketDto;
 import innowise.zuevsky.helpdesk.dto.TicketSaveDto;
 import innowise.zuevsky.helpdesk.dto.TicketUpdateDto;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -51,15 +53,27 @@ public class TicketsController {
 
     @PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER')")
     @GetMapping("/my")
-    public Page<TicketDto> getMyTickets(@PageableDefault(value = 5, page = 0) @SortDefault(sort = "urgency",
-            direction = Sort.Direction.DESC) Pageable pageable) {
-        return ticketsService.getMyTickets(usersService.getCurrentUser(), pageable);
+    public Page<TicketDto> getMyTickets(@PageableDefault(value = 5) @SortDefault(sort = "urgency",
+            direction = Sort.Direction.DESC) Pageable pageable,
+                                        Long id,
+                                        String name,
+                                        @RequestParam(defaultValue = "") String desiredDate,
+                                        @RequestParam(defaultValue = "") Urgency[] urgencies,
+                                        @RequestParam(defaultValue = "") State[] states) {
+        return ticketsService.getMyTickets(
+                usersService.getCurrentUser(), pageable, ticketsService.getFilterParamsDto(id, name, desiredDate, urgencies, states));
     }
 
     @PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER', 'ENGINEER')")
     @GetMapping("/all")
-    public Page<TicketDto> getAllTickets(@PageableDefault(value = 5, page = 0) @SortDefault(sort = "urgency",
-            direction = Sort.Direction.DESC) Pageable pageable) {
-        return ticketsService.getAllTickets(usersService.getCurrentUser(), pageable);
+    public Page<TicketDto> getAllTickets(@PageableDefault(value = 5) @SortDefault(sort = "urgency",
+            direction = Sort.Direction.DESC) Pageable pageable,
+                                         Long id,
+                                         String name,
+                                         @RequestParam(defaultValue = "") String desiredDate,
+                                         @RequestParam(defaultValue = "") Urgency[] urgencies,
+                                         @RequestParam(defaultValue = "") State[] states) {
+        return ticketsService.getAllTickets(
+                usersService.getCurrentUser(), pageable, ticketsService.getFilterParamsDto(id, name, desiredDate, urgencies, states));
     }
 }

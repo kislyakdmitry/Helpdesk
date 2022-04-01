@@ -2,6 +2,7 @@ package innowise.zuevsky.helpdesk.repository;
 
 import innowise.zuevsky.helpdesk.domain.Ticket;
 import innowise.zuevsky.helpdesk.domain.enums.State;
+import innowise.zuevsky.helpdesk.domain.enums.Urgency;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,25 +10,34 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Collection;
+import java.util.List;
 
 @Repository
 public interface TicketsRepository extends JpaRepository<Ticket, Long>, JpaSpecificationExecutor<Ticket> {
+
     @Query("""
             SELECT t FROM Ticket AS t
             JOIN User AS o ON o.id = t.ownerId
             JOIN User AS a ON a.id = t.approverId
-            WHERE t.ownerId = :id
-            OR (o.role = 'ROLE_EMPLOYEE' AND t.state = 1)
-            OR (t.approverId = :id AND t.state IN :statesOfManagerApprover)
+            WHERE ((t.ownerId = :userId) OR (o.role = 'ROLE_EMPLOYEE' AND t.state = 1) OR (t.approverId = :userId AND t.state IN :statesOfManagerApprover))
+            AND ((:ticketId IS NULL) OR (t.id = :ticketId))
+            AND ((:ticketName IS NULL) OR (t.name = : ticketName))
+            AND ((:ticketDesiredDate IS NULL) OR (t.desiredResolutionDate = :ticketDesiredDate))
+            AND (t.state IN :ticketStates)
+            AND (t.urgency IN :ticketUrgencies)
             """)
-    Page<Ticket> findTicketsForManager(Long id, Collection<State> statesOfManagerApprover, Pageable pageable);
+    Page<Ticket> findTicketsForManager(Long userId, Collection<State> statesOfManagerApprover, Long ticketId,
+                                       String ticketName, LocalDate ticketDesiredDate, List<State> ticketStates,
+                                       List<Urgency> ticketUrgencies, Pageable pageable);
 
     @Query("""
             SELECT t FROM Ticket AS t
             JOIN User AS o ON o.id = t.ownerId
             WHERE o.role IN ('ROLE_EMPLOYEE', 'ROLE_MANAGER') AND t.state = 2
-            OR (t.assigneeId = :id AND t.state IN :statesOfEngineerAssignee)
+            OR (t.assigneeId = :userId AND t.state IN :statesOfEngineerAssignee)
             """)
-    Page<Ticket> findTicketsForEngineer(Long id, Collection<State> statesOfEngineerAssignee, Pageable pageable);
+    Page<Ticket> findTicketsForEngineer(Long userId, Collection<State> statesOfEngineerAssignee, Pageable pageable);
 }

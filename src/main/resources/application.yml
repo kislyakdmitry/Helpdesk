@@ -11,10 +11,10 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQL95Dialect
-        show_sql: true
+        show_sql: false
         temp:
           use_jdbc_metadata_defaults: false
-        format_sql: true
+        format_sql: false
   liquibase:
     change-log: classpath:/db/changelog/db.changelog.xml
 jwt:
