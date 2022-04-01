@@ -21,3 +21,9 @@ jwt:
   secret: helpdeskhelpdeskhelpdeskhelpdesk
   expiration: 3600
 
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+#    include-stacktrace: on_param
+    incude-exception: false

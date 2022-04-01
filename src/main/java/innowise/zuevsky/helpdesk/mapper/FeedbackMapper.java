@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Component
 public class FeedbackMapper {
 
-    public FeedbackDto convertFeedbackToFeedbackDto(Feedback feedback){
+    public FeedbackDto mapFeedbackToFeedbackDto(Feedback feedback){
         return FeedbackDto.builder()
                 .date(feedback.getDate())
                 .rate(feedback.getRate())
@@ -18,7 +18,7 @@ public class FeedbackMapper {
                 .build();
     }
 
-    public Feedback convertFeedbackSaveDtoToTicket(FeedbackSaveDto saveDto){
+    public Feedback mapFeedbackSaveDtoToFeedback(FeedbackSaveDto saveDto){
         return Feedback.builder()
                 .date(LocalDateTime.now())
                 .ticketId(saveDto.getTicketId())
