@@ -20,16 +20,16 @@
         <comment>Add tickets</comment>
         <sql>
             INSERT INTO tickets( name, description, created_on, desired_resolution_date, assignee_id, owner_id, state, category, urgency, approver_id)
-            values ('Ticket 1', 'First ticket','2022-03-16 00:00:00','2022-03-18', 5, 1, 'NEW','APPLICATION_AND_SERVICES', 'CRITICAL', 3 ),
-                   ('Ticket 2', 'Second ticket','2022-03-17 10:00:00','2022-03-20', 5, 1, 'APPROVED','BENEFITS_AND_PAPER_WORK', 'HIGH', 3 ),
-                   ('Ticket 3', 'Third ticket','2022-03-17 10:00:00','2022-03-20', 6, 2, 'DECLINED','HARDWARE_AND_SOFTWARE', 'LOW', 4 ),
-                   ('Ticket 4', 'Fourth ticket','2022-03-17 10:00:00','2022-03-20', 6, 2, 'IN_PROGRESS','PEOPLE_MANAGEMENT', 'AVERAGE', 4 ),
-                   ('Ticket 5', 'Fourth ticket','2022-03-17 10:00:00','2022-03-20', 5, 1, 'DONE','SECURITY_AND_ACCESS', 'AVERAGE', 4 ),
-                   ('Ticket 6', 'Six ticket','2022-03-17 10:00:00','2022-03-20', 5, 1, 'CANCELED','WORKPLACES_AND_FACILITIES', 'HIGH', 4 ),
-                   ('Ticket 7', 'Seven ticket','2022-03-17 10:00:00','2022-03-20', 6, 1, 'DRAFT','WORKPLACES_AND_FACILITIES', 'AVERAGE', 3 ),
-                   ('Ticket 8', 'Eight ticket','2022-03-13 10:00:00','2022-03-20', 6, 1, 'DRAFT','BENEFITS_AND_PAPER_WORK', 'AVERAGE', 3 ),
-                   ('Ticket 9', 'Nine ticket','2022-03-15 10:00:00','2022-04-02', 5, 1, 'NEW','SECURITY_AND_ACCESS', 'CRITICAL', 3 ),
-                   ('Ticket 10', 'Ten ticket','2022-03-14 10:00:00','2022-03-25', 6, 1, 'IN_PROGRESS','APPLICATION_AND_SERVICES', 'LOW', 3 );
+            values ('Ticket 1', 'First ticket','2022-03-16 00:00:00','2022-03-18', 5, 1, 1, 0, 0, 3 ),
+                   ('Ticket 2', 'Second ticket','2022-03-17 10:00:00','2022-03-20', 5, 1, 2, 1, 1, 3 ),
+                   ('Ticket 3', 'Third ticket','2022-03-17 10:00:00','2022-03-20', 6, 2, 3, 2, 2, 4 ),
+                   ('Ticket 4', 'Fourth ticket','2022-03-17 10:00:00','2022-03-20', 6, 2, 4, 3, 3, 4 ),
+                   ('Ticket 5', 'Fourth ticket','2022-03-17 10:00:00','2022-03-20', 5, 1, 5, 4, 3, 4 ),
+                   ('Ticket 6', 'Six ticket','2022-03-17 10:00:00','2022-03-20', 5, 1, 6, 5, 2, 4 ),
+                   ('Ticket 7', 'Seven ticket','2022-03-17 10:00:00','2022-03-20', 6, 1, 1, 0, 1, 3 ),
+                   ('Ticket 8', 'Eight ticket','2022-03-13 10:00:00','2022-03-20', 6, 1, 0, 1, 2, 3 ),
+                   ('Ticket 9', 'Nine ticket','2022-03-15 10:00:00','2022-04-02', 5, 1, 2, 2, 0, 3 ),
+                   ('Ticket 10', 'Ten ticket','2022-03-14 10:00:00','2022-03-25', 6, 1, 3, 3, 3, 3 );
 
         </sql>
     </changeSet>
