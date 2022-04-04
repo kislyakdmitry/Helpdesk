@@ -1,5 +1,9 @@
 package innowise.zuevsky.helpdesk.exception;
 
+import innowise.zuevsky.helpdesk.exception.feedback.FeedbackExistException;
+import innowise.zuevsky.helpdesk.exception.feedback.FeedbackNotFoundException;
+import innowise.zuevsky.helpdesk.exception.feedback.FeedbackTicketBelongsToUserException;
+import innowise.zuevsky.helpdesk.exception.feedback.FeedbackTicketStatusException;
 import innowise.zuevsky.helpdesk.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -11,6 +15,16 @@ import java.time.LocalDateTime;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(FeedbackExistException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleFeedbackExistException(FeedbackExistException feedbackServiceException){
+        return ErrorResponse.builder()
+                .message(feedbackServiceException.getMessage())
+                .status(HttpStatus.BAD_REQUEST)
+                .timestamp(LocalDateTime.now())
+                .build();
+    }
+
     @ExceptionHandler(FeedbackNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse handleNotFoundException(FeedbackNotFoundException notFoundException ){
@@ -21,11 +35,21 @@ public class GlobalExceptionHandler {
                 .build();
     }
 
-    @ExceptionHandler(FeedbackServiceException.class)
+    @ExceptionHandler(FeedbackTicketBelongsToUserException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleFeedback(FeedbackServiceException feedbackServiceException){
+    public ErrorResponse handleFeedbackBelongsToUserException(FeedbackTicketBelongsToUserException feedbackServiceException){
         return ErrorResponse.builder()
                 .message(feedbackServiceException.getMessage())
+                .status(HttpStatus.BAD_REQUEST)
+                .timestamp(LocalDateTime.now())
+                .build();
+    }
+
+    @ExceptionHandler(FeedbackTicketStatusException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleFeedbackTicketStatusException(FeedbackTicketStatusException feedbackTicketStatusException){
+        return ErrorResponse.builder()
+                .message(feedbackTicketStatusException.getMessage())
                 .status(HttpStatus.BAD_REQUEST)
                 .timestamp(LocalDateTime.now())
                 .build();

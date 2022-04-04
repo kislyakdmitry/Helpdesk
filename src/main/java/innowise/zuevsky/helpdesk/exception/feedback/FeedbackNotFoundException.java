@@ -1,4 +1,4 @@
-package innowise.zuevsky.helpdesk.exception;
+package innowise.zuevsky.helpdesk.exception.feedback;
 
 public class FeedbackNotFoundException extends RuntimeException{
 

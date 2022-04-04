@@ -1,7 +1,5 @@
 package innowise.zuevsky.helpdesk.domain;
 import lombok.*;
-import org.hibernate.annotations.GeneratorType;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -28,7 +26,7 @@ public class Feedback {
     @Column(name = "text")
     private String text;
 
-    @Column(name = "date")
+    @Column(name = "created")
     private LocalDateTime date;
 
     @Column(name = "ticket_id")
