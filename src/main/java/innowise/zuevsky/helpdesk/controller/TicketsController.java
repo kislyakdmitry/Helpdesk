@@ -8,6 +8,7 @@ import innowise.zuevsky.helpdesk.dto.TicketUpdateDto;
 import innowise.zuevsky.helpdesk.service.TicketsService;
 import innowise.zuevsky.helpdesk.service.UsersService;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -57,9 +58,9 @@ public class TicketsController {
             direction = Sort.Direction.DESC) Pageable pageable,
                                         Long id,
                                         String name,
-                                        @RequestParam(defaultValue = "") String desiredDate,
-                                        @RequestParam(defaultValue = "") Urgency[] urgencies,
-                                        @RequestParam(defaultValue = "") State[] states) {
+                                        @RequestParam(defaultValue = StringUtils.EMPTY) String desiredDate,
+                                        @RequestParam(defaultValue = StringUtils.EMPTY) Urgency[] urgencies,
+                                        @RequestParam(defaultValue = StringUtils.EMPTY) State[] states) {
         return ticketsService.getMyTickets(
                 usersService.getCurrentUser(), pageable, ticketsService.getFilterParamsDto(id, name, desiredDate, urgencies, states));
     }
@@ -70,9 +71,9 @@ public class TicketsController {
             direction = Sort.Direction.DESC) Pageable pageable,
                                          Long id,
                                          String name,
-                                         @RequestParam(defaultValue = "") String desiredDate,
-                                         @RequestParam(defaultValue = "") Urgency[] urgencies,
-                                         @RequestParam(defaultValue = "") State[] states) {
+                                         @RequestParam(defaultValue = StringUtils.EMPTY) String desiredDate,
+                                         @RequestParam(defaultValue = StringUtils.EMPTY) Urgency[] urgencies,
+                                         @RequestParam(defaultValue = StringUtils.EMPTY) State[] states) {
         return ticketsService.getAllTickets(
                 usersService.getCurrentUser(), pageable, ticketsService.getFilterParamsDto(id, name, desiredDate, urgencies, states));
     }

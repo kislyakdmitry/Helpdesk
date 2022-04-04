@@ -5,8 +5,6 @@ import innowise.zuevsky.helpdesk.dto.TicketDto;
 import innowise.zuevsky.helpdesk.dto.TicketSaveDto;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component
 public class TicketMapper {
 
@@ -39,11 +37,5 @@ public class TicketMapper {
                 .approverId(ticket.getApproverId())
                 .assigneeId(ticket.getAssigneeId())
                 .build();
-    }
-
-    public List<TicketDto> mapTicketListInTicketDtoList(List<Ticket> tickets) {
-        return tickets.stream()
-                .map(this::mapTicketInTicketDto)
-                .toList();
     }
 }
