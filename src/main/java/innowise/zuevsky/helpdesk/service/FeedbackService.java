@@ -9,6 +9,7 @@ import innowise.zuevsky.helpdesk.mapper.FeedbackMapper;
 import innowise.zuevsky.helpdesk.repository.FeedbackRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.util.Objects;
 
 @Service
@@ -22,13 +23,13 @@ public class FeedbackService {
     public FeedbackDto getFeedback(Long feedbackId) {
         return feedbackRepository.findById(feedbackId)
                 .map(feedbackMapper::mapFeedbackToFeedbackDto)
-                .orElseThrow(() -> new FeedbackNotFoundException("Feedback with feedbackId="+ feedbackId +" is Not Found!"));
+                .orElseThrow(() -> new FeedbackNotFoundException(feedbackId));
     }
 
     public FeedbackDto getFeedbackByTicketId(Long ticketId) {
         return feedbackRepository.findFeedbackByTicketId(ticketId)
                 .map(feedbackMapper::mapFeedbackToFeedbackDto)
-                .orElseThrow(()->new FeedbackNotFoundException("Feedback with ticketId= "+ ticketId +" is Not Found!"));
+                .orElseThrow(() -> new FeedbackNotFoundException(ticketId));
     }
 
     public void saveFeedback(FeedbackSaveDto saveFeedbackDto) {
@@ -43,7 +44,7 @@ public class FeedbackService {
             return checkTicketBelongsToUser(ticket, userId, ticketId);
         }
 
-        throw new FeedbackTicketStatusException("Status for ticket with ticketId=" + ticketId + " is not DONE!");
+        throw new FeedbackTicketStatusException(ticketId);
     }
 
     private boolean checkTicketBelongsToUser(TicketDto ticket, Long userId, Long ticketId) {
@@ -51,12 +52,12 @@ public class FeedbackService {
             return checkFeedbackExists(ticketId);
         }
 
-        throw new FeedbackTicketBelongsToUserException("User with userId="+ userId +" can't create feedback for ticket with ticketId="+ ticketId +".");
+        throw new FeedbackTicketBelongsToUserException(userId,ticketId);
     }
 
     private boolean checkFeedbackExists(Long ticketId) {
         if (feedbackRepository.existsFeedbackByTicketId(ticketId)) {
-            throw new FeedbackExistException("Feedback for ticket with ticketId=" + ticketId + " already exists!");
+            throw new FeedbackExistException(ticketId);
         }
 
         return true;
