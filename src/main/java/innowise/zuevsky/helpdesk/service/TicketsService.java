@@ -39,7 +39,7 @@ public class TicketsService {
 
     public TicketDto getTicket(Long id) {
         return ticketMapper.mapTicketInTicketDto(ticketsRepository.findById(id).orElseThrow(() ->
-                new TicketNotFoundException("Ticket doesn't exist!")));
+                new TicketNotFoundException(id)));
     }
 
     public void createTicket(TicketSaveDto saveDto) {
@@ -48,7 +48,7 @@ public class TicketsService {
 
     public void updateTicket(TicketUpdateDto updateDto, Long id) {
         Ticket ticket = ticketsRepository.findById(id).orElseThrow(() ->
-                new TicketNotFoundException("Ticket doesn't exist!"));
+                new TicketNotFoundException(id));
         ticketsRepository.save(ticketUpdateService.updateTicket(updateDto, ticket));
     }
 
