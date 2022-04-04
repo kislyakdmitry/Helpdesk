@@ -38,7 +38,7 @@ public class Ticket {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "name", updatable = false)
+    @Column(name = "name")
     private String name;
 
     @Column(name = "description")
@@ -57,15 +57,15 @@ public class Ticket {
     @Column(name = "owner_id", updatable = false)
     private Long ownerId;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "state")
     private State state;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "category")
     private Category category;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "urgency")
     private Urgency urgency;
 

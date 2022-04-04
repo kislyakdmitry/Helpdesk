@@ -16,7 +16,7 @@ class TicketMapperTest {
     @Test
     void mapTicketSaveDtoInTicketShouldMapIfNumberOfFieldsIsRight() {
         TicketSaveDto saveDto = TicketUtil.createTicketSaveDto();
-        Ticket ticket = TicketUtil.createTicket();
+        Ticket ticket = TicketUtil.createTicketForTicketSaveDto();
         assertThat(ticket)
                 .usingRecursiveComparison()
                 .isEqualTo(ticketMapper.mapTicketSaveDtoInTicket(saveDto));
@@ -24,7 +24,7 @@ class TicketMapperTest {
 
     @Test
     void mapTicketInTicketDtoShouldMapIfNumberOfFieldsIsRight() {
-        Ticket ticket = TicketUtil.createTicket();
+        Ticket ticket = TicketUtil.createTicketForTicketDto();
         TicketDto ticketDto = TicketUtil.createTicketDto();
         assertThat(ticketDto)
                 .usingRecursiveComparison()

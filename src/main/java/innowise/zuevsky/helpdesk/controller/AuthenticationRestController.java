@@ -2,6 +2,7 @@ package innowise.zuevsky.helpdesk.controller;
 
 import innowise.zuevsky.helpdesk.domain.User;
 import innowise.zuevsky.helpdesk.dto.AuthenticationRequestDto;
+import innowise.zuevsky.helpdesk.exception.UserNotFoundException;
 import innowise.zuevsky.helpdesk.repository.UsersRepository;
 import innowise.zuevsky.helpdesk.security.JwtTokenProvider;
 import lombok.AllArgsConstructor;
@@ -35,7 +36,7 @@ public class AuthenticationRestController {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
             User user = usersRepository.findByEmail(request.getEmail()).orElseThrow(() ->
-                    new UsernameNotFoundException("User doesn't exists"));
+                    new UserNotFoundException("User doesn't exists"));
             String token = jwtTokenProvider.createToken(request.getEmail(), user.getRole().name());
             Map<Object, Object> response = new HashMap<>();
             response.put("email", request.getEmail());
