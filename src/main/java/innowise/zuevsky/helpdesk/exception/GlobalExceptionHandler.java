@@ -11,9 +11,9 @@ import java.time.LocalDateTime;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(NotFoundException.class)
+    @ExceptionHandler(FeedbackNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse handleNotFoundException(NotFoundException notFoundException ){
+    public ErrorResponse handleNotFoundException(FeedbackNotFoundException notFoundException ){
         return ErrorResponse.builder()
                 .message(notFoundException.getMessage())
                 .status(HttpStatus.NOT_FOUND)

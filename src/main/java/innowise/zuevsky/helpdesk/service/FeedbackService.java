@@ -5,8 +5,8 @@ import innowise.zuevsky.helpdesk.domain.enums.State;
 import innowise.zuevsky.helpdesk.dto.FeedbackDto;
 import innowise.zuevsky.helpdesk.dto.FeedbackSaveDto;
 import innowise.zuevsky.helpdesk.dto.TicketDto;
+import innowise.zuevsky.helpdesk.exception.FeedbackNotFoundException;
 import innowise.zuevsky.helpdesk.exception.FeedbackServiceException;
-import innowise.zuevsky.helpdesk.exception.NotFoundException;
 import innowise.zuevsky.helpdesk.mapper.FeedbackMapper;
 import innowise.zuevsky.helpdesk.repository.FeedbackRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,12 +25,12 @@ public class FeedbackService {
 
     public FeedbackDto getFeedback(Long id){
         return feedbackMapper.mapFeedbackToFeedbackDto(feedbackRepository.findById(id).orElseThrow(()->
-                new NotFoundException("Feedback Not Found!")));
+                new FeedbackNotFoundException("Feedback Not Found!")));
     }
 
     public FeedbackDto getFeedbackByTicketId(Long ticketId){
         return  feedbackMapper.mapFeedbackToFeedbackDto( feedbackRepository.findFeedbackByTicketId(ticketId).orElseThrow(()->
-                        new NotFoundException("Not found feedback with this ticketId")));
+                        new FeedbackNotFoundException("Not found feedback with this ticketId")));
     }
 
     public void saveFeedback(FeedbackSaveDto saveFeedbackDto){
