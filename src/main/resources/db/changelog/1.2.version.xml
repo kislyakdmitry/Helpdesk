@@ -7,29 +7,29 @@
     <changeSet id="1" author="Svetlana Shishaeva">
         <comment>Add users</comment>
         <sql>
-            INSERT INTO users (first_name, last_name, role, email, password, status)
-            values ('user1','user1','ROLE_EMPLOYEE','user1_mogilev@yopmail.com','$2a$12$UBXPkMHbwkC5ZFUWrInSKu65ba.joR3ZsVv2BoMhHH.GXtFsHR4p2','ACTIVE'),
-                   ('user2','user2','ROLE_EMPLOYEE','user2_mogilev@yopmail.com','$2a$12$UBXPkMHbwkC5ZFUWrInSKu65ba.joR3ZsVv2BoMhHH.GXtFsHR4p2','ACTIVE'),
-                   ('manager1','manager1','ROLE_MANAGER','manager1_mogilev@yopmail.com','$2a$12$UBXPkMHbwkC5ZFUWrInSKu65ba.joR3ZsVv2BoMhHH.GXtFsHR4p2','ACTIVE'),
-                   ('manager2','manager2','ROLE_MANAGER','manager2_mogilev@yopmail.com','$2a$12$UBXPkMHbwkC5ZFUWrInSKu65ba.joR3ZsVv2BoMhHH.GXtFsHR4p2','ACTIVE'),
-                   ('engineer1','engineer1','ROLE_ENGINEER','engineer1_mogilev@yopmail.com','$2a$12$UBXPkMHbwkC5ZFUWrInSKu65ba.joR3ZsVv2BoMhHH.GXtFsHR4p2','ACTIVE'),
-                   ('engineer2','engineer2','ROLE_ENGINEER','engineer2_mogilev@yopmail.com','$2a$12$UBXPkMHbwkC5ZFUWrInSKu65ba.joR3ZsVv2BoMhHH.GXtFsHR4p2','ACTIVE');
+            INSERT INTO users (id, first_name, last_name, role, email, password, status)
+            values ('1','user1','user1','ROLE_EMPLOYEE','user1_mogilev@yopmail.com','$2a$12$UBXPkMHbwkC5ZFUWrInSKu65ba.joR3ZsVv2BoMhHH.GXtFsHR4p2','ACTIVE'),
+                   ('2','user2','user2','ROLE_EMPLOYEE','user2_mogilev@yopmail.com','$2a$12$UBXPkMHbwkC5ZFUWrInSKu65ba.joR3ZsVv2BoMhHH.GXtFsHR4p2','ACTIVE'),
+                   ('3','manager1','manager1','ROLE_MANAGER','manager1_mogilev@yopmail.com','$2a$12$UBXPkMHbwkC5ZFUWrInSKu65ba.joR3ZsVv2BoMhHH.GXtFsHR4p2','ACTIVE'),
+                   ('4','manager2','manager2','ROLE_MANAGER','manager2_mogilev@yopmail.com','$2a$12$UBXPkMHbwkC5ZFUWrInSKu65ba.joR3ZsVv2BoMhHH.GXtFsHR4p2','ACTIVE'),
+                   ('5','engineer1','engineer1','ROLE_ENGINEER','engineer1_mogilev@yopmail.com','$2a$12$UBXPkMHbwkC5ZFUWrInSKu65ba.joR3ZsVv2BoMhHH.GXtFsHR4p2','ACTIVE'),
+                   ('6','engineer2','engineer2','ROLE_ENGINEER','engineer2_mogilev@yopmail.com','$2a$12$UBXPkMHbwkC5ZFUWrInSKu65ba.joR3ZsVv2BoMhHH.GXtFsHR4p2','ACTIVE');
         </sql>
     </changeSet>
     <changeSet id="2" author="Svetlana Shishaeva">
         <comment>Add tickets</comment>
         <sql>
-            INSERT INTO tickets( name, description, created_on, desired_resolution_date, assignee_id, owner_id, state, category, urgency, approver_id)
-            values ('Ticket 1', 'First ticket','2022-03-16 00:00:00','2022-03-18', 5, 1, 1, 0, 0, 3 ),
-                   ('Ticket 2', 'Second ticket','2022-03-17 10:00:00','2022-03-20', 5, 1, 2, 1, 1, 3 ),
-                   ('Ticket 3', 'Third ticket','2022-03-17 10:00:00','2022-03-20', 6, 2, 3, 2, 2, 4 ),
-                   ('Ticket 4', 'Fourth ticket','2022-03-17 10:00:00','2022-03-20', 6, 2, 4, 3, 3, 4 ),
-                   ('Ticket 5', 'Fourth ticket','2022-03-17 10:00:00','2022-03-20', 5, 1, 5, 4, 3, 4 ),
-                   ('Ticket 6', 'Six ticket','2022-03-17 10:00:00','2022-03-20', 5, 1, 6, 5, 2, 4 ),
-                   ('Ticket 7', 'Seven ticket','2022-03-17 10:00:00','2022-03-20', 6, 1, 1, 0, 1, 3 ),
-                   ('Ticket 8', 'Eight ticket','2022-03-13 10:00:00','2022-03-20', 6, 1, 0, 1, 2, 3 ),
-                   ('Ticket 9', 'Nine ticket','2022-03-15 10:00:00','2022-04-02', 5, 1, 2, 2, 0, 3 ),
-                   ('Ticket 10', 'Ten ticket','2022-03-14 10:00:00','2022-03-25', 6, 1, 3, 3, 3, 3 );
+            INSERT INTO tickets(id, name, description, created_on, desired_resolution_date, assignee_id, owner_id, state, category, urgency, approver_id)
+            values ('1','Ticket 1', 'First ticket','2022-03-16 00:00:00','2022-03-18', 5, 1, 1, 0, 0, 3 ),
+                   ('2','Ticket 2', 'Second ticket','2022-03-17 10:00:00','2022-03-20', 5, 1, 2, 1, 1, 3 ),
+                   ('3','Ticket 3', 'Third ticket','2022-03-17 10:00:00','2022-03-20', 6, 2, 3, 2, 2, 4 ),
+                   ('4','Ticket 4', 'Fourth ticket','2022-03-17 10:00:00','2022-03-20', 6, 2, 4, 3, 3, 4 ),
+                   ('5','Ticket 5', 'Fourth ticket','2022-03-17 10:00:00','2022-03-20', 5, 1, 5, 4, 3, 4 ),
+                   ('6','Ticket 6', 'Six ticket','2022-03-17 10:00:00','2022-03-20', 5, 1, 6, 5, 2, 4 ),
+                   ('7','Ticket 7', 'Seven ticket','2022-03-17 10:00:00','2022-03-20', 6, 1, 1, 0, 1, 3 ),
+                   ('8','Ticket 8', 'Eight ticket','2022-03-13 10:00:00','2022-03-20', 6, 1, 0, 1, 2, 3 ),
+                   ('9','Ticket 9', 'Nine ticket','2022-03-15 10:00:00','2022-04-02', 5, 1, 2, 2, 0, 3 ),
+                   ('10','Ticket 10', 'Ten ticket','2022-03-14 10:00:00','2022-03-25', 6, 1, 3, 3, 3, 3 );
 
         </sql>
     </changeSet>

@@ -27,7 +27,7 @@
         <sql>
             CREATE TABLE Users
             (
-                id          SERIAL PRIMARY KEY,
+                id          INT PRIMARY KEY,
                 first_name  VARCHAR( 20 ) NOT NULL,
                 last_name   VARCHAR( 25 ) NOT NULL,
                 role        user_role NOT NULL,
@@ -39,6 +39,14 @@
     </changeSet>
 
     <changeSet id="4" author="Alexey Zuevsky">
+        <comment>1.0.version. Create sequence for id in Users</comment>
+        <sql>
+            CREATE SEQUENCE users_id_seq START 100 INCREMENT 50;
+        </sql>
+        <rollback>DROP SEQUENCE users_id_seq;</rollback>
+    </changeSet>
+
+    <changeSet id="5" author="Alexey Zuevsky">
         <comment>1.0.version. Create ENUM ticket_state</comment>
         <sql>
             CREATE TYPE ticket_state AS ENUM( 'Draft', 'New', 'Approved', 'Declined', 'In Progress', 'Done', 'Canceled' );
@@ -46,7 +54,7 @@
         <rollback>DROP TYPE ticket_state;</rollback>
     </changeSet>
 
-    <changeSet id="5" author="Alexey Zuevsky">
+    <changeSet id="6" author="Alexey Zuevsky">
         <comment>1.0.version. Create ENUM ticket_urgency</comment>
         <sql>
             CREATE TYPE ticket_urgency AS ENUM( 'Critical', 'High', 'Average', 'Low' );
@@ -54,12 +62,12 @@
         <rollback>DROP TYPE ticket_urgency;</rollback>
     </changeSet>
 
-    <changeSet id="6" author="Alexey Zuevsky">
+    <changeSet id="7" author="Alexey Zuevsky">
         <comment>1.0.version. Create table Tickets</comment>
         <sql>
             CREATE TABLE Tickets
             (
-                id                       SERIAL PRIMARY KEY,
+                id                       INT PRIMARY KEY,
                 name                     VARCHAR( 100 ) NOT NULL,
                 description              VARCHAR( 500 ),
                 created_on               DATE NOT NULL,
@@ -75,12 +83,20 @@
         <rollback>DROP TABLE Tickets;</rollback>
     </changeSet>
 
-    <changeSet id="7" author="Alexey Zuevsky">
+    <changeSet id="8" author="Alexey Zuevsky">
+        <comment>1.0.version. Create sequence for id in Tickets</comment>
+        <sql>
+            CREATE SEQUENCE tickets_id_seq START 100 INCREMENT 50;
+        </sql>
+        <rollback>DROP SEQUENCE tickets_id_seq;</rollback>
+    </changeSet>
+
+    <changeSet id="9" author="Alexey Zuevsky">
         <comment>1.0.version. Create table Feedbacks</comment>
         <sql>
             CREATE TABLE Feedbacks
             (
-                id         SERIAL PRIMARY KEY,
+                id         INT PRIMARY KEY,
                 user_id    INT NOT NULL,
                 rate       SMALLINT NOT NULL,
                 date       DATE NOT NULL,
@@ -91,12 +107,20 @@
         <rollback>DROP TABLE Feedbacks;</rollback>
     </changeSet>
 
-    <changeSet id="8" author="Alexey Zuevsky">
+    <changeSet id="10" author="Alexey Zuevsky">
+        <comment>1.0.version. Create sequence for id in Feedbacks</comment>
+        <sql>
+            CREATE SEQUENCE feedbacks_id_seq START 100 INCREMENT 50;
+        </sql>
+        <rollback>DROP SEQUENCE feedbacks_id_seq;</rollback>
+    </changeSet>
+
+    <changeSet id="11" author="Alexey Zuevsky">
         <comment>1.0.version. Create table Attachments</comment>
         <sql>
             CREATE TABLE Attachments
             (
-                id         SERIAL PRIMARY KEY,
+                id         INT PRIMARY KEY,
                 blob       VARCHAR( 150 ) NOT NULL,
                 ticket_id  INT NOT NULL,
                 name       VARCHAR( 100 ) NOT NULL
@@ -105,12 +129,20 @@
         <rollback>DROP TABLE Attachments;</rollback>
     </changeSet>
 
-    <changeSet id="9" author="Alexey Zuevsky">
+    <changeSet id="12" author="Alexey Zuevsky">
+        <comment>1.0.version. Create sequence for id in Attachments</comment>
+        <sql>
+            CREATE SEQUENCE attachments_id_seq START 100 INCREMENT 50;
+        </sql>
+        <rollback>DROP SEQUENCE attachments_id_seq;</rollback>
+    </changeSet>
+
+    <changeSet id="13" author="Alexey Zuevsky">
         <comment>1.0.version. Create table Histories</comment>
         <sql>
             CREATE TABLE Histories
             (
-                id           SERIAL PRIMARY KEY,
+                id           INT PRIMARY KEY,
                 ticket_id    INT NOT NULL,
                 date         DATE NOT NULL,
                 action       VARCHAR( 300 ) NOT NULL,
@@ -121,12 +153,20 @@
         <rollback>DROP TABLE Histories;</rollback>
     </changeSet>
 
-    <changeSet id="10" author="Alexey Zuevsky">
+    <changeSet id="14" author="Alexey Zuevsky">
+        <comment>1.0.version. Create sequence for id in Histories</comment>
+        <sql>
+            CREATE SEQUENCE histories_id_seq START 100 INCREMENT 50;
+        </sql>
+        <rollback>DROP SEQUENCE histories_id_seq;</rollback>
+    </changeSet>
+
+    <changeSet id="15" author="Alexey Zuevsky">
         <comment>1.0.version. Create table Comments</comment>
         <sql>
             CREATE TABLE Comments
             (
-                id         SERIAL PRIMARY KEY,
+                id         INT PRIMARY KEY,
                 user_id    INT NOT NULL,
                 text       VARCHAR( 1000 ) NOT NULL,
                 date       DATE NOT NULL,
@@ -136,7 +176,15 @@
         <rollback>DROP TABLE Comments;</rollback>
     </changeSet>
 
-    <changeSet id="11" author="Alexey Zuevsky">
+    <changeSet id="16" author="Alexey Zuevsky">
+        <comment>1.0.version. Create sequence for id in Comments</comment>
+        <sql>
+            CREATE SEQUENCE comments_id_seq START 100 INCREMENT 50;
+        </sql>
+        <rollback>DROP SEQUENCE comments_id_seq;</rollback>
+    </changeSet>
+
+    <changeSet id="17" author="Alexey Zuevsky">
         <comment>1.0.version. Create fk_ticket_assignee_id to Tickets</comment>
         <sql>
             ALTER TABLE Tickets
@@ -145,7 +193,7 @@
         <rollback>ALTER TABLE Tickets DROP FOREIGN KEY fk_ticket_assignee_id;</rollback>
     </changeSet>
 
-    <changeSet id="12" author="Alexey Zuevsky">
+    <changeSet id="18" author="Alexey Zuevsky">
         <comment>1.0.version. Create fk_ticket_owner_id to Tickets</comment>
         <sql>
             ALTER TABLE Tickets
@@ -154,7 +202,7 @@
         <rollback>ALTER TABLE Tickets DROP FOREIGN KEY fk_ticket_owner_id;</rollback>
     </changeSet>
 
-    <changeSet id="13" author="Alexey Zuevsky">
+    <changeSet id="19" author="Alexey Zuevsky">
         <comment>1.0.version. Create fk_ticket_approver_id to Tickets</comment>
         <sql>
             ALTER TABLE Tickets
@@ -163,7 +211,7 @@
         <rollback>ALTER TABLE Tickets DROP FOREIGN KEY fk_ticket_approver_id;</rollback>
     </changeSet>
 
-    <changeSet id="14" author="Alexey Zuevsky">
+    <changeSet id="20" author="Alexey Zuevsky">
         <comment>1.0.version. Create fk_feedback_user_id to Feedbacks</comment>
         <sql>
             ALTER TABLE Feedbacks
@@ -172,7 +220,7 @@
         <rollback>ALTER TABLE Feedbacks DROP FOREIGN KEY fk_feedback_user_id;</rollback>
     </changeSet>
 
-    <changeSet id="15" author="Alexey Zuevsky">
+    <changeSet id="21" author="Alexey Zuevsky">
         <comment>1.0.version. Create fk_feedback_ticket_id to Feedbacks</comment>
         <sql>
             ALTER TABLE Feedbacks
@@ -181,7 +229,7 @@
         <rollback>ALTER TABLE Feedbacks DROP FOREIGN KEY fk_feedback_ticket_id;</rollback>
     </changeSet>
 
-    <changeSet id="16" author="Alexey Zuevsky">
+    <changeSet id="22" author="Alexey Zuevsky">
         <comment>1.0.version. Create fk_attachment_ticket_id to Attachments</comment>
         <sql>
             ALTER TABLE Attachments
@@ -190,7 +238,7 @@
         <rollback>ALTER TABLE Attachments DROP FOREIGN KEY fk_attachment_ticket_id;</rollback>
     </changeSet>
 
-    <changeSet id="17" author="Alexey Zuevsky">
+    <changeSet id="23" author="Alexey Zuevsky">
         <comment>1.0.version. Create fk_history_ticket_id to Histories</comment>
         <sql>
             ALTER TABLE Histories
@@ -199,7 +247,7 @@
         <rollback>ALTER TABLE Histories DROP FOREIGN KEY fk_history_ticket_id;</rollback>
     </changeSet>
 
-    <changeSet id="18" author="Alexey Zuevsky">
+    <changeSet id="24" author="Alexey Zuevsky">
         <comment>1.0.version. Create fk_history_user_id to Histories</comment>
         <sql>
             ALTER TABLE Histories
@@ -208,7 +256,7 @@
         <rollback>ALTER TABLE Histories DROP FOREIGN KEY fk_history_user_id;</rollback>
     </changeSet>
 
-    <changeSet id="19" author="Alexey Zuevsky">
+    <changeSet id="25" author="Alexey Zuevsky">
         <comment>1.0.version. Create fk_comment_user_id to Comments</comment>
         <sql>
             ALTER TABLE Comments
@@ -217,7 +265,7 @@
         <rollback>ALTER TABLE Comments DROP FOREIGN KEY fk_comment_user_id;</rollback>
     </changeSet>
 
-    <changeSet id="20" author="Alexey Zuevsky">
+    <changeSet id="26" author="Alexey Zuevsky">
         <comment>1.0.version. Create fk_comment_ticket_id to Comments</comment>
         <sql>
             ALTER TABLE Comments
