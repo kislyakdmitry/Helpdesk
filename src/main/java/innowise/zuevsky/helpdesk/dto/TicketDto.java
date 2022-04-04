@@ -19,6 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class TicketDto {
+    private Long id;
     private String name;
     private LocalDateTime createdOn;
     private State state;
@@ -29,6 +30,4 @@ public class TicketDto {
     private Long ownerId;
     private Long approverId;
     private Long assigneeId;
-    private List<Attachment> attachments;
-    private List<Comment> comments;
 }

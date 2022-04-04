@@ -16,6 +16,8 @@ import java.util.List;
 
 public class TicketUtil {
 
+    public static final Long TICKET_ID = 69L;
+
     public static final String TICKET_NAME = "test name";
     public static final String TICKET_UPDATED_NAME = "updated name";
     public static final String TICKET_DESCRIPTION = "test description";
@@ -26,7 +28,7 @@ public class TicketUtil {
     public static final Long ASSIGNEE_ID = 666L;
     public static final Long APPROVER_ID = 666L;
     public static final State STATE = State.NEW;
-    public static final Category CATEGORY = Category.PEOPLE_MANAGEMENT;
+    public static final Category CATEGORY = Category.BENEFITS_AND_PAPER_WORK;
     public static final Category UPDATED_CATEGORY = Category.HARDWARE_AND_SOFTWARE;
     public static final Urgency URGENCY = Urgency.LOW;
     public static final Urgency UPDATED_URGENCY = Urgency.CRITICAL;
@@ -49,6 +51,7 @@ public class TicketUtil {
 
     public static TicketDto createTicketDto() {
         return TicketDto.builder()
+                .id(TICKET_ID)
                 .name(TICKET_NAME)
                 .state(STATE)
                 .category(CATEGORY)
@@ -58,7 +61,6 @@ public class TicketUtil {
                 .ownerId(OWNER_ID)
                 .approverId(APPROVER_ID)
                 .assigneeId(ASSIGNEE_ID)
-                .attachments(ATTACHMENTS)
                 .build();
     }
 
@@ -82,7 +84,23 @@ public class TicketUtil {
     }
 
 
-    public static Ticket createTicket() {
+    public static Ticket createTicketForTicketDto() {
+        return Ticket.builder()
+                .id(TICKET_ID)
+                .name(TICKET_NAME)
+                .description(TICKET_DESCRIPTION)
+                .desiredResolutionDate(DESIRED_DATE)
+                .assigneeId(ASSIGNEE_ID)
+                .ownerId(OWNER_ID)
+                .state(STATE)
+                .category(CATEGORY)
+                .urgency(URGENCY)
+                .approverId(APPROVER_ID)
+                .attachments(ATTACHMENTS)
+                .build();
+    }
+
+    public static Ticket createTicketForTicketSaveDto() {
         return Ticket.builder()
                 .name(TICKET_NAME)
                 .description(TICKET_DESCRIPTION)
@@ -99,9 +117,9 @@ public class TicketUtil {
 
     public static List<Ticket> createListOfTickets() {
         List<Ticket> tickets = new ArrayList<>();
-        tickets.add(createTicket());
-        tickets.add(createTicket());
-        tickets.add(createTicket());
+        tickets.add(createTicketForTicketDto());
+        tickets.add(createTicketForTicketDto());
+        tickets.add(createTicketForTicketDto());
         return tickets;
     }
 }
