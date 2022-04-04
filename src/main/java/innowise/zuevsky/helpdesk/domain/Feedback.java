@@ -15,9 +15,8 @@ import java.time.LocalDateTime;
 public class Feedback {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "feedbacks_id_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "feedbacks_id_seq")
     @Column(name = "id", nullable = false)
-
     private Long id;
 
     @Column(name = "user_Id")
