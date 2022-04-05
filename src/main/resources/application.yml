@@ -22,3 +22,8 @@ jwt:
   secret: helpdeskhelpdeskhelpdeskhelpdesk
   expiration: 3600
 
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+    incude-exception: false

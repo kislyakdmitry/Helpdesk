@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="1" author="Svetlana Shishaeva">
+        <comment>Rename column in Feedbacks: date -> created</comment>
+        <sql>
+            ALTER TABLE Feedbacks
+                RENAME COLUMN date TO created;
+        </sql>
+    </changeSet>
+
+    <changeSet id="2" author="Svetlana Shishaeva">
+        <comment>Changing table Feedback(created): type date -> timestamp</comment>
+        <sql>
+            ALTER TABLE Feedbacks
+                ALTER COLUMN created SET DATA TYPE timestamp;
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
