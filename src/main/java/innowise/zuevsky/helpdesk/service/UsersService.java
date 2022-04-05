@@ -14,15 +14,17 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class UsersService {
 
-    private UsersRepository usersRepository;
+  private UsersRepository usersRepository;
 
-    public User getCurrentUser() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth == null || auth instanceof AnonymousAuthenticationToken) {
-            throw new AuthenticationTokenNotFoundException("Authentication token not found!");
-        }
-        String email = ((org.springframework.security.core.userdetails.User) auth.getPrincipal()).getUsername();
-        return usersRepository.findByEmail(email).orElseThrow(() ->
-                new UserNotFoundException("User doesn't exist!"));
+  public User getCurrentUser() {
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    if (auth == null || auth instanceof AnonymousAuthenticationToken) {
+      throw new AuthenticationTokenNotFoundException("Authentication token not found!");
     }
+    String email =
+        ((org.springframework.security.core.userdetails.User) auth.getPrincipal()).getUsername();
+    return usersRepository
+        .findByEmail(email)
+        .orElseThrow(() -> new UserNotFoundException("User doesn't exist!"));
+  }
 }
