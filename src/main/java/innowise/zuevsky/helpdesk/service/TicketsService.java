@@ -127,9 +127,4 @@ public class TicketsService {
       Long id, String name, String desiredDate, Urgency[] urgencies, State[] states) {
     return filterParamsMapper.mapParamsInFilterParamsDto(id, name, desiredDate, urgencies, states);
   }
-
-
-  public Object clone() {
-    return this;
-  }
 }
