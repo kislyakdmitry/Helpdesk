@@ -13,9 +13,11 @@ pipeline {
       }
     }
     stage('SonarQube Analysis') {
-      withSonarQubeEnv() {
-        sh "./gradlew sonarqube --no-daemon"
-      }
+        steps {
+            withSonarQubeEnv() {
+                sh "./gradlew sonarqube --no-daemon"
+            }
+        }
     }
 
   }
