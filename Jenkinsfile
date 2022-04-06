@@ -1,31 +1,31 @@
 pipeline {
-  agent any
-  stages {
-    stage('build') {
-      steps {
-        sh './gradlew clean build --no-daemon'
-      }
+    agent any
+    stages {
+        stage('build') {
+            steps {
+                sh './gradlew clean build --no-daemon'
+            }
+        }
+
+        stage('test') {
+            steps {
+                sh './gradlew test --no-daemon'
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            withSonarQubeEnv() {
+                sh "./gradlew sonarqube"
+            }
+        }
     }
 
-    stage('test') {
-      steps {
-        sh './gradlew test --no-daemon'
-      }
+    tools {
+        jdk 'JDK_17'
     }
-    stage('SonarQube Analysis') {
-       withSonarQubeEnv() {
-         sh "./gradlew sonarqube"
-       }
+    post {
+        always {
+            junit 'build/test-results/**/*.xml'
+        }
     }
-  }
-
-  tools {
-    jdk 'JDK_17'
-  }
-  post {
-    always {
-      junit 'build/test-results/**/*.xml'
-    }
-
-  }
 }
