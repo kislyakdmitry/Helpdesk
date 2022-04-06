@@ -12,7 +12,11 @@ pipeline {
         sh './gradlew test --no-daemon'
       }
     }
-
+    stage('SonarQube Analysis') {
+       withSonarQubeEnv() {
+         sh "./gradlew sonarqube"
+       }
+    }
   }
 
   tools {
