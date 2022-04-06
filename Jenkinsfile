@@ -6,13 +6,11 @@ pipeline {
         sh './gradlew clean build'
       }
     }
-
     stage('test') {
       steps {
         sh './gradlew test'
       }
     }
-
     stage('SonarQube Analysis') {
       steps {
         withSonarQubeEnv('Sonar') {
@@ -21,7 +19,15 @@ pipeline {
 
       }
     }
-
+    stage("Quality Gate") {
+      steps {
+        timeout(time: 1, unit: 'HOURS') {
+          // Parameter indicates whether to set pipeline to UNSTABLE if Quality Gate fails
+          // true = set pipeline to UNSTABLE, false = don't
+          waitForQualityGate abortPipeline: true
+        }
+      }
+    }
   }
   tools {
     jdk 'JDK_17'
