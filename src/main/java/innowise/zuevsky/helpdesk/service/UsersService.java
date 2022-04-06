@@ -22,7 +22,7 @@ public class UsersService {
             throw new AuthenticationTokenNotFoundException("Authentication token not found!");
         }
         String email = ((org.springframework.security.core.userdetails.User) auth.getPrincipal()).getUsername();
-        return usersRepository.findByEmail(email).orElseThrow(() ->
-                new UserNotFoundException("User doesn't exist!"));
+        return usersRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException(email));
     }
 }

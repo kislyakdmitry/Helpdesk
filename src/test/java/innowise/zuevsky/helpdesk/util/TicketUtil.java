@@ -17,7 +17,6 @@ import java.util.List;
 public class TicketUtil {
 
     public static final Long TICKET_ID = 69L;
-
     public static final String TICKET_NAME = "test name";
     public static final String TICKET_UPDATED_NAME = "updated name";
     public static final String TICKET_DESCRIPTION = "test description";
