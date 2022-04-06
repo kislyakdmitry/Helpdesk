@@ -63,4 +63,10 @@ public class FeedbackService {
 
     return true;
   }
+
+
+
+  public Object clone() {
+    return this;
+  }
 }
