@@ -120,4 +120,8 @@ public class TicketUtil {
     tickets.add(createTicketForTicketDto());
     return tickets;
   }
+
+  public static TicketDto createTicketDto(Long ticketId, State state, Long ownerId) {
+    return TicketDto.builder().id(ticketId).state(state).ownerId(ownerId).build();
+  }
 }

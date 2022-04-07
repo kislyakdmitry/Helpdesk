@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '2.6.3'
+    id 'org.springframework.boot' version '2.6.4'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id "com.diffplug.spotless" version "6.4.1" apply false
     id 'java'
@@ -29,29 +29,37 @@ dependencies {
 
     implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
     implementation 'io.jsonwebtoken:jjwt-gson:0.11.2'
+
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2'
 
     runtimeOnly 'org.postgresql:postgresql'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.testcontainers:testcontainers:1.16.3'
 
     compileOnly 'org.projectlombok:lombok:1.18.22'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
 
     testCompileOnly 'org.projectlombok:lombok:1.18.22'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
+
+    implementation platform('org.testcontainers:testcontainers-bom:1.16.3')
+
+    implementation 'org.testcontainers:junit-jupiter'
+    testImplementation 'org.testcontainers:postgresql'
 }
 
-tasks.named('test') {
+//tasks.named('test') {
+//    useJUnitPlatform()
+//}
+test {
     useJUnitPlatform()
 }
 
 apply plugin: 'com.diffplug.spotless'
-
 spotless.java {
     googleJavaFormat(googleJavaFormatVersion)
 }
-
 tasks.withType(JavaCompile).configureEach { javaCompile ->
     dependsOn 'spotlessApply'
 }

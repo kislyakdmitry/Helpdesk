@@ -22,6 +22,7 @@ import innowise.zuevsky.helpdesk.mapper.TicketMapper;
 import innowise.zuevsky.helpdesk.repository.TicketsRepository;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -126,5 +127,21 @@ public class TicketsService {
   public FilterParamsDto getFilterParamsDto(
       Long id, String name, String desiredDate, Urgency[] urgencies, State[] states) {
     return filterParamsMapper.mapParamsInFilterParamsDto(id, name, desiredDate, urgencies, states);
+  }
+
+  public boolean isTicketStateDone(Long ticketId) {
+    TicketDto ticketDto = getTicket(ticketId);
+    if (ticketDto.getState().equals(State.DONE)) {
+      return true;
+    }
+    return false;
+  }
+
+  public boolean isTicketOwnerBelongUser(Long ticketId, Long userId) {
+    TicketDto ticketDto = getTicket(ticketId);
+    if (Objects.equals(ticketDto.getOwnerId(), userId)) {
+      return true;
+    }
+    return false;
   }
 }

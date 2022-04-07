@@ -18,7 +18,7 @@ public class FeedbackController {
   @PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER')")
   @GetMapping("/{feedbackId}")
   public FeedbackDto getFeedback(@PathVariable Long feedbackId) {
-    return feedbackService.getFeedback(feedbackId);
+    return feedbackService.getFeedbackById(feedbackId);
   }
 
   @PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER')")

@@ -12,6 +12,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Getter
@@ -36,8 +37,9 @@ public class Feedback {
   @Column(name = "text")
   private String text;
 
-  @Column(name = "created")
-  private LocalDateTime date;
+  @Column(name = "created", updatable = false)
+  @CreationTimestamp
+  private LocalDateTime created;
 
   @Column(name = "ticket_id")
   private Long ticketId;

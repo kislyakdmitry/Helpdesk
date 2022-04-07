@@ -19,7 +19,7 @@ public class FeedbackService {
   private final FeedbackMapper feedbackMapper;
   private final TicketsService ticketsService;
 
-  public FeedbackDto getFeedback(Long feedbackId) {
+  public FeedbackDto getFeedbackById(Long feedbackId) {
     return feedbackRepository
         .findById(feedbackId)
         .map(feedbackMapper::mapFeedbackToFeedbackDto)
@@ -35,32 +35,29 @@ public class FeedbackService {
 
   public void saveFeedback(FeedbackSaveDto saveFeedbackDto) {
     TicketDto ticket = ticketsService.getTicket(saveFeedbackDto.getTicketId());
-    if (checkFeedback(ticket, saveFeedbackDto.getUserId(), saveFeedbackDto.getTicketId())) {
-      feedbackRepository.save(feedbackMapper.mapFeedbackSaveDtoToFeedback(saveFeedbackDto));
-    }
+    checkFeedback(ticket, saveFeedbackDto.getUserId(), saveFeedbackDto.getTicketId());
+    feedbackRepository.save(feedbackMapper.mapFeedbackSaveDtoToFeedback(saveFeedbackDto));
   }
 
-  private boolean checkFeedback(TicketDto ticket, Long userId, Long ticketId) {
+  private void checkFeedback(TicketDto ticket, Long userId, Long ticketId) {
     if (State.DONE.equals(ticket.getState())) {
-      return checkTicketBelongsToUser(ticket, userId, ticketId);
+      checkTicketBelongsToUser(ticket, userId);
+    } else {
+      throw new FeedbackTicketStatusException(ticketId);
     }
-
-    throw new FeedbackTicketStatusException(ticketId);
   }
 
-  private boolean checkTicketBelongsToUser(TicketDto ticket, Long userId, Long ticketId) {
+  private void checkTicketBelongsToUser(TicketDto ticket, Long userId) {
     if (Objects.equals(ticket.getOwnerId(), userId)) {
-      return checkFeedbackExists(ticketId);
+      checkFeedbackExists(ticket.getId());
+    } else {
+      throw new FeedbackTicketBelongsToUserException(userId, ticket.getId());
     }
-
-    throw new FeedbackTicketBelongsToUserException(userId, ticketId);
   }
 
-  private boolean checkFeedbackExists(Long ticketId) {
+  private void checkFeedbackExists(Long ticketId) {
     if (feedbackRepository.existsFeedbackByTicketId(ticketId)) {
       throw new FeedbackExistException(ticketId);
     }
-
-    return true;
   }
 }
