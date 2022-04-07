@@ -17,6 +17,8 @@ import innowise.zuevsky.helpdesk.dto.TicketDto;
 import innowise.zuevsky.helpdesk.dto.TicketSaveDto;
 import innowise.zuevsky.helpdesk.dto.TicketUpdateDto;
 import innowise.zuevsky.helpdesk.exception.TicketNotFoundException;
+import innowise.zuevsky.helpdesk.exception.feedback.TicketOwnerNotBelongsToUserException;
+import innowise.zuevsky.helpdesk.exception.feedback.TicketStateNotDoneException;
 import innowise.zuevsky.helpdesk.mapper.FilterParamsMapper;
 import innowise.zuevsky.helpdesk.mapper.TicketMapper;
 import innowise.zuevsky.helpdesk.repository.TicketsRepository;
@@ -129,19 +131,17 @@ public class TicketsService {
     return filterParamsMapper.mapParamsInFilterParamsDto(id, name, desiredDate, urgencies, states);
   }
 
-  public boolean isTicketStateDone(Long ticketId) {
+  public void validateTicketStateDone(Long ticketId) {
     TicketDto ticketDto = getTicket(ticketId);
-    if (ticketDto.getState().equals(State.DONE)) {
-      return true;
+    if (!ticketDto.getState().equals(State.DONE)) {
+      throw new TicketStateNotDoneException(ticketId);
     }
-    return false;
   }
 
-  public boolean isTicketOwnerBelongUser(Long ticketId, Long userId) {
+  public void validateTicketOwnerBelongUser(Long ticketId, Long userId) {
     TicketDto ticketDto = getTicket(ticketId);
-    if (Objects.equals(ticketDto.getOwnerId(), userId)) {
-      return true;
+    if (!Objects.equals(ticketDto.getOwnerId(), userId)) {
+      throw new TicketOwnerNotBelongsToUserException(ticketId, userId);
     }
-    return false;
   }
 }

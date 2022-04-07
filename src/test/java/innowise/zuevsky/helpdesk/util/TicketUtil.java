@@ -26,6 +26,7 @@ public class TicketUtil {
   public static final Long OWNER_ID = 666L;
   public static final Long ASSIGNEE_ID = 666L;
   public static final Long APPROVER_ID = 666L;
+  public static final Long USER_ID = 999L;
   public static final State STATE = State.NEW;
   public static final Category CATEGORY = Category.BENEFITS_AND_PAPER_WORK;
   public static final Category UPDATED_CATEGORY = Category.HARDWARE_AND_SOFTWARE;

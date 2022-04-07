@@ -2,8 +2,8 @@ package innowise.zuevsky.helpdesk.exception;
 
 import innowise.zuevsky.helpdesk.exception.feedback.FeedbackExistException;
 import innowise.zuevsky.helpdesk.exception.feedback.FeedbackNotFoundException;
-import innowise.zuevsky.helpdesk.exception.feedback.FeedbackTicketBelongsToUserException;
-import innowise.zuevsky.helpdesk.exception.feedback.FeedbackTicketStatusException;
+import innowise.zuevsky.helpdesk.exception.feedback.TicketOwnerNotBelongsToUserException;
+import innowise.zuevsky.helpdesk.exception.feedback.TicketStateNotDoneException;
 import innowise.zuevsky.helpdesk.response.ErrorResponse;
 import java.time.LocalDateTime;
 import org.springframework.http.HttpStatus;
@@ -35,10 +35,10 @@ public class GlobalExceptionHandler {
         .build();
   }
 
-  @ExceptionHandler(FeedbackTicketBelongsToUserException.class)
+  @ExceptionHandler(TicketOwnerNotBelongsToUserException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   public ErrorResponse handleFeedbackBelongsToUserException(
-      FeedbackTicketBelongsToUserException feedbackServiceException) {
+      TicketOwnerNotBelongsToUserException feedbackServiceException) {
     return ErrorResponse.builder()
         .message(feedbackServiceException.getMessage())
         .status(HttpStatus.BAD_REQUEST)
@@ -46,12 +46,12 @@ public class GlobalExceptionHandler {
         .build();
   }
 
-  @ExceptionHandler(FeedbackTicketStatusException.class)
+  @ExceptionHandler(TicketStateNotDoneException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   public ErrorResponse handleFeedbackTicketStatusException(
-      FeedbackTicketStatusException feedbackTicketStatusException) {
+      TicketStateNotDoneException ticketStateNotDoneException) {
     return ErrorResponse.builder()
-        .message(feedbackTicketStatusException.getMessage())
+        .message(ticketStateNotDoneException.getMessage())
         .status(HttpStatus.BAD_REQUEST)
         .timestamp(LocalDateTime.now())
         .build();
