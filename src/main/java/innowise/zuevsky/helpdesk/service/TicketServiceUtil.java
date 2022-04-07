@@ -12,7 +12,4 @@ public class TicketServiceUtil {
       List.of(State.APPROVED, State.DECLINED, State.CANCELED, State.IN_PROGRESS, State.DONE);
   public static final List<State> statesOfEngineerAssignee = List.of(State.IN_PROGRESS, State.DONE);
 
-  public Object clone() {
-    return this;
-  }
 }
