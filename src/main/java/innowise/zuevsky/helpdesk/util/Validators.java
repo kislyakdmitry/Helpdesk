@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = PRIVATE)
 public final class Validators {
 
-  public static void validateThat(boolean condition, Supplier<RuntimeException> exceptionSupplier) {
-    if (!condition) {
-      throw exceptionSupplier.get();
-    }
-  }
+	public static void validateThat(boolean condition, Supplier<RuntimeException> exceptionSupplier) {
+		if (!condition) {
+			throw exceptionSupplier.get();
+		}
+	}
 }

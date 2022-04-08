@@ -32,50 +32,50 @@ import org.hibernate.annotations.CreationTimestamp;
 @NoArgsConstructor
 @Table(name = "tickets")
 public class Ticket {
-  @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tickets_id_seq")
-  @Column(name = "id", nullable = false)
-  private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tickets_id_seq")
+	@Column(name = "id", nullable = false)
+	private Long id;
 
-  @Column(name = "name")
-  private String name;
+	@Column(name = "name")
+	private String name;
 
-  @Column(name = "description")
-  private String description;
+	@Column(name = "description")
+	private String description;
 
-  @Column(name = "created_on", updatable = false)
-  @CreationTimestamp
-  private LocalDateTime createdOn;
+	@Column(name = "created_on", updatable = false)
+	@CreationTimestamp
+	private LocalDateTime createdOn;
 
-  @Column(name = "desired_resolution_date")
-  private LocalDate desiredResolutionDate;
+	@Column(name = "desired_resolution_date")
+	private LocalDate desiredResolutionDate;
 
-  @Column(name = "assignee_id", updatable = false)
-  private Long assigneeId;
+	@Column(name = "assignee_id", updatable = false)
+	private Long assigneeId;
 
-  @Column(name = "owner_id", updatable = false)
-  private Long ownerId;
+	@Column(name = "owner_id", updatable = false)
+	private Long ownerId;
 
-  @Enumerated(EnumType.ORDINAL)
-  @Column(name = "state")
-  private State state;
+	@Enumerated(EnumType.ORDINAL)
+	@Column(name = "state")
+	private State state;
 
-  @Enumerated(EnumType.ORDINAL)
-  @Column(name = "category")
-  private Category category;
+	@Enumerated(EnumType.ORDINAL)
+	@Column(name = "category")
+	private Category category;
 
-  @Enumerated(EnumType.ORDINAL)
-  @Column(name = "urgency")
-  private Urgency urgency;
+	@Enumerated(EnumType.ORDINAL)
+	@Column(name = "urgency")
+	private Urgency urgency;
 
-  @Column(name = "approver_id", updatable = false)
-  private Long approverId;
+	@Column(name = "approver_id", updatable = false)
+	private Long approverId;
 
-  @OneToMany(fetch = FetchType.LAZY)
-  @JoinColumn(name = "ticket_id")
-  private List<Attachment> attachments;
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ticket_id")
+	private List<Attachment> attachments;
 
-  @OneToMany(fetch = FetchType.LAZY)
-  @JoinColumn(name = "ticket_id")
-  private List<Comment> comments;
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ticket_id")
+	private List<Comment> comments;
 }

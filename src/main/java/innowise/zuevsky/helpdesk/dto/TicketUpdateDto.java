@@ -20,19 +20,23 @@ import lombok.NoArgsConstructor;
 @Builder
 public class TicketUpdateDto {
 
-  @NotBlank
-  @Pattern(regexp = "^[a-z0-9~.\"(),:;<>@\\[\\]!#$%&'*+\\-/=?^_`{|} ]{2,100}$")
-  private String name;
+	@NotBlank
+	@Pattern(regexp = "^[a-z0-9~.\"(),:;<>@\\[\\]!#$%&'*+\\-/=?^_`{|} ]{2,100}$")
+	private String name;
 
-  @NotBlank
-  @Pattern(regexp = "^[A-Za-z0-9~.\"(),:;<>@\\[\\]!#$%&'*+\\-/=?^_`{|} ]{2,500}$")
-  private String description;
+	@NotBlank
+	@Pattern(regexp = "^[A-Za-z0-9~.\"(),:;<>@\\[\\]!#$%&'*+\\-/=?^_`{|} ]{2,500}$")
+	private String description;
 
-  @NotNull @FutureOrPresent private LocalDate desiredResolutionDate;
+	@NotNull
+	@FutureOrPresent
+	private LocalDate desiredResolutionDate;
 
-  @NotNull private Category category;
+	@NotNull
+	private Category category;
 
-  @NotNull private Urgency urgency;
+	@NotNull
+	private Urgency urgency;
 
-  private List<Attachment> attachments;
+	private List<Attachment> attachments;
 }

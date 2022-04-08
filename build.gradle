@@ -58,7 +58,7 @@ test {
 
 apply plugin: 'com.diffplug.spotless'
 spotless.java {
-    googleJavaFormat(googleJavaFormatVersion)
+    eclipse("4.21.0")
 }
 tasks.withType(JavaCompile).configureEach { javaCompile ->
     dependsOn 'spotlessApply'

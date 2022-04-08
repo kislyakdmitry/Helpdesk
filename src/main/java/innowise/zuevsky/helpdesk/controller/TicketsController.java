@@ -30,57 +30,46 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class TicketsController {
 
-  private final TicketsService ticketsService;
-  private final UsersService usersService;
+	private final TicketsService ticketsService;
+	private final UsersService usersService;
 
-  @PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER')")
-  @PostMapping
-  public void createTicket(@Valid @RequestBody TicketSaveDto saveDto) {
-    ticketsService.createTicket(saveDto);
-  }
+	@PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER')")
+	@PostMapping
+	public void createTicket(@Valid @RequestBody TicketSaveDto saveDto) {
+		ticketsService.createTicket(saveDto);
+	}
 
-  @PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER')")
-  @PutMapping("/{ticketId}")
-  public void updateTicket(
-      @Valid @RequestBody TicketUpdateDto updateDto, @PathVariable Long ticketId) {
-    ticketsService.updateTicket(updateDto, ticketId);
-  }
+	@PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER')")
+	@PutMapping("/{ticketId}")
+	public void updateTicket(@Valid @RequestBody TicketUpdateDto updateDto, @PathVariable Long ticketId) {
+		ticketsService.updateTicket(updateDto, ticketId);
+	}
 
-  @PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER', 'ENGINEER')")
-  @GetMapping("/{ticketId}")
-  public TicketDto getTicket(@PathVariable Long ticketId) {
-    return ticketsService.getTicket(ticketId);
-  }
+	@PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER', 'ENGINEER')")
+	@GetMapping("/{ticketId}")
+	public TicketDto getTicket(@PathVariable Long ticketId) {
+		return ticketsService.getTicket(ticketId);
+	}
 
-  @PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER')")
-  @GetMapping("/my")
-  public Page<TicketDto> getMyTickets(
-      @PageableDefault(value = 5) @SortDefault(sort = "urgency", direction = Sort.Direction.DESC)
-          Pageable pageable,
-      Long id,
-      String name,
-      @RequestParam(defaultValue = StringUtils.EMPTY) String desiredDate,
-      @RequestParam(defaultValue = StringUtils.EMPTY) Urgency[] urgencies,
-      @RequestParam(defaultValue = StringUtils.EMPTY) State[] states) {
-    return ticketsService.getMyTickets(
-        usersService.getCurrentUser(),
-        pageable,
-        ticketsService.getFilterParamsDto(id, name, desiredDate, urgencies, states));
-  }
+	@PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER')")
+	@GetMapping("/my")
+	public Page<TicketDto> getMyTickets(
+			@PageableDefault(value = 5) @SortDefault(sort = "urgency", direction = Sort.Direction.DESC) Pageable pageable,
+			Long id, String name, @RequestParam(defaultValue = StringUtils.EMPTY) String desiredDate,
+			@RequestParam(defaultValue = StringUtils.EMPTY) Urgency[] urgencies,
+			@RequestParam(defaultValue = StringUtils.EMPTY) State[] states) {
+		return ticketsService.getMyTickets(usersService.getCurrentUser(), pageable,
+				ticketsService.getFilterParamsDto(id, name, desiredDate, urgencies, states));
+	}
 
-  @PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER', 'ENGINEER')")
-  @GetMapping("/all")
-  public Page<TicketDto> getAllTickets(
-      @PageableDefault(value = 5) @SortDefault(sort = "urgency", direction = Sort.Direction.DESC)
-          Pageable pageable,
-      Long id,
-      String name,
-      @RequestParam(defaultValue = StringUtils.EMPTY) String desiredDate,
-      @RequestParam(defaultValue = StringUtils.EMPTY) Urgency[] urgencies,
-      @RequestParam(defaultValue = StringUtils.EMPTY) State[] states) {
-    return ticketsService.getAllTickets(
-        usersService.getCurrentUser(),
-        pageable,
-        ticketsService.getFilterParamsDto(id, name, desiredDate, urgencies, states));
-  }
+	@PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER', 'ENGINEER')")
+	@GetMapping("/all")
+	public Page<TicketDto> getAllTickets(
+			@PageableDefault(value = 5) @SortDefault(sort = "urgency", direction = Sort.Direction.DESC) Pageable pageable,
+			Long id, String name, @RequestParam(defaultValue = StringUtils.EMPTY) String desiredDate,
+			@RequestParam(defaultValue = StringUtils.EMPTY) Urgency[] urgencies,
+			@RequestParam(defaultValue = StringUtils.EMPTY) State[] states) {
+		return ticketsService.getAllTickets(usersService.getCurrentUser(), pageable,
+				ticketsService.getFilterParamsDto(id, name, desiredDate, urgencies, states));
+	}
 }

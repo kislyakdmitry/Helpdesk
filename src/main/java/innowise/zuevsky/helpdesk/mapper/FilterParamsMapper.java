@@ -12,14 +12,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class FilterParamsMapper {
 
-  public FilterParamsDto mapParamsInFilterParamsDto(
-      Long id, String name, String desiredDate, Urgency[] urgencies, State[] states) {
-    return FilterParamsDto.builder()
-        .id(id)
-        .name(name)
-        .desiredDate(desiredDate.isEmpty() ? null : LocalDate.parse(desiredDate))
-        .urgencies(Optional.ofNullable(urgencies).map(Arrays::asList).orElse(List.of()))
-        .states(Optional.ofNullable(states).map(Arrays::asList).orElse(List.of()))
-        .build();
-  }
+	public FilterParamsDto mapParamsInFilterParamsDto(Long id, String name, String desiredDate, Urgency[] urgencies,
+			State[] states) {
+		return FilterParamsDto.builder().id(id).name(name)
+				.desiredDate(desiredDate.isEmpty() ? null : LocalDate.parse(desiredDate))
+				.urgencies(Optional.ofNullable(urgencies).map(Arrays::asList).orElse(List.of()))
+				.states(Optional.ofNullable(states).map(Arrays::asList).orElse(List.of())).build();
+	}
 }

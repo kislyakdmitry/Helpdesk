@@ -18,30 +18,30 @@ import org.springframework.web.filter.GenericFilterBean;
 @AllArgsConstructor
 public class JwtTokenFilter extends GenericFilterBean {
 
-  private final JwtTokenProvider jwtTokenProvider;
+	private final JwtTokenProvider jwtTokenProvider;
 
-  @Override
-  public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-      throws IOException, ServletException {
-    String token = jwtTokenProvider.resolveToken((HttpServletRequest) request);
+	@Override
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
+		String token = jwtTokenProvider.resolveToken((HttpServletRequest) request);
 
-    try {
-      if (token != null && jwtTokenProvider.validateToken(token)) {
-        Authentication authentication = jwtTokenProvider.getAuthentication(token);
-        if (authentication != null) {
-          SecurityContextHolder.getContext().setAuthentication(authentication);
-        }
-      }
-    } catch (JwtAuthenticationException e) {
-      SecurityContextHolder.clearContext();
-      ((HttpServletResponse) response).sendError(e.getHttpStatus().value());
-      try {
-        throw new JwtAuthenticationException("JWT token is expired or invalid");
-      } catch (JwtAuthenticationException ex) {
-        throw new RuntimeException(ex);
-      }
-    }
+		try {
+			if (token != null && jwtTokenProvider.validateToken(token)) {
+				Authentication authentication = jwtTokenProvider.getAuthentication(token);
+				if (authentication != null) {
+					SecurityContextHolder.getContext().setAuthentication(authentication);
+				}
+			}
+		} catch (JwtAuthenticationException e) {
+			SecurityContextHolder.clearContext();
+			((HttpServletResponse) response).sendError(e.getHttpStatus().value());
+			try {
+				throw new JwtAuthenticationException("JWT token is expired or invalid");
+			} catch (JwtAuthenticationException ex) {
+				throw new RuntimeException(ex);
+			}
+		}
 
-    chain.doFilter(request, response);
-  }
+		chain.doFilter(request, response);
+	}
 }

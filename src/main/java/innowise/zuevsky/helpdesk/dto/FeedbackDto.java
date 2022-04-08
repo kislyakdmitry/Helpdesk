@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class FeedbackDto {
-  private LocalDateTime date;
-  private Integer rate;
-  private String text;
+	private LocalDateTime date;
+	private Integer rate;
+	private String text;
 }
