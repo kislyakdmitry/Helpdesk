@@ -1,4 +1,4 @@
-package innowise.zuevsky.helpdesk.exception.feedback;
+package innowise.zuevsky.helpdesk.exception;
 
 public class TicketOwnerNotBelongsToUserException extends RuntimeException {
 

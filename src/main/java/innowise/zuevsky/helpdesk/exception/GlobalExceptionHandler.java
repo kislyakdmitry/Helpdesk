@@ -1,9 +1,5 @@
 package innowise.zuevsky.helpdesk.exception;
 
-import innowise.zuevsky.helpdesk.exception.feedback.FeedbackExistException;
-import innowise.zuevsky.helpdesk.exception.feedback.FeedbackNotFoundException;
-import innowise.zuevsky.helpdesk.exception.feedback.TicketOwnerNotBelongsToUserException;
-import innowise.zuevsky.helpdesk.exception.feedback.TicketStateNotDoneException;
 import innowise.zuevsky.helpdesk.response.ErrorResponse;
 import java.time.LocalDateTime;
 import org.springframework.http.HttpStatus;

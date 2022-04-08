@@ -16,7 +16,7 @@ public class FeedbackUtil {
   public static final String TEXT = "test text";
   public static final LocalDateTime CREATED = LocalDateTime.of(2022, 4, 1, 12, 0, 0);
   public static final State STATE_DONE = State.DONE;
-  public static final State STATE_NEW = State.NEW;
+  //  public static final State STATE_NEW = State.NEW;
 
   public static FeedbackDto createFeedbackDto() {
     return FeedbackDto.builder().date(CREATED).rate(RATE).text(TEXT).build();

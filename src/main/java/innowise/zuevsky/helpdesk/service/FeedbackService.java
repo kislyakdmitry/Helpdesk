@@ -2,7 +2,8 @@ package innowise.zuevsky.helpdesk.service;
 
 import innowise.zuevsky.helpdesk.dto.FeedbackDto;
 import innowise.zuevsky.helpdesk.dto.FeedbackSaveDto;
-import innowise.zuevsky.helpdesk.exception.feedback.*;
+import innowise.zuevsky.helpdesk.exception.FeedbackExistException;
+import innowise.zuevsky.helpdesk.exception.FeedbackNotFoundException;
 import innowise.zuevsky.helpdesk.mapper.FeedbackMapper;
 import innowise.zuevsky.helpdesk.repository.FeedbackRepository;
 import lombok.RequiredArgsConstructor;
