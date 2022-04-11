@@ -21,7 +21,6 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -74,7 +73,7 @@ class JwtTokenFilterTest {
 		// when
 		spy.doFilter(request, response, chain);
 		// then
-		verify(spy).doFilter(eq(request), eq(response), eq(chain));
+		verify(spy).doFilter(request, response, chain);
 		verify(jwtTokenProvider).resolveToken(any(HttpServletRequest.class));
 		verify(jwtTokenProvider).validateToken(anyString());
 		verify(jwtTokenProvider).getAuthentication(anyString());
