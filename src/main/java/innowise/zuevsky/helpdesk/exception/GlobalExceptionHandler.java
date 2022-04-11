@@ -19,14 +19,14 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler(FeedbackNotFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
-	public ErrorResponse handleNotFoundException(FeedbackNotFoundException notFoundException) {
+	public ErrorResponse handleFeedbackNotFoundException(FeedbackNotFoundException notFoundException) {
 		return ErrorResponse.builder().message(notFoundException.getMessage()).status(HttpStatus.NOT_FOUND)
 				.timestamp(LocalDateTime.now()).build();
 	}
 
 	@ExceptionHandler(TicketOwnerNotBelongsToUserException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	public ErrorResponse handleFeedbackBelongsToUserException(
+	public ErrorResponse handleTicketOwnerNotBelongsToUserException(
 			TicketOwnerNotBelongsToUserException feedbackServiceException) {
 		return ErrorResponse.builder().message(feedbackServiceException.getMessage()).status(HttpStatus.BAD_REQUEST)
 				.timestamp(LocalDateTime.now()).build();
@@ -34,8 +34,16 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler(TicketStateNotDoneException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	public ErrorResponse handleFeedbackTicketStatusException(TicketStateNotDoneException ticketStateNotDoneException) {
+	public ErrorResponse handleTicketStateNotDoneException(TicketStateNotDoneException ticketStateNotDoneException) {
 		return ErrorResponse.builder().message(ticketStateNotDoneException.getMessage()).status(HttpStatus.BAD_REQUEST)
 				.timestamp(LocalDateTime.now()).build();
 	}
+
+	@ExceptionHandler(JwtFilterException.class)
+	@ResponseStatus(HttpStatus.UNAUTHORIZED)
+	public ErrorResponse handleJwtFilterException(JwtFilterException jwtFilterException) {
+		return ErrorResponse.builder().message(jwtFilterException.getMessage()).status(HttpStatus.UNAUTHORIZED)
+				.timestamp(LocalDateTime.now()).build();
+	}
+
 }

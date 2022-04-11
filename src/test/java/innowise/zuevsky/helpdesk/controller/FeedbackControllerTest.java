@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import innowise.zuevsky.helpdesk.dto.FeedbackDto;
 import innowise.zuevsky.helpdesk.dto.FeedbackSaveDto;
+import innowise.zuevsky.helpdesk.exception.GlobalExceptionHandler;
 import innowise.zuevsky.helpdesk.service.FeedbackService;
 import innowise.zuevsky.helpdesk.util.FeedbackUtil;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,7 +40,8 @@ class FeedbackControllerTest {
 
 	@BeforeEach
 	void setUp() {
-		mockMvc = MockMvcBuilders.standaloneSetup(feedbackController).build();
+		mockMvc = MockMvcBuilders.standaloneSetup(feedbackController).setControllerAdvice(GlobalExceptionHandler.class)
+				.build();
 	}
 
 	@Test
