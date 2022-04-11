@@ -3,18 +3,30 @@ pipeline {
   stages {
     stage('build') {
       steps {
-        sh './gradlew clean build --no-daemon'
+        sh './gradlew clean build'
       }
     }
-
     stage('test') {
       steps {
-        sh './gradlew test --no-daemon'
+        sh './gradlew test'
       }
     }
+    stage('SonarQube Analysis') {
+      steps {
+        withSonarQubeEnv('Sonar') {
+          sh './gradlew sonarqube -Dsonar.login=b82de7b91b30c7479f84869133f3db9e881e6e0f'
+        }
 
+      }
+    }
+    stage("Quality Gate") {
+      steps {
+        timeout(time: 2, unit: 'MINUTES') {
+          waitForQualityGate abortPipeline: true
+        }
+      }
+    }
   }
-
   tools {
     jdk 'JDK_17'
   }
