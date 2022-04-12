@@ -14,7 +14,7 @@ pipeline {
     stage('SonarQube Analysis') {
       steps {
         withSonarQubeEnv('Sonar') {
-          sh './gradlew sonarqube -Dsonar.login=b82de7b91b30c7479f84869133f3db9e881e6e0f'
+          sh './gradlew jacocoTestReport sonarqube -Dsonar.login=b82de7b91b30c7479f84869133f3db9e881e6e0f'
         }
 
       }
