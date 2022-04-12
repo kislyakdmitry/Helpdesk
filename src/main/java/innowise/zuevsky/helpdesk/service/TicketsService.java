@@ -59,6 +59,7 @@ public class TicketsService {
 			case ROLE_EMPLOYEE -> getMyTickets(user, pageable, filterParams);
 			case ROLE_MANAGER -> getTicketsForManager(user, pageable, filterParams);
 			case ROLE_ENGINEER -> getTicketsForEngineer(user, pageable, filterParams);
+			default -> null;
 		};
 	}
 
