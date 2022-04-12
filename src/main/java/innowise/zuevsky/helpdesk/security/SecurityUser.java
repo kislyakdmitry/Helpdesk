@@ -10,6 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+@java.lang.SuppressWarnings("java:S4144")
 @Data
 @AllArgsConstructor
 public class SecurityUser implements UserDetails {
