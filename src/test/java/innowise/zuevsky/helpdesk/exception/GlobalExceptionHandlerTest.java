@@ -44,7 +44,6 @@ class GlobalExceptionHandlerTest {
 		assertThat(actual).isNotNull();
 		assertThat(expected.getMessage()).isEqualTo(actual.getMessage());
 		assertThat(expected.getStatus()).isEqualTo(actual.getStatus());
-
 	}
 
 	@Test

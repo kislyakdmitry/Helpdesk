@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import innowise.zuevsky.helpdesk.dto.FeedbackDto;
 import innowise.zuevsky.helpdesk.dto.FeedbackSaveDto;
+import innowise.zuevsky.helpdesk.exception.FeedbackNotFoundException;
 import innowise.zuevsky.helpdesk.exception.GlobalExceptionHandler;
 import innowise.zuevsky.helpdesk.service.FeedbackService;
 import innowise.zuevsky.helpdesk.util.FeedbackUtil;
@@ -55,7 +56,18 @@ class FeedbackControllerTest {
 		// then
 		mockMvc.perform(get(url, FeedbackUtil.FEEDBACK_ID)).andExpect(jsonPath("$.date").isNotEmpty())
 				.andExpect(jsonPath("$.rate").value(feedbackDto.getRate()))
-				.andExpect(jsonPath("$.text").value(feedbackDto.getText()));
+				.andExpect(jsonPath("$.text").value(feedbackDto.getText())).andExpect(status().isOk());
+	}
+
+	@Test
+	@WithMockUser
+	void getFeedback_shouldReturnFeedbackNotFoundException_whenFeedbackDoesNotExist() throws Exception {
+		// given
+		String url = "/api/feedbacks/{feedbackId}";
+		when(feedbackService.getFeedbackById(anyLong()))
+				.thenThrow(new FeedbackNotFoundException(FeedbackUtil.FEEDBACK_ID));
+		// then
+		mockMvc.perform(get(url, FeedbackUtil.FEEDBACK_ID)).andExpect(status().isNotFound());
 	}
 
 	@Test
@@ -67,7 +79,18 @@ class FeedbackControllerTest {
 		// then
 		mockMvc.perform(get(url, FeedbackUtil.TICKET_ID)).andExpect(jsonPath("$.date").isNotEmpty())
 				.andExpect(jsonPath("$.rate").value(feedbackDto.getRate()))
-				.andExpect(jsonPath("$.text").value(feedbackDto.getText()));
+				.andExpect(jsonPath("$.text").value(feedbackDto.getText())).andExpect(status().isOk());
+	}
+
+	@Test
+	void getFeedbackByTicketId_shouldReturnFeedbackNotFoundException_whenDoesNotExist() throws Exception {
+		// given
+		String url = "/api/feedbacks/feedback/{ticketId}";
+		when(feedbackService.getFeedbackByTicketId(anyLong()))
+				.thenThrow(new FeedbackNotFoundException(FeedbackUtil.TICKET_ID));
+		// when
+		// then
+		mockMvc.perform(get(url, FeedbackUtil.TICKET_ID)).andExpect(status().isNotFound());
 	}
 
 	@Test
