@@ -1,6 +1,5 @@
 package innowise.zuevsky.helpdesk.exception;
 
-import innowise.zuevsky.helpdesk.domain.Ticket;
 import innowise.zuevsky.helpdesk.response.ErrorResponse;
 import innowise.zuevsky.helpdesk.util.FeedbackUtil;
 import innowise.zuevsky.helpdesk.util.TicketUtil;
@@ -13,9 +12,6 @@ import org.springframework.http.HttpStatus;
 import java.time.LocalDateTime;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class GlobalExceptionHandlerTest {
@@ -74,7 +70,6 @@ class GlobalExceptionHandlerTest {
 		TicketStateNotDoneException exception = new TicketStateNotDoneException(TicketUtil.TICKET_ID);
 		ErrorResponse expected = ErrorResponse.builder().message(exception.getMessage()).status(HttpStatus.BAD_REQUEST)
 				.timestamp(LocalDateTime.now()).build();
-
 		// when
 		ErrorResponse actual = globalExceptionHandler.handleTicketStateNotDoneException(exception);
 
@@ -95,6 +90,35 @@ class GlobalExceptionHandlerTest {
 		ErrorResponse actual = globalExceptionHandler.handleJwtFilterException(exception);
 		// then
 		assertThat(actual).isNotNull();
+		assertThat(expected.getMessage()).isEqualTo(actual.getMessage());
+		assertThat(expected.getStatus()).isEqualTo(actual.getStatus());
+	}
+
+	@Test
+	void handleTicketNotFoundException_shouldReturnTicketNotFoundException() {
+		// given
+		TicketNotFoundException exception = new TicketNotFoundException(TicketUtil.TICKET_ID);
+		ErrorResponse expected = ErrorResponse.builder().message(exception.getMessage()).status(HttpStatus.NOT_FOUND)
+				.timestamp(LocalDateTime.now()).build();
+		// when
+		ErrorResponse actual = globalExceptionHandler.handleTicketNotFoundException(exception);
+		// then
+
+		assertThat(actual).isNotNull();
+		assertThat(expected.getMessage()).isEqualTo(actual.getMessage());
+		assertThat(expected.getStatus()).isEqualTo(actual.getStatus());
+	}
+
+	@Test
+	void handleAuthenticationTokenNotFoundException_shouldReturnAuthenticationTokenNotFoundException() {
+		AuthenticationTokenNotFoundException exception = new AuthenticationTokenNotFoundException("Error");
+		ErrorResponse expected = ErrorResponse.builder().message(exception.getMessage()).status(HttpStatus.NOT_FOUND)
+				.timestamp(LocalDateTime.now()).build();
+		// when
+		ErrorResponse actual = globalExceptionHandler.handleAuthenticationTokenNotFoundException(exception);
+
+		// then
+		assertThat(expected).isNotNull();
 		assertThat(expected.getMessage()).isEqualTo(actual.getMessage());
 		assertThat(expected.getStatus()).isEqualTo(actual.getStatus());
 	}

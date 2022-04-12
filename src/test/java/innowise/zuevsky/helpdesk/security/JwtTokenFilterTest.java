@@ -63,7 +63,7 @@ class JwtTokenFilterTest {
 	}
 
 	@Test
-	public void doFilter_shouldSuccess_whenUserAuthenticated() throws Exception {
+	void doFilter_shouldSuccess_whenUserAuthenticated() throws Exception {
 		// given
 		JwtTokenFilter spy = Mockito.spy(jwtTokenFilter);
 		Authentication authentication = mock(Authentication.class);
