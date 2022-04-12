@@ -84,7 +84,7 @@ class JwtTokenProviderTest {
   }
 
   @Test
-  void getAuthentication_ShouldPass_WhenActualAuthenticationIsEqualToExpectedAuthentication() {
+  void getAuthentication_ShouldPass_WhenActualAuthenticationIsValid() {
 
     //given
     String token = SecurityUtil.createTestToken();
@@ -100,7 +100,7 @@ class JwtTokenProviderTest {
   }
 
   @Test
-  void getUsername_ShouldPass_WhenActualUsernameIsEqualToExpectedUsername() {
+  void getUsername_ShouldPass_WhenActualUsernameIsValid() {
 
     //given
     String token = SecurityUtil.createTestToken();
@@ -114,7 +114,7 @@ class JwtTokenProviderTest {
   }
 
   @Test
-  void resolveToken_ShouldPass_WhenActualTokenIsEqualToExpectedToken() {
+  void resolveToken_ShouldPass_WhenActualTokenResolved() {
 
     //given
     String expectedToken = "token";

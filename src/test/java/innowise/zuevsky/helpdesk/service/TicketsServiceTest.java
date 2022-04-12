@@ -47,7 +47,7 @@ class TicketsServiceTest {
     private TicketsService ticketsService;
 
     @Test
-    void getTicket_ShouldPass_WhenCurrentTicketDtoIsEqualToSampleTicketDto() {
+    void getTicket_ShouldPass_WhenTicketExist() {
 
         //given
         TicketDto expectedDto = TicketUtil.createTicketDto();
@@ -133,7 +133,7 @@ class TicketsServiceTest {
     }
 
     @Test
-    void getAllTickets_ShouldPass_WhenActualPageOfTicketsDtoIsEqualToExpectedPageOfTicketsDto_ForRoleEmployee() {
+    void getAllTickets_ShouldPass_WhenActualPageOfTicketsDtoIsValid_ForRoleEmployee() {
 
         //given
         User user = UserUtil.createTestUser();
@@ -155,7 +155,7 @@ class TicketsServiceTest {
     }
 
     @Test
-    void getAllTickets_ShouldPass_WhenActualPageOfTicketsDtoIsEqualToExpectedPageOfTicketsDto_ForRoleManager() {
+    void getAllTickets_ShouldPass_WhenActualPageOfTicketsDtoIsValid_ForRoleManager() {
 
         //given
         User user = UserUtil.createTestUser();
@@ -182,7 +182,7 @@ class TicketsServiceTest {
     }
 
     @Test
-    void getAllTickets_ShouldPass_WhenActualPageOfTicketsDtoIsEqualToExpectedPageOfTicketsDto_ForRoleEngineer() {
+    void getAllTickets_ShouldPass_WhenActualPageOfTicketsDtoIsValid_ForRoleEngineer() {
 
         //given
         User user = UserUtil.createTestUser();
@@ -209,7 +209,7 @@ class TicketsServiceTest {
     }
 
     @Test
-    void getMyTickets_ShouldPass_WhenActualPageOfTicketsDtoIsEqualToExpectedPageOfTicketsDto() {
+    void getMyTickets_ShouldPass_WhenActualPageOfTicketsDtoIsValid() {
 
         //given
         User user = UserUtil.createTestUser();
@@ -231,7 +231,7 @@ class TicketsServiceTest {
     }
 
     @Test
-    void getTicketsForManager_ShouldPass_WhenActualPageOfTicketsDtoIsEqualToExpectedPageOfTicketsDto() {
+    void getTicketsForManager_ShouldPass_WhenActualPageOfTicketsDtoIsValid() {
 
         //given
         User user = UserUtil.createTestUser();
@@ -257,7 +257,7 @@ class TicketsServiceTest {
     }
 
     @Test
-    void getTicketsForEngineer_ShouldPass_WhenActualPageOfTicketsDtoIsEqualToExpectedPageOfTicketsDto() {
+    void getTicketsForEngineer_ShouldPass_WhenActualPageOfTicketsDtoIsValid() {
 
         //given
         User user = UserUtil.createTestUser();
@@ -283,7 +283,7 @@ class TicketsServiceTest {
     }
 
     @Test
-    void getFilterParamsDto_ShouldPass_WhenActualFilterParamsDtoIsEqualToExpectedFilterParamsDto() {
+    void getFilterParamsDto_ShouldPass_WhenActualFilterParamsDtoIsValid() {
 
         //given
         FilterParamsDto expectedFilterParamsDto = TicketUtil.createFilterParamsDto();

@@ -31,7 +31,7 @@ class UserDetailsServiceImplTest {
   UserDetailsServiceImpl userDetailsService;
 
   @Test
-  void loadUserByUsername_ShouldPass_WhenActualUserDetailsIsEqualToExpectedUserDetails() {
+  void loadUserByUsername_ShouldPass_WhenActualUserDetailsIsValid() {
 
     //given
     User user = UserUtil.createTestUser();
@@ -46,7 +46,7 @@ class UserDetailsServiceImplTest {
   }
 
   @Test
-  void loadUserByUsername() {
+  void loadUserByUsername_ShouldThrowException_WhenUserNotFound() {
     String wrongEmail = "email@com";
     assertThatThrownBy(() -> userDetailsService.loadUserByUsername(wrongEmail))
         .isInstanceOf(UserNotFoundException.class)

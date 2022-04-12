@@ -55,4 +55,11 @@ public class GlobalExceptionHandler {
                 .build();
     }
 
+    @ExceptionHandler(TicketNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handleTicketNotFoundException(TicketNotFoundException exception) {
+        return ErrorResponse.builder().message(exception.getMessage()).status(HttpStatus.NOT_FOUND)
+                .timestamp(LocalDateTime.now()).build();
+    }
+
 }

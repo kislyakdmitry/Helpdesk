@@ -17,7 +17,7 @@ class TicketUpdateServiceTest {
   private TicketUpdateService ticketUpdateService;
 
   @Test
-  void updateTicket() {
+  void updateTicket_ShouldPass_WhenTicketUpdatedSuccessful() {
 
     //given
     Ticket ticket = TicketUtil.createTicketForTicketDto();

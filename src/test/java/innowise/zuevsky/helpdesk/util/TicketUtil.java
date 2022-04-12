@@ -69,14 +69,6 @@ public class TicketUtil {
                 .build();
     }
 
-    public static List<TicketDto> createListOfTicketDto() {
-        List<TicketDto> listOfTicketDto = new ArrayList<>();
-        listOfTicketDto.add(createTicketDto());
-        listOfTicketDto.add(createTicketDto());
-        listOfTicketDto.add(createTicketDto());
-        return listOfTicketDto;
-    }
-
     public static TicketUpdateDto createTicketUpdateDto() {
         return TicketUpdateDto.builder()
                 .name(UPDATED_NAME)
@@ -134,14 +126,6 @@ public class TicketUtil {
                 .approverId(APPROVER_ID)
                 .attachments(ATTACHMENTS)
                 .build();
-    }
-
-    public static List<Ticket> createListOfTickets() {
-        List<Ticket> tickets = new ArrayList<>();
-        tickets.add(createTicketForTicketDto());
-        tickets.add(createTicketForTicketDto());
-        tickets.add(createTicketForTicketDto());
-        return tickets;
     }
 
     public static Pageable  createPageable() {
