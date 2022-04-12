@@ -1,7 +1,6 @@
 plugins {
     id 'org.springframework.boot' version '2.6.4'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id "com.diffplug.spotless" version "6.4.1" apply false
     id 'java'
     id "org.sonarqube" version "3.3"
 }
@@ -24,45 +23,25 @@ dependencies {
     implementation 'io.springfox:springfox-boot-starter:3.0.0'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.apache.commons:commons-lang3:3.12.0'
-
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.security:spring-security-test'
-
     implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
     implementation 'io.jsonwebtoken:jjwt-gson:0.11.2'
-
-    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2'
-
-    runtimeOnly 'org.postgresql:postgresql'
-
+    implementation'io.jsonwebtoken:jjwt-impl:0.11.2'
+    implementation'org.postgresql:postgresql'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.testcontainers:testcontainers:1.16.3'
-
-    compileOnly 'org.projectlombok:lombok:1.18.22'
+    implementation('org.projectlombok:lombok:1.18.22')
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
-
-    testCompileOnly 'org.projectlombok:lombok:1.18.22'
+    testImplementation('org.projectlombok:lombok:1.18.22')
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
-
     implementation platform('org.testcontainers:testcontainers-bom:1.16.3')
-
     implementation 'org.testcontainers:junit-jupiter'
     testImplementation 'org.testcontainers:postgresql'
 }
 
-//tasks.named('test') {
-//    useJUnitPlatform()
-//}
 test {
     useJUnitPlatform()
-}
-
-apply plugin: 'com.diffplug.spotless'
-spotless.java {
-    eclipse("4.21.0")
-}
-tasks.withType(JavaCompile).configureEach { javaCompile ->
-    dependsOn 'spotlessApply'
 }
 
 sonarqube {
@@ -70,4 +49,3 @@ sonarqube {
         property "sonar.projectKey", "kislyakdmitry_Helpdesk_AX__tPAjOMfz8VAl1un8"
     }
 }
-
