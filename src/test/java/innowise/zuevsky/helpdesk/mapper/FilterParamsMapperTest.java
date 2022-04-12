@@ -11,8 +11,9 @@ class FilterParamsMapperTest {
     private final FilterParamsMapper filterParamsMapper = new FilterParamsMapper();
 
     @Test
-    void mapParamsInFilterParamsDtoShouldMapIfNumberOfFieldsIsRight() {
+    void mapParamsInFilterParamsDto_ShouldPass_IfNumberOfFieldsIsRight() {
         FilterParamsDto filterParamsDto = FilterParamsUtil.createFilterParamsDto();
+
         assertThat(filterParamsDto)
                 .usingRecursiveComparison()
                 .isEqualTo(filterParamsMapper.mapParamsInFilterParamsDto(

@@ -54,7 +54,7 @@ public class TicketsController {
 
     @PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER')")
     @GetMapping("/my")
-    public Page<TicketDto> getMyTickets(@PageableDefault(value = 5) @SortDefault(sort = "urgency",
+    public Page<TicketDto> getMyTickets(@PageableDefault(size = 5) @SortDefault(sort = "urgency",
             direction = Sort.Direction.DESC) Pageable pageable,
                                         Long id,
                                         String name,

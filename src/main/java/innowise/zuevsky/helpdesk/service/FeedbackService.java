@@ -40,7 +40,7 @@ public class FeedbackService {
     }
 
     private boolean checkFeedback(TicketDto ticket, Long userId, Long ticketId) {
-        if (State.DONE.equals(ticket.getState())) {
+        if (State.DONE.equals(ticket.state())) {
             return checkTicketBelongsToUser(ticket, userId, ticketId);
         }
 
@@ -48,7 +48,7 @@ public class FeedbackService {
     }
 
     private boolean checkTicketBelongsToUser(TicketDto ticket, Long userId, Long ticketId) {
-        if (Objects.equals(ticket.getOwnerId(), userId)) {
+        if (Objects.equals(ticket.ownerId(), userId)) {
             return checkFeedbackExists(ticketId);
         }
 

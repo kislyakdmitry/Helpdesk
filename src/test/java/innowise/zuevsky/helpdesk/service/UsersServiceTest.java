@@ -1,6 +1,7 @@
 package innowise.zuevsky.helpdesk.service;
 
 import innowise.zuevsky.helpdesk.domain.User;
+import innowise.zuevsky.helpdesk.exception.UserNotFoundException;
 import innowise.zuevsky.helpdesk.repository.UsersRepository;
 import innowise.zuevsky.helpdesk.security.SecurityUser;
 import innowise.zuevsky.helpdesk.util.UserUtil;
@@ -16,6 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -24,7 +26,7 @@ import static org.mockito.Mockito.when;
 class UsersServiceTest {
 
     @Mock
-    private UsersRepository usersRepositoryMock;
+    private UsersRepository usersRepository;
 
     private static final User testUser = UserUtil.createTestUser();
 
@@ -32,7 +34,7 @@ class UsersServiceTest {
     private UsersService usersService;
 
     @Test
-    void getCurrentUserShouldPassIfCurrentUserIsEqualToTestUser() {
+    void getCurrentUser_ShouldPass_IfCurrentUserIsEqualToTestUser() {
 
         //given
         Authentication auth = mock(Authentication.class);
@@ -41,7 +43,7 @@ class UsersServiceTest {
 
         when(auth.getPrincipal()).thenReturn(SecurityUser.fromUser(testUser));
         when(securityContext.getAuthentication()).thenReturn(auth);
-        when(usersRepositoryMock.findByEmail(any(String.class))).thenReturn(Optional.of(testUser));
+        when(usersRepository.findByEmail(testUser.getEmail())).thenReturn(Optional.of(testUser));
 
         //when
         User currentUser = usersService.getCurrentUser();
@@ -49,5 +51,23 @@ class UsersServiceTest {
         //then
         assertThat(currentUser.getEmail()).isEqualTo(testUser.getEmail());
         assertThat(currentUser.getPassword()).isEqualTo(testUser.getPassword());
+    }
+
+    @Test
+    void getCurrentUser_ShouldThrowException_WhenUserNotFound() {
+
+        //given
+        Authentication auth = mock(Authentication.class);
+        SecurityContext securityContext = mock(SecurityContext.class);
+        SecurityContextHolder.setContext(securityContext);
+
+        when(auth.getPrincipal()).thenReturn(SecurityUser.fromUser(testUser));
+        when(securityContext.getAuthentication()).thenReturn(auth);
+        when(usersRepository.findByEmail(testUser.getEmail())).thenReturn(Optional.empty());
+
+        //then
+        assertThatThrownBy(() -> usersService.getCurrentUser())
+                .isInstanceOf(UserNotFoundException.class)
+                .hasMessage(String.format("User doesn't exist! Email: %s", testUser.getEmail()));
     }
 }

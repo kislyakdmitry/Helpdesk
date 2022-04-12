@@ -8,6 +8,11 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import java.security.Key;
+import java.util.Base64;
+import java.util.Date;
+import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -17,28 +22,22 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
-import java.security.Key;
-import java.util.Base64;
-import java.util.Date;
-
 @Component
 public class JwtTokenProvider {
 
     private final UserDetailsService userDetailsService;
-
-    @Value("${jwt.secret}")
     private String secretKey;
+    private final String authorizationHeader;
+    private final long validityInMilliseconds;
 
-    @Value("${jwt.header}")
-    private String authorizationHeader;
 
-    @Value("${jwt.expiration}")
-    private long validityInMilliseconds;
 
-    public JwtTokenProvider(@Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService) {
+    public JwtTokenProvider(@Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService,
+        @Value("${jwt.expiration}") long validityInMilliseconds, @Value("${jwt.secret}") String secretKey, @Value("${jwt.header}") String authorizationHeader) {
         this.userDetailsService = userDetailsService;
+        this.validityInMilliseconds = validityInMilliseconds;
+        this.secretKey = secretKey;
+        this.authorizationHeader = authorizationHeader;
     }
 
     @PostConstruct

@@ -2,15 +2,15 @@ package innowise.zuevsky.helpdesk.security;
 
 import innowise.zuevsky.helpdesk.domain.User;
 import innowise.zuevsky.helpdesk.domain.enums.Status;
+import java.util.ArrayList;
+import java.util.Collection;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
+@java.lang.SuppressWarnings("java:S4144")
 @Data
 @AllArgsConstructor
 public class SecurityUser implements UserDetails {
