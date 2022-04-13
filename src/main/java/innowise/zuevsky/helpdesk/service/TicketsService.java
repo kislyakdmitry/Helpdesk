@@ -6,6 +6,7 @@ import static innowise.zuevsky.helpdesk.specification.TicketFilterSpecification.
 import static innowise.zuevsky.helpdesk.specification.TicketFilterSpecification.hasOwnerId;
 import static innowise.zuevsky.helpdesk.specification.TicketFilterSpecification.hasState;
 import static innowise.zuevsky.helpdesk.specification.TicketFilterSpecification.hasUrgency;
+import static innowise.zuevsky.helpdesk.util.Validators.validateThat;
 import static org.springframework.data.jpa.domain.Specification.where;
 
 import innowise.zuevsky.helpdesk.domain.Ticket;
@@ -17,11 +18,15 @@ import innowise.zuevsky.helpdesk.dto.TicketDto;
 import innowise.zuevsky.helpdesk.dto.TicketSaveDto;
 import innowise.zuevsky.helpdesk.dto.TicketUpdateDto;
 import innowise.zuevsky.helpdesk.exception.TicketNotFoundException;
+import innowise.zuevsky.helpdesk.exception.TicketOwnerNotBelongsToUserException;
+import innowise.zuevsky.helpdesk.exception.TicketStateNotDoneException;
 import innowise.zuevsky.helpdesk.mapper.FilterParamsMapper;
 import innowise.zuevsky.helpdesk.mapper.TicketMapper;
 import innowise.zuevsky.helpdesk.repository.TicketsRepository;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -110,5 +115,16 @@ public class TicketsService {
   public FilterParamsDto getFilterParamsDto(Long id, String name, String desiredDate,
       Urgency[] urgencies, State[] states) {
     return filterParamsMapper.mapParamsInFilterParamsDto(id, name, desiredDate, urgencies, states);
+  }
+
+  public void validateTicketStateDone(Long ticketId) {
+    TicketDto ticketDto = getTicket(ticketId);
+    validateThat(State.DONE.equals(ticketDto.getState()), () -> new TicketStateNotDoneException(ticketId));
+  }
+
+  public void validateTicketOwnerBelongUser(Long ticketId, Long userId) {
+    TicketDto ticketDto = getTicket(ticketId);
+    validateThat(Objects.equals(ticketDto.getOwnerId(), userId),
+                 () -> new TicketOwnerNotBelongsToUserException(ticketId, userId));
   }
 }

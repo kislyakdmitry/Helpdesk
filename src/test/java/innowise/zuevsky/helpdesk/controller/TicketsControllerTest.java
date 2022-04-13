@@ -52,12 +52,12 @@ class TicketsControllerTest {
 
     //given
     String url = "/api/tickets/{ticketId}";
-    when(ticketsService.getTicket(TicketUtil.ID)).thenReturn(ticketDto);
+    when(ticketsService.getTicket(TicketUtil.TICKET_ID)).thenReturn(ticketDto);
 
     //then
-    mockMvc.perform(get(url, TicketUtil.ID))
-            .andExpect(jsonPath("$.name").value(ticketDto.name()))
-            .andExpect(jsonPath("$.id").value(ticketDto.id()));
+    mockMvc.perform(get(url, TicketUtil.TICKET_ID))
+            .andExpect(jsonPath("$.name").value(ticketDto.getName()))
+            .andExpect(jsonPath("$.id").value(ticketDto.getId()));
   }
 
   @Test
@@ -65,9 +65,9 @@ class TicketsControllerTest {
   void getTicket_shouldReturnTicketNotFoundException_whenTicketDoesNotExist() throws Exception {
     // given
     String url = "/api/tickets/{ticketId}";
-    when(ticketsService.getTicket(TicketUtil.ID))
-            .thenThrow(new TicketNotFoundException(TicketUtil.ID));
+    when(ticketsService.getTicket(TicketUtil.TICKET_ID))
+            .thenThrow(new TicketNotFoundException(TicketUtil.TICKET_ID));
     // then
-    mockMvc.perform(get(url, TicketUtil.ID)).andExpect(status().isNotFound());
+    mockMvc.perform(get(url, TicketUtil.TICKET_ID)).andExpect(status().isNotFound());
   }
 }

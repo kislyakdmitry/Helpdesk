@@ -1,11 +1,5 @@
 package innowise.zuevsky.helpdesk.service;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import innowise.zuevsky.helpdesk.domain.Ticket;
 import innowise.zuevsky.helpdesk.domain.User;
 import innowise.zuevsky.helpdesk.domain.enums.Role;
@@ -14,13 +8,13 @@ import innowise.zuevsky.helpdesk.dto.TicketDto;
 import innowise.zuevsky.helpdesk.dto.TicketSaveDto;
 import innowise.zuevsky.helpdesk.dto.TicketUpdateDto;
 import innowise.zuevsky.helpdesk.exception.TicketNotFoundException;
+import innowise.zuevsky.helpdesk.exception.TicketOwnerNotBelongsToUserException;
+import innowise.zuevsky.helpdesk.exception.TicketStateNotDoneException;
 import innowise.zuevsky.helpdesk.mapper.FilterParamsMapper;
 import innowise.zuevsky.helpdesk.mapper.TicketMapper;
 import innowise.zuevsky.helpdesk.repository.TicketsRepository;
 import innowise.zuevsky.helpdesk.util.TicketUtil;
 import innowise.zuevsky.helpdesk.util.UserUtil;
-import java.util.List;
-import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -30,6 +24,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+
+import java.util.List;
+import java.util.Optional;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class TicketsServiceTest {
@@ -46,6 +49,9 @@ class TicketsServiceTest {
     @InjectMocks
     private TicketsService ticketsService;
 
+    private static final TicketDto ticketDto = TicketUtil.createTicketDto();
+    private static final Ticket ticket = TicketUtil.createTicketForTicketDto();
+
     @Test
     void getTicket_ShouldPass_WhenTicketExist() {
 
@@ -53,12 +59,12 @@ class TicketsServiceTest {
         TicketDto expectedDto = TicketUtil.createTicketDto();
         Ticket expectedTicket = TicketUtil.createTicketForTicketDto();
 
-        when(ticketsRepository.findById(TicketUtil.ID)).thenReturn(Optional.ofNullable(expectedTicket));
+        when(ticketsRepository.findById(TicketUtil.TICKET_ID)).thenReturn(Optional.ofNullable(expectedTicket));
         assert expectedTicket != null;
         when(ticketMapper.mapTicketInTicketDto(expectedTicket)).thenReturn(expectedDto);
 
         //when
-        TicketDto currentTicketDto = ticketsService.getTicket(TicketUtil.ID);
+        TicketDto currentTicketDto = ticketsService.getTicket(TicketUtil.TICKET_ID);
 
         //then
         assertThat(currentTicketDto).isEqualTo(expectedDto);
@@ -104,15 +110,15 @@ class TicketsServiceTest {
         TicketUpdateDto ticketUpdateDto = TicketUtil.createTicketUpdateDto();
         Ticket expectedUpdatedTicket = TicketUtil.createUpdatedTicket();
 
-        when(ticketsRepository.findById(TicketUtil.ID)).thenReturn(Optional.ofNullable(ticket));
+        when(ticketsRepository.findById(TicketUtil.TICKET_ID)).thenReturn(Optional.ofNullable(ticket));
         assert ticket != null;
         when(ticketUpdateService.updateTicket(ticketUpdateDto, ticket)).thenReturn(expectedUpdatedTicket);
 
         //when
-        ticketsService.updateTicket(ticketUpdateDto, TicketUtil.ID);
+        ticketsService.updateTicket(ticketUpdateDto, TicketUtil.TICKET_ID);
 
         //then
-        verify(ticketsRepository).findById(TicketUtil.ID);
+        verify(ticketsRepository).findById(TicketUtil.TICKET_ID);
         verify(ticketUpdateService).updateTicket(ticketUpdateDto, ticket);
         verify(ticketsRepository).save(expectedUpdatedTicket);
     }
@@ -123,12 +129,12 @@ class TicketsServiceTest {
         //given
         TicketUpdateDto ticketUpdateDto = TicketUtil.createTicketUpdateDto();
 
-        when(ticketsRepository.findById(TicketUtil.ID)).thenReturn(Optional.empty());
+        when(ticketsRepository.findById(TicketUtil.TICKET_ID)).thenReturn(Optional.empty());
 
         //then
-        assertThatThrownBy(() -> ticketsService.updateTicket(ticketUpdateDto, TicketUtil.ID))
+        assertThatThrownBy(() -> ticketsService.updateTicket(ticketUpdateDto, TicketUtil.TICKET_ID))
             .isInstanceOf(TicketNotFoundException.class)
-            .hasMessage(String.format("Ticket doesn't exist! ID: %d", TicketUtil.ID));
+            .hasMessage(String.format("Ticket doesn't exist! ID: %d", TicketUtil.TICKET_ID));
 
     }
 
@@ -289,16 +295,47 @@ class TicketsServiceTest {
         FilterParamsDto expectedFilterParamsDto = TicketUtil.createFilterParamsDto();
 
         when(filterParamsMapper.mapParamsInFilterParamsDto(
-            TicketUtil.ID, TicketUtil.NAME, TicketUtil.DESIRED_DATE_FOR_FILTER_PARAMS,
-            TicketUtil.URGENCIES_FOR_FILTER_PARAMS, TicketUtil.STATES_FOR_FILTER_PARAMS))
-            .thenReturn(expectedFilterParamsDto);
+                TicketUtil.TICKET_ID, TicketUtil.NAME, TicketUtil.DESIRED_DATE_FOR_FILTER_PARAMS,
+                TicketUtil.URGENCIES_FOR_FILTER_PARAMS, TicketUtil.STATES_FOR_FILTER_PARAMS))
+                .thenReturn(expectedFilterParamsDto);
 
         //when
         FilterParamsDto actualFilterParamsDto = ticketsService.getFilterParamsDto(
-            TicketUtil.ID, TicketUtil.NAME, TicketUtil.DESIRED_DATE_FOR_FILTER_PARAMS,
-            TicketUtil.URGENCIES_FOR_FILTER_PARAMS, TicketUtil.STATES_FOR_FILTER_PARAMS);
+                TicketUtil.TICKET_ID, TicketUtil.NAME, TicketUtil.DESIRED_DATE_FOR_FILTER_PARAMS,
+                TicketUtil.URGENCIES_FOR_FILTER_PARAMS, TicketUtil.STATES_FOR_FILTER_PARAMS);
 
         //then
         assertThat(actualFilterParamsDto).isEqualTo(expectedFilterParamsDto);
+    }
+
+    @Test
+    void validateTicketStateDone_shouldThrowTicketStateNotDoneException_whenTicketStatusIsNotDone() {
+        // given
+        when(ticketsRepository.findById(ticket.getId())).thenReturn(Optional.of(ticket));
+        when(ticketMapper.mapTicketInTicketDto(ticket)).thenReturn(ticketDto);
+        //when
+        //then
+        assertThatThrownBy(() -> ticketsService.validateTicketStateDone(TicketUtil.TICKET_ID))
+                .isInstanceOf(TicketStateNotDoneException.class)
+                .hasMessage(String.format("Status for ticket is not DONE! ticketId:%s", TicketUtil.TICKET_ID));
+        verify(ticketMapper).mapTicketInTicketDto(ticket);
+        verify(ticketsRepository).findById(ticket.getId());
+    }
+
+    @Test
+    void validateTicketOwnerBelongUser_shouldThrowTicketOwnerNotBelongsToUserException() {
+        //given
+        Long differentUserId = 667L;
+
+        when(ticketsRepository.findById(ticket.getId())).thenReturn(Optional.of(ticket));
+        when(ticketMapper.mapTicketInTicketDto(ticket)).thenReturn(ticketDto);
+        //when
+        //then
+        assertThatThrownBy(() -> ticketsService.validateTicketOwnerBelongUser(TicketUtil.TICKET_ID, differentUserId))
+                .isInstanceOf(TicketOwnerNotBelongsToUserException.class)
+                .hasMessage(String.format("Ticket owner not belongs to user for ticket! ticketId=%s, userId:%s", TicketUtil.TICKET_ID, differentUserId));
+
+        verify(ticketMapper).mapTicketInTicketDto(ticket);
+        verify(ticketsRepository).findById(ticket.getId());
     }
 }

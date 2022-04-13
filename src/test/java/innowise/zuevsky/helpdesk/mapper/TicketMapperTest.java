@@ -1,17 +1,16 @@
 package innowise.zuevsky.helpdesk.mapper;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
 import innowise.zuevsky.helpdesk.domain.Ticket;
 import innowise.zuevsky.helpdesk.dto.TicketDto;
 import innowise.zuevsky.helpdesk.dto.TicketSaveDto;
 import innowise.zuevsky.helpdesk.util.TicketUtil;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-
-
 class TicketMapperTest {
 
-    private final TicketMapper ticketMapper = new TicketMapper();
+	private final TicketMapper ticketMapper = new TicketMapper();
 
     @Test
     void mapTicketSaveDtoInTicket_ShouldPass_IfNumberOfFieldsIsRight() {

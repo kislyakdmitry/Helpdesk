@@ -11,7 +11,6 @@ import innowise.zuevsky.helpdesk.dto.TicketSaveDto;
 import innowise.zuevsky.helpdesk.dto.TicketUpdateDto;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import org.springframework.data.domain.PageRequest;
@@ -19,7 +18,7 @@ import org.springframework.data.domain.Pageable;
 
 public class TicketUtil {
 
-    public static final Long ID = 69L;
+    public static final Long TICKET_ID = 69L;
     public static final String NAME = "test name";
     public static final String UPDATED_NAME = "updated name";
     public static final String DESCRIPTION = "test description";
@@ -56,7 +55,7 @@ public class TicketUtil {
 
     public static TicketDto createTicketDto() {
         return TicketDto.builder()
-                .id(ID)
+                .id(TICKET_ID)
                 .name(NAME)
                 .state(STATE)
                 .category(CATEGORY)
@@ -82,7 +81,7 @@ public class TicketUtil {
 
     public static Ticket createUpdatedTicket() {
         return Ticket.builder()
-            .id(ID)
+            .id(TICKET_ID)
             .name(UPDATED_NAME)
             .description(UPDATED_DESCRIPTION)
             .desiredResolutionDate(DESIRED_UPDATED_DATE)
@@ -99,7 +98,7 @@ public class TicketUtil {
 
     public static Ticket createTicketForTicketDto() {
         return Ticket.builder()
-                .id(ID)
+                .id(TICKET_ID)
                 .name(NAME)
                 .description(DESCRIPTION)
                 .desiredResolutionDate(DESIRED_DATE)
@@ -134,7 +133,7 @@ public class TicketUtil {
 
     public static FilterParamsDto createFilterParamsDto() {
         return FilterParamsDto.builder()
-            .id(ID)
+            .id(TICKET_ID)
             .name(NAME)
             .desiredDate(DESIRED_DATE)
             .urgencies(List.of(URGENCY))

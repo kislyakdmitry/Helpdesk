@@ -1,10 +1,10 @@
 package innowise.zuevsky.helpdesk.exception;
 
-public class TicketNotFoundException extends RuntimeException{
+public class TicketNotFoundException extends EntityNotFoundException {
 
-    private static final String DEFAULT_MESSAGE = "Ticket doesn't exist! ID: %d";
+	private static final String DEFAULT_MESSAGE = "Ticket doesn't exist! ID: ";
 
-    public TicketNotFoundException(Long id) {
-        super(String.format(DEFAULT_MESSAGE, id));
-    }
+	public TicketNotFoundException(Long id) {
+		super(DEFAULT_MESSAGE + id);
+	}
 }
