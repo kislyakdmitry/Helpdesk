@@ -25,10 +25,10 @@ public class GlobalExceptionHandler {
 				.timestamp(LocalDateTime.now()).build();
 	}
 
-	@ExceptionHandler(FeedbackNotFoundException.class)
+	@ExceptionHandler({FeedbackNotFoundException.class, TicketNotFoundException.class})
 	@ResponseStatus(HttpStatus.NOT_FOUND)
-	public ErrorResponse handleFeedbackNotFoundException(FeedbackNotFoundException notFoundException) {
-		return ErrorResponse.builder().message(notFoundException.getMessage()).status(HttpStatus.NOT_FOUND)
+	public ErrorResponse handleEntityNotFoundException(EntityNotFoundException entityNotFoundException) {
+		return ErrorResponse.builder().message(entityNotFoundException.getMessage()).status(HttpStatus.NOT_FOUND)
 				.timestamp(LocalDateTime.now()).build();
 	}
 
@@ -36,13 +36,6 @@ public class GlobalExceptionHandler {
 	@ResponseStatus(HttpStatus.UNAUTHORIZED)
 	public ErrorResponse handleJwtFilterException(JwtFilterException jwtFilterException) {
 		return ErrorResponse.builder().message(jwtFilterException.getMessage()).status(HttpStatus.UNAUTHORIZED)
-				.timestamp(LocalDateTime.now()).build();
-	}
-
-	@ExceptionHandler(TicketNotFoundException.class)
-	@ResponseStatus(HttpStatus.NOT_FOUND)
-	public ErrorResponse handleTicketNotFoundException(TicketNotFoundException exception) {
-		return ErrorResponse.builder().message(exception.getMessage()).status(HttpStatus.NOT_FOUND)
 				.timestamp(LocalDateTime.now()).build();
 	}
 

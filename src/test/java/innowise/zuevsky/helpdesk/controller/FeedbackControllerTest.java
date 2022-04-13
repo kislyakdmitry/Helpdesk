@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -28,89 +29,94 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(MockitoExtension.class)
 class FeedbackControllerTest {
-	@InjectMocks
-	FeedbackController feedbackController;
+    @InjectMocks
+    FeedbackController feedbackController;
+    @Mock
+    FeedbackService feedbackService;
+    MockMvc mockMvc;
+    FeedbackDto feedbackDto = FeedbackUtil.createFeedbackDto();
+    FeedbackSaveDto feedbackSaveDto = FeedbackUtil.createFeedbackSaveDtoForFeedback();
 
-	@Mock
-	FeedbackService feedbackService;
+    @BeforeEach
+    void setUp() {
+        mockMvc = MockMvcBuilders.standaloneSetup(feedbackController)
+                .setControllerAdvice(GlobalExceptionHandler.class)
+                .build();
+    }
 
-	MockMvc mockMvc;
+    @Test
+    @WithMockUser
+    void getFeedback_shouldReturnFeedbackDto_whenFeedbackExist() throws Exception {
+        // given
+        String url = "/api/feedbacks/{feedbackId}";
+        when(feedbackService.getFeedbackById(FeedbackUtil.FEEDBACK_ID)).thenReturn(feedbackDto);
+        // when
+        // then
+        mockMvc.perform(get(url, FeedbackUtil.FEEDBACK_ID))
+                .andExpect(jsonPath("$.date").isNotEmpty())
+                .andExpect(jsonPath("$.rate").value(feedbackDto.getRate()))
+                .andExpect(jsonPath("$.text").value(feedbackDto.getText())).andExpect(status().isOk());
 
-	FeedbackDto feedbackDto = FeedbackUtil.createFeedbackDto();
-	FeedbackSaveDto feedbackSaveDto = FeedbackUtil.createFeedbackSaveDtoForFeedback();
+        verify(feedbackService).getFeedbackById(FeedbackUtil.FEEDBACK_ID);
+    }
 
-	@BeforeEach
-	void setUp() {
-		mockMvc = MockMvcBuilders.standaloneSetup(feedbackController).setControllerAdvice(GlobalExceptionHandler.class)
-				.build();
-	}
+    @Test
+    @WithMockUser
+    void getFeedback_shouldReturnFeedbackNotFoundException_whenFeedbackDoesNotExist() throws Exception {
+        // given
+        String url = "/api/feedbacks/{feedbackId}";
+        when(feedbackService.getFeedbackById(FeedbackUtil.FEEDBACK_ID)).thenThrow(new FeedbackNotFoundException(FeedbackUtil.FEEDBACK_ID));
 
-	@Test
-	@WithMockUser
-	void getFeedback_shouldReturnFeedbackDto_whenFeedbackExist() throws Exception {
-		// given
-		String url = "/api/feedbacks/{feedbackId}";
+        mockMvc.perform(get(url, FeedbackUtil.FEEDBACK_ID))
+                .andExpect(status().isNotFound());
+        //then
+        verify(feedbackService).getFeedbackById(FeedbackUtil.FEEDBACK_ID);
+    }
 
-		when(feedbackService.getFeedbackById(anyLong())).thenReturn(feedbackDto);
-		// when
-		// then
-		mockMvc.perform(get(url, FeedbackUtil.FEEDBACK_ID)).andExpect(jsonPath("$.date").isNotEmpty())
-				.andExpect(jsonPath("$.rate").value(feedbackDto.getRate()))
-				.andExpect(jsonPath("$.text").value(feedbackDto.getText())).andExpect(status().isOk());
-	}
+    @Test
+    void getFeedbackByTicketId_shouldReturnFeedback_whenExist() throws Exception {
+        // given
+        String url = "/api/feedbacks/feedback/{ticketId}";
+        when(feedbackService.getFeedbackByTicketId(anyLong())).thenReturn(feedbackDto);
+        // when
+        // then
+        mockMvc.perform(get(url, FeedbackUtil.TICKET_ID))
+                .andExpect(jsonPath("$.date").isNotEmpty())
+                .andExpect(jsonPath("$.rate").value(feedbackDto.getRate()))
+                .andExpect(jsonPath("$.text").value(feedbackDto.getText())).andExpect(status().isOk());
 
-	@Test
-	@WithMockUser
-	void getFeedback_shouldReturnFeedbackNotFoundException_whenFeedbackDoesNotExist() throws Exception {
-		// given
-		String url = "/api/feedbacks/{feedbackId}";
-		when(feedbackService.getFeedbackById(anyLong()))
-				.thenThrow(new FeedbackNotFoundException(FeedbackUtil.FEEDBACK_ID));
-		// then
-		mockMvc.perform(get(url, FeedbackUtil.FEEDBACK_ID)).andExpect(status().isNotFound());
-	}
+        verify(feedbackService).getFeedbackByTicketId(FeedbackUtil.TICKET_ID);
+    }
 
-	@Test
-	void getFeedbackByTicketId_shouldReturnFeedback_whenExist() throws Exception {
-		// given
-		String url = "/api/feedbacks/feedback/{ticketId}";
-		when(feedbackService.getFeedbackByTicketId(anyLong())).thenReturn(feedbackDto);
-		// when
-		// then
-		mockMvc.perform(get(url, FeedbackUtil.TICKET_ID)).andExpect(jsonPath("$.date").isNotEmpty())
-				.andExpect(jsonPath("$.rate").value(feedbackDto.getRate()))
-				.andExpect(jsonPath("$.text").value(feedbackDto.getText())).andExpect(status().isOk());
-	}
+    @Test
+    void getFeedbackByTicketId_shouldReturnFeedbackNotFoundException_whenDoesNotExist() throws Exception {
+        // given
+        String url = "/api/feedbacks/feedback/{ticketId}";
+        when(feedbackService.getFeedbackByTicketId(anyLong())).thenThrow(new FeedbackNotFoundException(FeedbackUtil.TICKET_ID));
+        // when
+        // then
+        mockMvc.perform(get(url, FeedbackUtil.TICKET_ID))
+                .andExpect(status().isNotFound());
+        verify(feedbackService).getFeedbackByTicketId(FeedbackUtil.TICKET_ID);
+    }
 
-	@Test
-	void getFeedbackByTicketId_shouldReturnFeedbackNotFoundException_whenDoesNotExist() throws Exception {
-		// given
-		String url = "/api/feedbacks/feedback/{ticketId}";
-		when(feedbackService.getFeedbackByTicketId(anyLong()))
-				.thenThrow(new FeedbackNotFoundException(FeedbackUtil.TICKET_ID));
-		// when
-		// then
-		mockMvc.perform(get(url, FeedbackUtil.TICKET_ID)).andExpect(status().isNotFound());
-	}
+    @Test
+    void saveFeedback_shouldSaveFeedback() throws Exception {
+        // given
+        String url = "/api/feedbacks";
+        // when
+        // then
+        mockMvc.perform(post(url).contentType(APPLICATION_JSON).accept(APPLICATION_JSON).content(asJson(feedbackSaveDto)))
+                .andExpect(status().isOk());
+    }
 
-	@Test
-	void saveFeedback_shouldSaveFeedback() throws Exception {
-		// given
-		String url = "/api/feedbacks";
-		// when
-		// then
-		mockMvc.perform(
-				post(url).contentType(APPLICATION_JSON).accept(APPLICATION_JSON).content(asJson(feedbackSaveDto)))
-				.andExpect(status().isOk());
-	}
-
-	private String asJson(Object object) {
-		try {
-			ObjectMapper objectMapper = new ObjectMapper();
-			return objectMapper.writeValueAsString(object);
-		} catch (JsonProcessingException e) {
-			throw new RuntimeException(e);
-		}
-	}
+    private String asJson(Object object) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            return objectMapper.writeValueAsString(object);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

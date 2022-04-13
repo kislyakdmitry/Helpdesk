@@ -9,9 +9,7 @@ import innowise.zuevsky.helpdesk.util.FeedbackUtil;
 import org.junit.jupiter.api.Test;
 
 class FeedbackMapperTest {
-
 	private final FeedbackMapper feedbackMapper = new FeedbackMapper();
-
 	@Test
 	void mapFeedbackToFeedbackDto_shouldReturnFeedbackDto() {
 		// given
