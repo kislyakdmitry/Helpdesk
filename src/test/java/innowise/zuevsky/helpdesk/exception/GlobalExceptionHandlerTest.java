@@ -50,7 +50,7 @@ class GlobalExceptionHandlerTest {
     void handleTicketOwnerNotBelongsToUserException_shouldReturnErrorResponse() {
         // given
         TicketOwnerNotBelongsToUserException exception = new TicketOwnerNotBelongsToUserException(TicketUtil.TICKET_ID,
-                TicketUtil.USER_ID);
+                TicketUtil.OWNER_ID);
         ErrorResponse expected = ErrorResponse.builder().message(exception.getMessage()).status(HttpStatus.BAD_REQUEST)
                 .timestamp(LocalDateTime.now()).build();
 
