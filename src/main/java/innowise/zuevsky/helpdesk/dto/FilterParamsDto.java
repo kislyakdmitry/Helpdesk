@@ -14,9 +14,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class FilterParamsDto {
-  private Long id;
-  private String name;
-  private LocalDate desiredDate;
-  private List<Urgency> urgencies;
-  private List<State> states;
+	private Long id;
+	private String name;
+	private LocalDate desiredDate;
+	private List<Urgency> urgencies;
+	private List<State> states;
 }

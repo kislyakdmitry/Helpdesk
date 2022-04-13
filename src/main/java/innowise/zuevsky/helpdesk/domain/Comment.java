@@ -21,17 +21,17 @@ import lombok.Setter;
 @NoArgsConstructor
 @Table(name = "comments")
 public class Comment {
-  @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "comments_id_seq")
-  @Column(name = "id", nullable = false)
-  private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "comments_id_seq")
+	@Column(name = "id", nullable = false)
+	private Long id;
 
-  @Column(name = "user_id")
-  private Long userId;
+	@Column(name = "user_id")
+	private Long userId;
 
-  @Column(name = "text")
-  private String text;
+	@Column(name = "text")
+	private String text;
 
-  @Column(name = "date")
-  private LocalDate date;
+	@Column(name = "date")
+	private LocalDate date;
 }

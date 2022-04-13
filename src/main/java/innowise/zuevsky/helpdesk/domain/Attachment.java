@@ -20,14 +20,14 @@ import lombok.Setter;
 @NoArgsConstructor
 @Table(name = "attachments")
 public class Attachment {
-  @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "attachments_id_seq")
-  @Column(name = "id", nullable = false)
-  private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "attachments_id_seq")
+	@Column(name = "id", nullable = false)
+	private Long id;
 
-  @Column(name = "link")
-  private String link;
+	@Column(name = "link")
+	private String link;
 
-  @Column(name = "name")
-  private String name;
+	@Column(name = "name")
+	private String name;
 }

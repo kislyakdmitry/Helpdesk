@@ -12,6 +12,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Getter
@@ -22,23 +23,24 @@ import lombok.Setter;
 @Table(name = "feedbacks")
 public class Feedback {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "feedbacks_id_seq")
-  @Column(name = "id", nullable = false)
-  private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "feedbacks_id_seq")
+	@Column(name = "id", nullable = false)
+	private Long id;
 
-  @Column(name = "user_Id")
-  private Long userId;
+	@Column(name = "user_Id")
+	private Long userId;
 
-  @Column(name = "rate", nullable = false)
-  private Integer rate;
+	@Column(name = "rate", nullable = false)
+	private Integer rate;
 
-  @Column(name = "text")
-  private String text;
+	@Column(name = "text")
+	private String text;
 
-  @Column(name = "created")
-  private LocalDateTime date;
+	@Column(name = "created", updatable = false)
+	@CreationTimestamp
+	private LocalDateTime created;
 
-  @Column(name = "ticket_id")
-  private Long ticketId;
+	@Column(name = "ticket_id")
+	private Long ticketId;
 }

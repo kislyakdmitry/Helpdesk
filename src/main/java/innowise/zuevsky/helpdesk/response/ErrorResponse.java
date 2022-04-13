@@ -12,7 +12,7 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 @Builder
 public class ErrorResponse {
-  private String message;
-  private HttpStatus status;
-  private LocalDateTime timestamp;
+	private String message;
+	private HttpStatus status;
+	private LocalDateTime timestamp;
 }

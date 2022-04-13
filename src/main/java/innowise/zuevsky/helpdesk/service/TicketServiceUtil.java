@@ -8,8 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TicketServiceUtil {
 
-  public static final List<State> statesOfManagerApprover =
-      List.of(State.APPROVED, State.DECLINED, State.CANCELED, State.IN_PROGRESS, State.DONE);
-  public static final List<State> statesOfEngineerAssignee = List.of(State.IN_PROGRESS, State.DONE);
-
+	public static final List<State> statesOfManagerApprover = List.of(State.APPROVED, State.DECLINED, State.CANCELED,
+			State.IN_PROGRESS, State.DONE);
+	public static final List<State> statesOfEngineerAssignee = List.of(State.IN_PROGRESS, State.DONE);
 }
