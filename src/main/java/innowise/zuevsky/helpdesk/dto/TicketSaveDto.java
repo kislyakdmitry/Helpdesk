@@ -1,5 +1,9 @@
 package innowise.zuevsky.helpdesk.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import innowise.zuevsky.helpdesk.domain.Attachment;
 import innowise.zuevsky.helpdesk.domain.enums.Category;
 import innowise.zuevsky.helpdesk.domain.enums.State;
@@ -29,6 +33,8 @@ public class TicketSaveDto {
 	@Pattern(regexp = "^[A-Za-z0-9~.\"(),:;<>@\\[\\]!#$%&'*+\\-/=?^_`{|} ]{2,500}$")
 	private String description;
 
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonDeserialize(using = LocalDateDeserializer.class)
 	@NotNull
 	@FutureOrPresent
 	private LocalDate desiredResolutionDate;

@@ -1,5 +1,6 @@
 package innowise.zuevsky.helpdesk.controller;
 
+import innowise.zuevsky.helpdesk.api.ITicketsController;
 import innowise.zuevsky.helpdesk.domain.enums.State;
 import innowise.zuevsky.helpdesk.domain.enums.Urgency;
 import innowise.zuevsky.helpdesk.dto.TicketDto;
@@ -29,7 +30,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/api/tickets")
 @RequiredArgsConstructor
-public class TicketsController {
+public class TicketsController implements ITicketsController {
 
     private final TicketsService ticketsService;
     private final UsersService usersService;

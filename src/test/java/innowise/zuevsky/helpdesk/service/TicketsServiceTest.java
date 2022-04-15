@@ -338,4 +338,5 @@ class TicketsServiceTest {
         verify(ticketMapper).mapTicketInTicketDto(ticket);
         verify(ticketsRepository).findById(ticket.getId());
     }
+
 }

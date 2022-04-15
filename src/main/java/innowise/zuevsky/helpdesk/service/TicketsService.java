@@ -52,7 +52,7 @@ public class TicketsService {
 
   public void updateTicket(TicketUpdateDto updateDto, Long id) {
     Ticket ticket = ticketsRepository.findById(id).orElseThrow(() ->
-        new TicketNotFoundException(id));
+            new TicketNotFoundException(id));
     ticketsRepository.save(ticketUpdateService.updateTicket(updateDto, ticket));
   }
 

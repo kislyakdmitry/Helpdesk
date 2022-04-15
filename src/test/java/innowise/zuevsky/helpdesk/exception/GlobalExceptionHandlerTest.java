@@ -118,4 +118,21 @@ class GlobalExceptionHandlerTest {
         assertThat(expected.getMessage()).isEqualTo(actual.getMessage());
         assertThat(expected.getStatus()).isEqualTo(actual.getStatus());
     }
+
+    @Test
+    void handleJwtAuthenticationException_shouldReturnJwtAuthenticationException(){
+        JwtAuthenticationException exception =  new JwtAuthenticationException("Error", HttpStatus.UNAUTHORIZED);
+        ErrorResponse expected = ErrorResponse.builder()
+                .message(exception.getMessage()).status(HttpStatus.UNAUTHORIZED)
+                .timestamp(LocalDateTime.now())
+                .build();
+
+        ErrorResponse actual = globalExceptionHandler.handleJwtAuthenticationException(exception);
+
+        //then
+        assertThat(expected).isNotNull();
+        assertThat(exception.getMessage()).isEqualTo(actual.getMessage());
+        assertThat(expected.getStatus()).isEqualTo(actual.getStatus());
+    }
+
 }
