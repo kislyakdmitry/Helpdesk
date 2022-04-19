@@ -25,7 +25,7 @@ public class GlobalExceptionHandler {
 				.timestamp(LocalDateTime.now()).build();
 	}
 
-	@ExceptionHandler({FeedbackNotFoundException.class, TicketNotFoundException.class})
+	@ExceptionHandler({FeedbackNotFoundException.class, TicketNotFoundException.class, UserNotFoundException.class})
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	public ErrorResponse handleEntityNotFoundException(EntityNotFoundException entityNotFoundException) {
 		return ErrorResponse.builder().message(entityNotFoundException.getMessage()).status(HttpStatus.NOT_FOUND)
@@ -53,5 +53,22 @@ public class GlobalExceptionHandler {
 		return ErrorResponse.builder().message(ticketStateNotDoneException.getMessage()).status(HttpStatus.BAD_REQUEST)
 				.timestamp(LocalDateTime.now()).build();
 	}
+
+	@ExceptionHandler(JwtAuthenticationException.class)
+	@ResponseStatus(HttpStatus.UNAUTHORIZED)
+	public ErrorResponse handleJwtAuthenticationException(JwtAuthenticationException jwtAuthenticationException){
+		return ErrorResponse.builder().message(jwtAuthenticationException.getMessage()).status(HttpStatus.UNAUTHORIZED)
+				.timestamp(LocalDateTime.now())
+				.build();
+	}
+
+	@ExceptionHandler(LoginException.class)
+	@ResponseStatus(HttpStatus.UNAUTHORIZED)
+	public ErrorResponse handleLoginException(LoginException loginException){
+		return ErrorResponse.builder().message(loginException.getMessage()).status(HttpStatus.UNAUTHORIZED)
+				.timestamp(LocalDateTime.now())
+				.build();
+	}
+
 
 }
