@@ -20,8 +20,5 @@ public class FeedbackIT extends DatabaseIT {
     @Test
     @WithMockUser
     public void testMvc() {
-        Feedback feedback = feedbackRepository.save(FeedbackUtil.createFeedback());
-        ResponseEntity<FeedbackDto> response = testRestTemplate.getForEntity("/api/feedbacks/{feedbackId}", FeedbackDto.class, feedback.getId());
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
     }
 }
