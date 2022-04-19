@@ -1,12 +1,13 @@
 package innowise.zuevsky.helpdesk.it;
 
 import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Testcontainers
 public class TestPostgresContainer extends PostgreSQLContainer<TestPostgresContainer> {
 
-    private static final String IMAGE_VERSION = "postgres:11.1";
+    private static final String IMAGE_VERSION = "postgres:13.1";
 
     private static TestPostgresContainer container;
 
