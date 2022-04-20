@@ -10,9 +10,11 @@ public class FeedbackUtil {
 
 	public static final int RATE = 5;
 	public static final Long FEEDBACK_ID = 1L;
+	public static final Long FEEDBACK_ID_NOT_EXIST = 100L;
 	public static final Long USER_ID = 2L;
 	public static final Long OWNER_ID = 4L;
 	public static final Long TICKET_ID = 3L;
+	public static final Long TICKET_ID_NOT_EXIST = 300L;
 	public static final String TEXT = "test text";
 	public static final LocalDateTime CREATED = LocalDateTime.of(2022, 4, 1, 12, 0, 0);
 	public static final State STATE_DONE = State.DONE;

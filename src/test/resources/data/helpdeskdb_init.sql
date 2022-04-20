@@ -64,23 +64,3 @@ create table feedbacks
         foreign key (ticket_id) references tickets
             on delete cascade
 );
-
-INSERT INTO public.users (id, first_name, last_name, role, email, password, status) VALUES (1, 'user1', 'user1', 'ROLE_EMPLOYEE', 'user1_mogilev@yopmail.com', '$2a$12$UBXPkMHbwkC5ZFUWrInSKu65ba.joR3ZsVv2BoMhHH.GXtFsHR4p2', 'ACTIVE');
-INSERT INTO public.users (id, first_name, last_name, role, email, password, status) VALUES (2, 'user2', 'user2', 'ROLE_EMPLOYEE', 'user2_mogilev@yopmail.com', '$2a$12$UBXPkMHbwkC5ZFUWrInSKu65ba.joR3ZsVv2BoMhHH.GXtFsHR4p2', 'ACTIVE');
-INSERT INTO public.users (id, first_name, last_name, role, email, password, status) VALUES (3, 'manager1', 'manager1', 'ROLE_MANAGER', 'manager1_mogilev@yopmail.com', '$2a$12$UBXPkMHbwkC5ZFUWrInSKu65ba.joR3ZsVv2BoMhHH.GXtFsHR4p2', 'ACTIVE');
-INSERT INTO public.users (id, first_name, last_name, role, email, password, status) VALUES (4, 'manager2', 'manager2', 'ROLE_MANAGER', 'manager2_mogilev@yopmail.com', '$2a$12$UBXPkMHbwkC5ZFUWrInSKu65ba.joR3ZsVv2BoMhHH.GXtFsHR4p2', 'ACTIVE');
-INSERT INTO public.users (id, first_name, last_name, role, email, password, status) VALUES (5, 'engineer1', 'engineer1', 'ROLE_ENGINEER', 'engineer1_mogilev@yopmail.com', '$2a$12$UBXPkMHbwkC5ZFUWrInSKu65ba.joR3ZsVv2BoMhHH.GXtFsHR4p2', 'ACTIVE');
-INSERT INTO public.users (id, first_name, last_name, role, email, password, status) VALUES (6, 'engineer2', 'engineer2', 'ROLE_ENGINEER', 'engineer2_mogilev@yopmail.com', '$2a$12$UBXPkMHbwkC5ZFUWrInSKu65ba.joR3ZsVv2BoMhHH.GXtFsHR4p2', 'ACTIVE');
-
-INSERT INTO public.tickets (id, name, description, created_on, desired_resolution_date, assignee_id, owner_id, state, category, urgency, approver_id) VALUES (1, 'Ticket 1', 'First ticket', '2022-03-16 00:00:00.000000', '2022-03-18', 5, 1, 1, 0, 0, 3);
-INSERT INTO public.tickets (id, name, description, created_on, desired_resolution_date, assignee_id, owner_id, state, category, urgency, approver_id) VALUES (2, 'Ticket 2', 'Second ticket', '2022-03-17 10:00:00.000000', '2022-03-20', 5, 1, 2, 1, 1, 3);
-INSERT INTO public.tickets (id, name, description, created_on, desired_resolution_date, assignee_id, owner_id, state, category, urgency, approver_id) VALUES (3, 'Ticket 3', 'Third ticket', '2022-03-17 10:00:00.000000', '2022-03-20', 6, 2, 3, 2, 2, 4);
-INSERT INTO public.tickets (id, name, description, created_on, desired_resolution_date, assignee_id, owner_id, state, category, urgency, approver_id) VALUES (4, 'Ticket 4', 'Fourth ticket', '2022-03-17 10:00:00.000000', '2022-03-20', 6, 2, 4, 3, 3, 4);
-INSERT INTO public.tickets (id, name, description, created_on, desired_resolution_date, assignee_id, owner_id, state, category, urgency, approver_id) VALUES (5, 'Ticket 5', 'Fourth ticket', '2022-03-17 10:00:00.000000', '2022-03-20', 5, 1, 5, 4, 3, 4);
-INSERT INTO public.tickets (id, name, description, created_on, desired_resolution_date, assignee_id, owner_id, state, category, urgency, approver_id) VALUES (6, 'Ticket 6', 'Six ticket', '2022-03-17 10:00:00.000000', '2022-03-20', 5, 1, 6, 5, 2, 4);
-INSERT INTO public.tickets (id, name, description, created_on, desired_resolution_date, assignee_id, owner_id, state, category, urgency, approver_id) VALUES (7, 'Ticket 7', 'Seven ticket', '2022-03-17 10:00:00.000000', '2022-03-20', 6, 1, 1, 0, 1, 3);
-INSERT INTO public.tickets (id, name, description, created_on, desired_resolution_date, assignee_id, owner_id, state, category, urgency, approver_id) VALUES (8, 'Ticket 8', 'Eight ticket', '2022-03-13 10:00:00.000000', '2022-03-20', 6, 1, 0, 1, 2, 3);
-INSERT INTO public.tickets (id, name, description, created_on, desired_resolution_date, assignee_id, owner_id, state, category, urgency, approver_id) VALUES (9, 'Ticket 9', 'Nine ticket', '2022-03-15 10:00:00.000000', '2022-04-02', 5, 1, 2, 2, 0, 3);
-INSERT INTO public.tickets (id, name, description, created_on, desired_resolution_date, assignee_id, owner_id, state, category, urgency, approver_id) VALUES (10, 'Ticket 10', 'Ten ticket', '2022-03-14 10:00:00.000000', '2022-03-25', 6, 1, 3, 3, 3, 3);
-
-INSERT INTO public.feedbacks (id, user_id, rate, created, text, ticket_id) VALUES (1, 2, 5, '2022-04-19 09:51:54.989423', 'Good job!', 3);
