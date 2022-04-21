@@ -2,23 +2,11 @@ pipeline {
   agent any
   stages {
     stage('build') {
-            agent{
-                  docker{
-                      image 'postgres:14.1'
-                      reuseNode true
-                    }
-            }
       steps {
         sh './gradlew clean build'
       }
     }
     stage('test') {
-        agent{
-              docker{
-                  image 'postgres:14.1'
-                  reuseNode true
-                }
-        }
       steps {
         sh './gradlew test'
       }
@@ -40,7 +28,7 @@ pipeline {
     }
   }
   tools {
-    jdk 'JDK_17'
+    jdk 'JDK_17_new'
   }
   post {
     always {
