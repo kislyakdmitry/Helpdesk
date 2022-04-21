@@ -6,11 +6,6 @@ pipeline {
         sh './gradlew clean build'
       }
     }
-    stage('test') {
-      steps {
-        sh './gradlew test'
-      }
-    }
     stage('SonarQube Analysis') {
       steps {
         withSonarQubeEnv('Sonar') {
@@ -28,7 +23,7 @@ pipeline {
     }
   }
   tools {
-    jdk 'JDK_17'
+    jdk 'JDK_17_new'
   }
   post {
     always {
