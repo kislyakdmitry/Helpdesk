@@ -1,15 +1,18 @@
 pipeline {
-  agent {
-    docker { image 'node:16.13.1-alpine' }
-   }
+  agent any
   stages {
     stage('build') {
       steps {
-        sh 'node --version'
         sh './gradlew clean build'
       }
     }
     stage('test') {
+        agent{
+              docker{
+                  image 'postgres:14.1'
+                  reuseNode true
+                }
+        }
       steps {
         sh './gradlew test'
       }
