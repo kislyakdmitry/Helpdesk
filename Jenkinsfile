@@ -1,16 +1,16 @@
 pipeline {
   agent {
-         docker { image 'node:16.13.1-alpine' }
-  }
+    docker { image 'node:16.13.1-alpine' }
+   }
   stages {
     stage('build') {
       steps {
+        sh 'node --version'
         sh './gradlew clean build'
       }
     }
     stage('test') {
       steps {
-        sh 'node --version'
         sh './gradlew test'
       }
     }
