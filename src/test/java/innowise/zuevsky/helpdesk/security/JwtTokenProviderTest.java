@@ -5,8 +5,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.Mockito.when;
 
 import innowise.zuevsky.helpdesk.exception.JwtAuthenticationException;
-import innowise.zuevsky.helpdesk.util.SecurityUtil;
-import innowise.zuevsky.helpdesk.util.UserUtil;
+import innowise.zuevsky.helpdesk.util.SecurityTestUtil;
+import innowise.zuevsky.helpdesk.util.UserTestUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -35,28 +35,28 @@ class JwtTokenProviderTest {
     userDetailsService = Mockito.mock(UserDetailsServiceImpl.class);
     request = Mockito.mock(HttpServletRequest.class);
     jwtTokenProvider = new JwtTokenProvider(
-        userDetailsService, 3600, SecurityUtil.ENCODED_SECRET_KEY, "Authorization");
+        userDetailsService, 3600, SecurityTestUtil.ENCODED_SECRET_KEY, "Authorization");
   }
 
   @Test
   void createToken_ShouldPass_WhenTokenCreatedSuccessfully() {
 
     //when
-    String token = jwtTokenProvider.createToken(SecurityUtil.USERNAME,
-        SecurityUtil.USER_ROLE.name());
-    String username = Jwts.parserBuilder().setSigningKey(SecurityUtil.ENCODED_SECRET_KEY).build()
+    String token = jwtTokenProvider.createToken(SecurityTestUtil.USERNAME,
+        SecurityTestUtil.USER_ROLE.name());
+    String username = Jwts.parserBuilder().setSigningKey(SecurityTestUtil.ENCODED_SECRET_KEY).build()
         .parseClaimsJws(token).getBody().getSubject();
 
     //then
     assertThat(token).isNotNull();
-    assertThat(username).isEqualTo(SecurityUtil.USERNAME);
+    assertThat(username).isEqualTo(SecurityTestUtil.USERNAME);
   }
 
   @Test
   void validateToken_ShouldPass_WhenTokenIsNotExpired() throws JwtAuthenticationException {
 
     //when
-    String token = SecurityUtil.createTestToken();
+    String token = SecurityTestUtil.createTestToken();
 
     //then
     assertThat(jwtTokenProvider.validateToken(token)).isTrue();
@@ -66,15 +66,15 @@ class JwtTokenProviderTest {
   void validateToken_ShouldThrowException_WhenTokenIsExpired() {
 
     //when
-    Claims claims = Jwts.claims().setSubject(SecurityUtil.USERNAME);
-    claims.put("role", SecurityUtil.USER_ROLE.name());
+    Claims claims = Jwts.claims().setSubject(SecurityTestUtil.USERNAME);
+    claims.put("role", SecurityTestUtil.USER_ROLE.name());
     Date now = new Date();
-    Date validity = new Date(now.getTime() + 100);
+    Date validity = new Date(now.getTime() + 1);
     String token = Jwts.builder()
         .setClaims(claims)
         .setIssuedAt(now)
         .setExpiration(validity)
-        .signWith(SecurityUtil.SECRET_KEY, SignatureAlgorithm.HS256)
+        .signWith(SecurityTestUtil.SECRET_KEY, SignatureAlgorithm.HS256)
         .compact();
 
     //then
@@ -87,10 +87,10 @@ class JwtTokenProviderTest {
   void getAuthentication_ShouldPass_WhenActualAuthenticationIsValid() {
 
     //given
-    String token = SecurityUtil.createTestToken();
-    UserDetails userDetails = SecurityUser.fromUser(UserUtil.createTestUser());
+    String token = SecurityTestUtil.createTestToken();
+    UserDetails userDetails = SecurityUser.fromUser(UserTestUtil.createTestUser());
     Authentication expectedAuthentication = new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
-    when(userDetailsService.loadUserByUsername(SecurityUtil.USERNAME)).thenReturn(userDetails);
+    when(userDetailsService.loadUserByUsername(SecurityTestUtil.USERNAME)).thenReturn(userDetails);
 
     //when
     Authentication actualAuthentication = jwtTokenProvider.getAuthentication(token);
@@ -103,8 +103,8 @@ class JwtTokenProviderTest {
   void getUsername_ShouldPass_WhenActualUsernameIsValid() {
 
     //given
-    String token = SecurityUtil.createTestToken();
-    String expectedUsername = Jwts.parserBuilder().setSigningKey(SecurityUtil.ENCODED_SECRET_KEY).build().parseClaimsJws(token).getBody().getSubject();
+    String token = SecurityTestUtil.createTestToken();
+    String expectedUsername = Jwts.parserBuilder().setSigningKey(SecurityTestUtil.ENCODED_SECRET_KEY).build().parseClaimsJws(token).getBody().getSubject();
 
     //when
     String actualUsername = jwtTokenProvider.getUsername(token);

@@ -1,7 +1,7 @@
 package innowise.zuevsky.helpdesk.mapper;
 
 import innowise.zuevsky.helpdesk.dto.FilterParamsDto;
-import innowise.zuevsky.helpdesk.util.FilterParamsUtil;
+import innowise.zuevsky.helpdesk.util.FilterParamsTestUtil;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -12,11 +12,11 @@ class    FilterParamsMapperTest {
 
     @Test
     void mapParamsInFilterParamsDto_ShouldPass_IfNumberOfFieldsIsRight() {
-        FilterParamsDto filterParamsDto = FilterParamsUtil.createFilterParamsDto();
+        FilterParamsDto filterParamsDto = FilterParamsTestUtil.createFilterParamsDto();
 
         assertThat(filterParamsDto)
                 .usingRecursiveComparison()
                 .isEqualTo(filterParamsMapper.mapParamsInFilterParamsDto(
-                        FilterParamsUtil.ID, FilterParamsUtil.NAME, FilterParamsUtil.DESIRED_DATE, FilterParamsUtil.URGENCIES, FilterParamsUtil.STATES));
+                        FilterParamsTestUtil.ID, FilterParamsTestUtil.NAME, FilterParamsTestUtil.DESIRED_DATE, FilterParamsTestUtil.URGENCIES, FilterParamsTestUtil.STATES));
     }
 }

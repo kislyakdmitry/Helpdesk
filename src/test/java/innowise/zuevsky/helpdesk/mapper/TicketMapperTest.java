@@ -5,7 +5,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import innowise.zuevsky.helpdesk.domain.Ticket;
 import innowise.zuevsky.helpdesk.dto.TicketDto;
 import innowise.zuevsky.helpdesk.dto.TicketSaveDto;
-import innowise.zuevsky.helpdesk.util.TicketUtil;
+import innowise.zuevsky.helpdesk.util.TicketTestUtil;
 import org.junit.jupiter.api.Test;
 
 class TicketMapperTest {
@@ -14,8 +14,8 @@ class TicketMapperTest {
 
     @Test
     void mapTicketSaveDtoInTicket_ShouldPass_IfNumberOfFieldsIsRight() {
-        TicketSaveDto saveDto = TicketUtil.createTicketSaveDto();
-        Ticket ticket = TicketUtil.createTicketForTicketSaveDto();
+        TicketSaveDto saveDto = TicketTestUtil.createTicketSaveDto();
+        Ticket ticket = TicketTestUtil.createTicketForTicketSaveDto();
 
         assertThat(ticket)
                 .usingRecursiveComparison()
@@ -24,8 +24,8 @@ class TicketMapperTest {
 
     @Test
     void mapTicketInTicketDto_ShouldPass_IfNumberOfFieldsIsRight() {
-        Ticket ticket = TicketUtil.createTicketForTicketDto();
-        TicketDto ticketDto = TicketUtil.createTicketDto();
+        Ticket ticket = TicketTestUtil.createTicketForTicketDto();
+        TicketDto ticketDto = TicketTestUtil.createTicketDto();
 
         assertThat(ticketDto)
                 .usingRecursiveComparison()

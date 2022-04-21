@@ -1,10 +1,14 @@
 package innowise.zuevsky.helpdesk.dto;
 
+import innowise.zuevsky.helpdesk.domain.Attachment;
+import innowise.zuevsky.helpdesk.domain.Comment;
 import innowise.zuevsky.helpdesk.domain.enums.Category;
 import innowise.zuevsky.helpdesk.domain.enums.State;
 import innowise.zuevsky.helpdesk.domain.enums.Urgency;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,4 +30,6 @@ public class TicketDto {
 	private Long ownerId;
 	private Long approverId;
 	private Long assigneeId;
+	private List<Attachment> attachments;
+	private List<Comment> comments;
 }

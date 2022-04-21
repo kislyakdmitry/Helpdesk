@@ -1,10 +1,10 @@
-package innowise.zuevsky.helpdesk.it.tests;
+package innowise.zuevsky.helpdesk.it.tests.service;
 
 import innowise.zuevsky.helpdesk.dto.FeedbackDto;
 import innowise.zuevsky.helpdesk.exception.FeedbackNotFoundException;
 import innowise.zuevsky.helpdesk.it.BaseIT;
 import innowise.zuevsky.helpdesk.service.FeedbackService;
-import innowise.zuevsky.helpdesk.util.FeedbackUtil;
+import innowise.zuevsky.helpdesk.util.FeedbackTestUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
@@ -12,7 +12,7 @@ import org.springframework.test.context.jdbc.Sql;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@Sql("/data/insert_feedbacks.sql")
+@Sql({"/data/clear_feedbacks.sql", "/data/insert_feedbacks.sql"})
 class FeedbackServiceIT extends BaseIT {
 
     @Autowired
@@ -20,16 +20,16 @@ class FeedbackServiceIT extends BaseIT {
 
     @Test
     void getFeedbackById_shouldReturnFeedbackDto_whenFeedbackExist(){
-        FeedbackDto feedbackDto = feedbackService.getFeedbackById(FeedbackUtil.FEEDBACK_ID);
+        FeedbackDto feedbackDto = feedbackService.getFeedbackById(FeedbackTestUtil.FEEDBACK_ID);
         assertThat(feedbackDto.getRate()).isEqualTo(5);
     }
 
 
     @Test
     void getFeedbackById_shouldThrowFeedbackNotFoundException_whenFeedbackNotExist() {
-        assertThatThrownBy(() -> feedbackService.getFeedbackById(FeedbackUtil.FEEDBACK_ID_NOT_EXIST))
+        assertThatThrownBy(() -> feedbackService.getFeedbackById(FeedbackTestUtil.FEEDBACK_ID_NOT_EXIST))
                 .isInstanceOf(FeedbackNotFoundException.class)
-                .hasMessage(String.format("Feedback doesn't exist! feedbackId:%s", FeedbackUtil.FEEDBACK_ID_NOT_EXIST));
+                .hasMessage(String.format("Feedback doesn't exist! feedbackId:%s", FeedbackTestUtil.FEEDBACK_ID_NOT_EXIST));
     }
 
     @Test
@@ -42,9 +42,9 @@ class FeedbackServiceIT extends BaseIT {
 
     @Test
     void getFeedbackByTicketId_shouldThrowFeedbackNotFoundException_whenFeedbackNotExist() {
-        assertThatThrownBy(()->feedbackService.getFeedbackByTicketId(FeedbackUtil.TICKET_ID_NOT_EXIST))
+        assertThatThrownBy(()->feedbackService.getFeedbackByTicketId(FeedbackTestUtil.TICKET_ID_NOT_EXIST))
                 .isInstanceOf(FeedbackNotFoundException.class)
-                .hasMessage(String.format("Feedback doesn't exist! feedbackId:%s", FeedbackUtil.TICKET_ID_NOT_EXIST));
+                .hasMessage(String.format("Feedback doesn't exist! feedbackId:%s", FeedbackTestUtil.TICKET_ID_NOT_EXIST));
     }
 
 }

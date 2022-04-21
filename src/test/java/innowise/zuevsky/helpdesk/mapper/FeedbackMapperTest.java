@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import innowise.zuevsky.helpdesk.domain.Feedback;
 import innowise.zuevsky.helpdesk.dto.FeedbackDto;
 import innowise.zuevsky.helpdesk.dto.FeedbackSaveDto;
-import innowise.zuevsky.helpdesk.util.FeedbackUtil;
+import innowise.zuevsky.helpdesk.util.FeedbackTestUtil;
 import org.junit.jupiter.api.Test;
 
 class FeedbackMapperTest {
@@ -13,8 +13,8 @@ class FeedbackMapperTest {
 	@Test
 	void mapFeedbackToFeedbackDto_shouldReturnFeedbackDto() {
 		// given
-		Feedback feedback = FeedbackUtil.createFeedback();
-		FeedbackDto expectedFeedback = FeedbackUtil.createFeedbackDto();
+		Feedback feedback = FeedbackTestUtil.createFeedback();
+		FeedbackDto expectedFeedback = FeedbackTestUtil.createFeedbackDto();
 		// when
 		FeedbackDto actualFeedback = feedbackMapper.mapFeedbackToFeedbackDto(feedback);
 		// then
@@ -24,8 +24,8 @@ class FeedbackMapperTest {
 	@Test
 	void mapFeedbackSaveDtoToFeedback_shouldReturnFeedback() {
 		// given
-		FeedbackSaveDto saveDto = FeedbackUtil.createFeedbackSaveDtoForFeedback();
-		Feedback expectedFeedback = FeedbackUtil.createFeedbackSaveDtoToFeedback();
+		FeedbackSaveDto saveDto = FeedbackTestUtil.createFeedbackSaveDtoForFeedback();
+		Feedback expectedFeedback = FeedbackTestUtil.createFeedbackSaveDtoToFeedback();
 		// when
 		Feedback actualFeedback = feedbackMapper.mapFeedbackSaveDtoToFeedback(saveDto);
 		// then

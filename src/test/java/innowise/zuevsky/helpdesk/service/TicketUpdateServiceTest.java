@@ -4,7 +4,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import innowise.zuevsky.helpdesk.domain.Ticket;
 import innowise.zuevsky.helpdesk.dto.TicketUpdateDto;
-import innowise.zuevsky.helpdesk.util.TicketUtil;
+import innowise.zuevsky.helpdesk.util.TicketTestUtil;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -20,9 +20,9 @@ class TicketUpdateServiceTest {
   void updateTicket_ShouldPass_WhenTicketUpdatedSuccessful() {
 
     //given
-    Ticket ticket = TicketUtil.createTicketForTicketDto();
-    TicketUpdateDto ticketUpdateDto = TicketUtil.createTicketUpdateDto();
-    Ticket expectedUpdatedTicket = TicketUtil.createUpdatedTicket();
+    Ticket ticket = TicketTestUtil.createTicketForTicketDto();
+    TicketUpdateDto ticketUpdateDto = TicketTestUtil.createTicketUpdateDto();
+    Ticket expectedUpdatedTicket = TicketTestUtil.createUpdatedTicket();
 
     //when
     Ticket actualUpdatedTicket = ticketUpdateService.updateTicket(ticketUpdateDto, ticket);

@@ -4,7 +4,7 @@ import innowise.zuevsky.helpdesk.domain.User;
 import innowise.zuevsky.helpdesk.domain.enums.Role;
 import innowise.zuevsky.helpdesk.domain.enums.Status;
 
-public class UserUtil {
+public class UserTestUtil {
 
     private static final Long USER_ID = 666L;
     private static final String USER_FIRSTNAME = "User";

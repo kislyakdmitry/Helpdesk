@@ -21,6 +21,7 @@ public class TicketMapper {
                 .state(ticket.getState()).category(ticket.getCategory()).urgency(ticket.getUrgency())
                 .description(ticket.getDescription()).desiredResolutionDate(ticket.getDesiredResolutionDate())
                 .ownerId(ticket.getOwnerId()).approverId(ticket.getApproverId()).assigneeId(ticket.getAssigneeId())
+                .attachments(ticket.getAttachments()).comments(ticket.getComments())
                 .build();
     }
 }
