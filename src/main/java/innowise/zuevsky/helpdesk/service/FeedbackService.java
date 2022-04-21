@@ -33,7 +33,7 @@ public class FeedbackService {
         ticketsService.validateTicketStateDone(saveFeedbackDto.getTicketId());
         ticketsService.validateTicketOwnerBelongUser(saveFeedbackDto.getTicketId(), saveFeedbackDto.getUserId());
         checkFeedbackIsNotExists(saveFeedbackDto.getTicketId());
-        feedbackRepository.saveAndFlush(feedbackMapper.mapFeedbackSaveDtoToFeedback(saveFeedbackDto));
+        feedbackRepository.save(feedbackMapper.mapFeedbackSaveDtoToFeedback(saveFeedbackDto));
     }
 
     private void checkFeedbackIsNotExists(Long ticketId) {
