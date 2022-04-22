@@ -29,7 +29,7 @@ class FeedbackRepositoryIT extends BaseIT {
         //then
         assertNotNull(currentFeedback);
         assertThat(currentFeedback.getText()).isEqualTo(expectedFeedback.getText());
-        assertThat(currentFeedback.getCreated()).isEqualTo(expectedFeedback.getCreated());
+        assertThat(currentFeedback.getId()).isEqualTo(expectedFeedback.getId());
     }
 
     @Test
