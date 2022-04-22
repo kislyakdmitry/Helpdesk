@@ -64,3 +64,15 @@ create table feedbacks
         foreign key (ticket_id) references tickets
             on delete cascade
 );
+
+create table if not exists attachments
+(
+    id        integer      not null
+        primary key,
+    link      varchar(150) not null,
+    ticket_id integer      not null
+        constraint fk_attachment_ticket_id
+            references tickets
+            on delete cascade,
+    name      varchar(100) not null
+);

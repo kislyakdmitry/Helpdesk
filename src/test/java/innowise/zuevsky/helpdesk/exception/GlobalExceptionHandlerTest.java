@@ -1,8 +1,8 @@
 package innowise.zuevsky.helpdesk.exception;
 
 import innowise.zuevsky.helpdesk.response.ErrorResponse;
-import innowise.zuevsky.helpdesk.util.FeedbackUtil;
-import innowise.zuevsky.helpdesk.util.TicketUtil;
+import innowise.zuevsky.helpdesk.util.FeedbackTestUtil;
+import innowise.zuevsky.helpdesk.util.TicketTestUtil;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -22,7 +22,7 @@ class GlobalExceptionHandlerTest {
     @Test
     void handleFeedbackExistException_shouldReturnErrorResponse() {
         // given
-        FeedbackExistException exception = new FeedbackExistException(FeedbackUtil.FEEDBACK_ID);
+        FeedbackExistException exception = new FeedbackExistException(FeedbackTestUtil.FEEDBACK_ID);
         ErrorResponse expected = ErrorResponse.builder().message(exception.getMessage()).status(HttpStatus.BAD_REQUEST)
                 .timestamp(LocalDateTime.now()).build();
         // when
@@ -35,7 +35,7 @@ class GlobalExceptionHandlerTest {
 
     @Test
     void handleFeedbackNotFoundException_shouldReturnErrorResponse() {
-        FeedbackNotFoundException exception = new FeedbackNotFoundException(FeedbackUtil.FEEDBACK_ID);
+        FeedbackNotFoundException exception = new FeedbackNotFoundException(FeedbackTestUtil.FEEDBACK_ID);
         ErrorResponse expected = ErrorResponse.builder().message(exception.getMessage()).status(HttpStatus.NOT_FOUND)
                 .timestamp(LocalDateTime.now()).build();
         // when
@@ -49,8 +49,8 @@ class GlobalExceptionHandlerTest {
     @Test
     void handleTicketOwnerNotBelongsToUserException_shouldReturnErrorResponse() {
         // given
-        TicketOwnerNotBelongsToUserException exception = new TicketOwnerNotBelongsToUserException(TicketUtil.TICKET_ID,
-                TicketUtil.OWNER_ID);
+        TicketOwnerNotBelongsToUserException exception = new TicketOwnerNotBelongsToUserException(TicketTestUtil.TICKET_ID,
+                TicketTestUtil.OWNER_ID);
         ErrorResponse expected = ErrorResponse.builder().message(exception.getMessage()).status(HttpStatus.BAD_REQUEST)
                 .timestamp(LocalDateTime.now()).build();
 
@@ -66,7 +66,7 @@ class GlobalExceptionHandlerTest {
     @Test
     void handleTicketStateNotDoneException_shouldReturnErrorResponse() {
         // given
-        TicketStateNotDoneException exception = new TicketStateNotDoneException(TicketUtil.TICKET_ID);
+        TicketStateNotDoneException exception = new TicketStateNotDoneException(TicketTestUtil.TICKET_ID);
         ErrorResponse expected = ErrorResponse.builder().message(exception.getMessage()).status(HttpStatus.BAD_REQUEST)
                 .timestamp(LocalDateTime.now()).build();
         // when
@@ -95,7 +95,7 @@ class GlobalExceptionHandlerTest {
     @Test
     void handleTicketNotFoundException_shouldReturnTicketNotFoundException() {
         // given
-        TicketNotFoundException exception = new TicketNotFoundException(TicketUtil.TICKET_ID);
+        TicketNotFoundException exception = new TicketNotFoundException(TicketTestUtil.TICKET_ID);
         ErrorResponse expected = ErrorResponse.builder().message(exception.getMessage()).status(HttpStatus.NOT_FOUND)
                 .timestamp(LocalDateTime.now()).build();
         // when

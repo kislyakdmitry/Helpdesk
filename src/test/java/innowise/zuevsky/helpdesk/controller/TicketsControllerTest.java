@@ -12,8 +12,8 @@ import innowise.zuevsky.helpdesk.mapper.TicketMapper;
 import innowise.zuevsky.helpdesk.repository.TicketsRepository;
 import innowise.zuevsky.helpdesk.service.TicketsService;
 import innowise.zuevsky.helpdesk.service.UsersService;
-import innowise.zuevsky.helpdesk.util.TicketUtil;
-import innowise.zuevsky.helpdesk.util.UserUtil;
+import innowise.zuevsky.helpdesk.util.TicketTestUtil;
+import innowise.zuevsky.helpdesk.util.UserTestUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -54,12 +54,12 @@ class TicketsControllerTest {
 
     MockMvc mockMvc;
 
-    TicketDto ticketDto = TicketUtil.createTicketDto();
-    TicketUpdateDto ticketUpdateDto = TicketUtil.createTicketUpdateDto();
-    TicketSaveDto ticketSaveDto = TicketUtil.createTicketSaveDto();
-    User user = UserUtil.createTestUser();
-    Pageable pageable = TicketUtil.createPageable();
-    FilterParamsDto filterParamsDto = TicketUtil.createFilterParamsDto();
+    TicketDto ticketDto = TicketTestUtil.createTicketDto();
+    TicketUpdateDto ticketUpdateDto = TicketTestUtil.createTicketUpdateDto();
+    TicketSaveDto ticketSaveDto = TicketTestUtil.createTicketSaveDto();
+    User user = UserTestUtil.createTestUser();
+    Pageable pageable = TicketTestUtil.createPageable();
+    FilterParamsDto filterParamsDto = TicketTestUtil.createFilterParamsDto();
 
     @BeforeEach
     void setUp() {
@@ -75,10 +75,10 @@ class TicketsControllerTest {
 
         //given
         String url = "/api/tickets/{ticketId}";
-        when(ticketsService.getTicket(TicketUtil.TICKET_ID)).thenReturn(ticketDto);
+        when(ticketsService.getTicket(TicketTestUtil.TICKET_ID)).thenReturn(ticketDto);
 
         //then
-        mockMvc.perform(get(url, TicketUtil.TICKET_ID))
+        mockMvc.perform(get(url, TicketTestUtil.TICKET_ID))
                 .andExpect(jsonPath("$.name").value(ticketDto.getName()))
                 .andExpect(jsonPath("$.id").value(ticketDto.getId()));
     }
@@ -88,10 +88,10 @@ class TicketsControllerTest {
     void getTicket_shouldReturnTicketNotFoundException_whenTicketDoesNotExist() throws Exception {
         // given
         String url = "/api/tickets/{ticketId}";
-        when(ticketsService.getTicket(TicketUtil.TICKET_ID))
-                .thenThrow(new TicketNotFoundException(TicketUtil.TICKET_ID));
+        when(ticketsService.getTicket(TicketTestUtil.TICKET_ID))
+                .thenThrow(new TicketNotFoundException(TicketTestUtil.TICKET_ID));
         // then
-        mockMvc.perform(get(url, TicketUtil.TICKET_ID)).andExpect(status().isNotFound());
+        mockMvc.perform(get(url, TicketTestUtil.TICKET_ID)).andExpect(status().isNotFound());
     }
 
     @Test
@@ -101,7 +101,7 @@ class TicketsControllerTest {
         String url = "/api/tickets/{ticketId}";
         //when
         //then
-        mockMvc.perform(put(url, TicketUtil.TICKET_ID).contentType(APPLICATION_JSON).accept(APPLICATION_JSON)
+        mockMvc.perform(put(url, TicketTestUtil.TICKET_ID).contentType(APPLICATION_JSON).accept(APPLICATION_JSON)
                         .content(asJson(ticketUpdateDto)))
                 .andExpect(status().isOk());
     }

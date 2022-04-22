@@ -5,14 +5,12 @@ import innowise.zuevsky.helpdesk.exception.AuthenticationTokenNotFoundException;
 import innowise.zuevsky.helpdesk.exception.UserNotFoundException;
 import innowise.zuevsky.helpdesk.repository.UsersRepository;
 import innowise.zuevsky.helpdesk.security.SecurityUser;
-import innowise.zuevsky.helpdesk.util.UserUtil;
-import org.junit.jupiter.api.Disabled;
+import innowise.zuevsky.helpdesk.util.UserTestUtil;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,7 +28,7 @@ class UsersServiceTest {
     @Mock
     private UsersRepository usersRepository;
 
-    private static final User testUser = UserUtil.createTestUser();
+    private static final User testUser = UserTestUtil.createTestUser();
 
     @InjectMocks
     private UsersService usersService;

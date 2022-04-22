@@ -8,7 +8,7 @@ import innowise.zuevsky.helpdesk.exception.GlobalExceptionHandler;
 import innowise.zuevsky.helpdesk.exception.UserNotFoundException;
 import innowise.zuevsky.helpdesk.repository.UsersRepository;
 import innowise.zuevsky.helpdesk.security.JwtTokenProvider;
-import innowise.zuevsky.helpdesk.util.UserUtil;
+import innowise.zuevsky.helpdesk.util.UserTestUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -45,7 +45,7 @@ class AuthenticationRestControllerTest {
     @Mock
     JwtTokenProvider jwtTokenProvider;
 
-    User user = UserUtil.createTestUser();
+    User user = UserTestUtil.createTestUser();
 
     AuthenticationDto requestLogin = AuthenticationDto.builder()
             .email(user.getEmail())

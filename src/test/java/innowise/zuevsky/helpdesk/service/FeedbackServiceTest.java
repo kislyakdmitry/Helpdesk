@@ -7,7 +7,7 @@ import innowise.zuevsky.helpdesk.exception.FeedbackExistException;
 import innowise.zuevsky.helpdesk.exception.FeedbackNotFoundException;
 import innowise.zuevsky.helpdesk.mapper.FeedbackMapper;
 import innowise.zuevsky.helpdesk.repository.FeedbackRepository;
-import innowise.zuevsky.helpdesk.util.FeedbackUtil;
+import innowise.zuevsky.helpdesk.util.FeedbackTestUtil;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -36,17 +36,17 @@ class FeedbackServiceTest {
     @Mock
     private TicketsService ticketsService;
 
-    private static final Feedback feedback = FeedbackUtil.createFeedback();
-    private static final FeedbackSaveDto feedbackSaveDto = FeedbackUtil.createFeedbackSaveDtoForFeedback();
+    private static final Feedback feedback = FeedbackTestUtil.createFeedback();
+    private static final FeedbackSaveDto feedbackSaveDto = FeedbackTestUtil.createFeedbackSaveDtoForFeedback();
 
     @Test
     void getFeedbackById_shouldReturnFeedbackDto_whenFeedbackExist() {
         // given
-        FeedbackDto expectedFeedback = FeedbackUtil.createFeedbackDto();
+        FeedbackDto expectedFeedback = FeedbackTestUtil.createFeedbackDto();
         when(feedbackRepository.findById(feedback.getId())).thenReturn(Optional.of(feedback));
         when(feedbackMapper.mapFeedbackToFeedbackDto(feedback)).thenReturn(expectedFeedback);
         // when
-        FeedbackDto actualFeedback = feedbackService.getFeedbackById(FeedbackUtil.FEEDBACK_ID);
+        FeedbackDto actualFeedback = feedbackService.getFeedbackById(FeedbackTestUtil.FEEDBACK_ID);
         // then
         assertEquals(expectedFeedback, actualFeedback);
         verify(feedbackRepository).findById(feedback.getId());
@@ -57,21 +57,21 @@ class FeedbackServiceTest {
     void getFeedbackById_shouldThrowFeedbackNotFoundException_whenFeedbackNotExist() {
         // when
         // then
-        assertThatThrownBy(() -> feedbackService.getFeedbackById(FeedbackUtil.FEEDBACK_ID))
+        assertThatThrownBy(() -> feedbackService.getFeedbackById(FeedbackTestUtil.FEEDBACK_ID))
                 .isInstanceOf(FeedbackNotFoundException.class)
-                .hasMessage(String.format("Feedback doesn't exist! feedbackId:%s", FeedbackUtil.FEEDBACK_ID));
-        verify(feedbackRepository).findById(FeedbackUtil.FEEDBACK_ID);
+                .hasMessage(String.format("Feedback doesn't exist! feedbackId:%s", FeedbackTestUtil.FEEDBACK_ID));
+        verify(feedbackRepository).findById(FeedbackTestUtil.FEEDBACK_ID);
         verify(feedbackMapper, never()).mapFeedbackToFeedbackDto(any(Feedback.class));
     }
 
     @Test
     void getFeedbackByTicketId_shouldReturnFeedbackDto_whenFeedbackExist() {
         // given
-        FeedbackDto expectedFeedback = FeedbackUtil.createFeedbackDto();
-        when(feedbackRepository.findFeedbackByTicketId(FeedbackUtil.TICKET_ID)).thenReturn(Optional.of(feedback));
+        FeedbackDto expectedFeedback = FeedbackTestUtil.createFeedbackDto();
+        when(feedbackRepository.findFeedbackByTicketId(FeedbackTestUtil.TICKET_ID)).thenReturn(Optional.of(feedback));
         when(feedbackMapper.mapFeedbackToFeedbackDto(feedback)).thenReturn(expectedFeedback);
         // when
-        FeedbackDto actualFeedback = feedbackService.getFeedbackByTicketId(FeedbackUtil.TICKET_ID);
+        FeedbackDto actualFeedback = feedbackService.getFeedbackByTicketId(FeedbackTestUtil.TICKET_ID);
         // then
         assertEquals(expectedFeedback, actualFeedback);
         verify(feedbackRepository).findFeedbackByTicketId(anyLong());
@@ -81,11 +81,11 @@ class FeedbackServiceTest {
     @Test
     void getFeedbackByTicketId_shouldThrowFeedbackNotFoundException_whenFeedbackNotExist() {
         // when
-        assertThatThrownBy(()->feedbackService.getFeedbackByTicketId(FeedbackUtil.TICKET_ID))
+        assertThatThrownBy(()->feedbackService.getFeedbackByTicketId(FeedbackTestUtil.TICKET_ID))
                 .isInstanceOf(FeedbackNotFoundException.class)
-                .hasMessage(String.format("Feedback doesn't exist! feedbackId:%s", FeedbackUtil.TICKET_ID));
+                .hasMessage(String.format("Feedback doesn't exist! feedbackId:%s", FeedbackTestUtil.TICKET_ID));
         // then
-        verify(feedbackRepository).findFeedbackByTicketId(FeedbackUtil.TICKET_ID);
+        verify(feedbackRepository).findFeedbackByTicketId(FeedbackTestUtil.TICKET_ID);
         verify(feedbackMapper, never()).mapFeedbackToFeedbackDto(any(Feedback.class));
     }
 

@@ -6,7 +6,7 @@ import innowise.zuevsky.helpdesk.dto.FeedbackDto;
 import innowise.zuevsky.helpdesk.dto.FeedbackSaveDto;
 import java.time.LocalDateTime;
 
-public class FeedbackUtil {
+public class FeedbackTestUtil {
 
 	public static final int RATE = 5;
 	public static final Long FEEDBACK_ID = 1L;

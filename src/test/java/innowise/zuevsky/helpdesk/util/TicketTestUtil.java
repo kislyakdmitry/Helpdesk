@@ -16,7 +16,7 @@ import java.util.List;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
-public class TicketUtil {
+public class TicketTestUtil {
 
     public static final Long TICKET_ID = 69L;
     public static final String NAME = "test name";
@@ -65,6 +65,7 @@ public class TicketUtil {
                 .ownerId(OWNER_ID)
                 .approverId(APPROVER_ID)
                 .assigneeId(ASSIGNEE_ID)
+                .attachments(ATTACHMENTS)
                 .build();
     }
 
@@ -139,5 +140,15 @@ public class TicketUtil {
             .urgencies(List.of(URGENCY))
             .states(List.of(STATE))
             .build();
+    }
+
+    public static FilterParamsDto createEmptyFilterParamsDto() {
+        return FilterParamsDto.builder()
+                .id(null)
+                .name(null)
+                .desiredDate(null)
+                .urgencies(List.of())
+                .states(List.of())
+                .build();
     }
 }

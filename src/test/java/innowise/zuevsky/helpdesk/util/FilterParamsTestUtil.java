@@ -7,7 +7,7 @@ import innowise.zuevsky.helpdesk.dto.FilterParamsDto;
 import java.time.LocalDate;
 import java.util.Arrays;
 
-public class FilterParamsUtil {
+public class FilterParamsTestUtil {
 
     public static final Long ID = 666L;
     public static final String NAME = "FilterParams";

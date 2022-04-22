@@ -7,7 +7,7 @@ import innowise.zuevsky.helpdesk.dto.FeedbackSaveDto;
 import innowise.zuevsky.helpdesk.exception.FeedbackNotFoundException;
 import innowise.zuevsky.helpdesk.exception.GlobalExceptionHandler;
 import innowise.zuevsky.helpdesk.service.FeedbackService;
-import innowise.zuevsky.helpdesk.util.FeedbackUtil;
+import innowise.zuevsky.helpdesk.util.FeedbackTestUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,8 +34,8 @@ class FeedbackControllerTest {
     @Mock
     FeedbackService feedbackService;
     MockMvc mockMvc;
-    FeedbackDto feedbackDto = FeedbackUtil.createFeedbackDto();
-    FeedbackSaveDto feedbackSaveDto = FeedbackUtil.createFeedbackSaveDtoForFeedback();
+    FeedbackDto feedbackDto = FeedbackTestUtil.createFeedbackDto();
+    FeedbackSaveDto feedbackSaveDto = FeedbackTestUtil.createFeedbackSaveDtoForFeedback();
 
     @BeforeEach
     void setUp() {
@@ -49,15 +49,15 @@ class FeedbackControllerTest {
     void getFeedback_shouldReturnFeedbackDto_whenFeedbackExist() throws Exception {
         // given
         String url = "/api/feedbacks/{feedbackId}";
-        when(feedbackService.getFeedbackById(FeedbackUtil.FEEDBACK_ID)).thenReturn(feedbackDto);
+        when(feedbackService.getFeedbackById(FeedbackTestUtil.FEEDBACK_ID)).thenReturn(feedbackDto);
         // when
         // then
-        mockMvc.perform(get(url, FeedbackUtil.FEEDBACK_ID))
+        mockMvc.perform(get(url, FeedbackTestUtil.FEEDBACK_ID))
                 .andExpect(jsonPath("$.date").isNotEmpty())
                 .andExpect(jsonPath("$.rate").value(feedbackDto.getRate()))
                 .andExpect(jsonPath("$.text").value(feedbackDto.getText())).andExpect(status().isOk());
 
-        verify(feedbackService).getFeedbackById(FeedbackUtil.FEEDBACK_ID);
+        verify(feedbackService).getFeedbackById(FeedbackTestUtil.FEEDBACK_ID);
     }
 
     @Test
@@ -65,12 +65,12 @@ class FeedbackControllerTest {
     void getFeedback_shouldReturnFeedbackNotFoundException_whenFeedbackDoesNotExist() throws Exception {
         // given
         String url = "/api/feedbacks/{feedbackId}";
-        when(feedbackService.getFeedbackById(FeedbackUtil.FEEDBACK_ID)).thenThrow(new FeedbackNotFoundException(FeedbackUtil.FEEDBACK_ID));
+        when(feedbackService.getFeedbackById(FeedbackTestUtil.FEEDBACK_ID)).thenThrow(new FeedbackNotFoundException(FeedbackTestUtil.FEEDBACK_ID));
 
-        mockMvc.perform(get(url, FeedbackUtil.FEEDBACK_ID))
+        mockMvc.perform(get(url, FeedbackTestUtil.FEEDBACK_ID))
                 .andExpect(status().isNotFound());
         //then
-        verify(feedbackService).getFeedbackById(FeedbackUtil.FEEDBACK_ID);
+        verify(feedbackService).getFeedbackById(FeedbackTestUtil.FEEDBACK_ID);
     }
 
     @Test
@@ -80,24 +80,24 @@ class FeedbackControllerTest {
         when(feedbackService.getFeedbackByTicketId(anyLong())).thenReturn(feedbackDto);
         // when
         // then
-        mockMvc.perform(get(url, FeedbackUtil.TICKET_ID))
+        mockMvc.perform(get(url, FeedbackTestUtil.TICKET_ID))
                 .andExpect(jsonPath("$.date").isNotEmpty())
                 .andExpect(jsonPath("$.rate").value(feedbackDto.getRate()))
                 .andExpect(jsonPath("$.text").value(feedbackDto.getText())).andExpect(status().isOk());
 
-        verify(feedbackService).getFeedbackByTicketId(FeedbackUtil.TICKET_ID);
+        verify(feedbackService).getFeedbackByTicketId(FeedbackTestUtil.TICKET_ID);
     }
 
     @Test
     void getFeedbackByTicketId_shouldReturnFeedbackNotFoundException_whenDoesNotExist() throws Exception {
         // given
         String url = "/api/feedbacks/feedback/{ticketId}";
-        when(feedbackService.getFeedbackByTicketId(anyLong())).thenThrow(new FeedbackNotFoundException(FeedbackUtil.TICKET_ID));
+        when(feedbackService.getFeedbackByTicketId(anyLong())).thenThrow(new FeedbackNotFoundException(FeedbackTestUtil.TICKET_ID));
         // when
         // then
-        mockMvc.perform(get(url, FeedbackUtil.TICKET_ID))
+        mockMvc.perform(get(url, FeedbackTestUtil.TICKET_ID))
                 .andExpect(status().isNotFound());
-        verify(feedbackService).getFeedbackByTicketId(FeedbackUtil.TICKET_ID);
+        verify(feedbackService).getFeedbackByTicketId(FeedbackTestUtil.TICKET_ID);
     }
 
     @Test
