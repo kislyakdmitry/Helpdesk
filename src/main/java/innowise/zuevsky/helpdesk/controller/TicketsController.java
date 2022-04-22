@@ -55,7 +55,7 @@ public class TicketsController implements ITicketsController {
 
     @PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER')")
     @GetMapping("/my")
-    public Page<TicketDto> getMyTickets(@PageableDefault(size = 5) @SortDefault(sort = "urgency",
+    public Page<TicketDto> getMyTickets(@PageableDefault(size = 5) @SortDefault(sort = {"urgency", "desiredResolutionDate"},
             direction = Sort.Direction.DESC) Pageable pageable,
                                         Long id,
                                         String name,
@@ -68,7 +68,7 @@ public class TicketsController implements ITicketsController {
 
     @PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER', 'ENGINEER')")
     @GetMapping("/all")
-    public Page<TicketDto> getAllTickets(@PageableDefault(value = 5) @SortDefault(sort = "urgency",
+    public Page<TicketDto> getAllTickets(@PageableDefault(value = 5) @SortDefault(sort = {"urgency", "desiredResolutionDate"},
             direction = Sort.Direction.DESC) Pageable pageable,
                                          Long id,
                                          String name,
