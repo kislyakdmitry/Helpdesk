@@ -17,6 +17,7 @@ spring:
         format_sql: false
   liquibase:
     change-log: classpath:/db/changelog/db.changelog.xml
+
 jwt:
   header: Authorization
   secret: helpdeskhelpdeskhelpdeskhelpdesk

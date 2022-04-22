@@ -1,0 +1,1 @@
+truncate table public.feedbacks,public.tickets, public.users CASCADE;

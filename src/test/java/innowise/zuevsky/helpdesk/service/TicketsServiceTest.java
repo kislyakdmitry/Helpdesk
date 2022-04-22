@@ -149,7 +149,6 @@ class TicketsServiceTest {
         TicketDto ticketDto = TicketUtil.createTicketDto();
         Page<Ticket> expectedPageOfTickets = new PageImpl<>(List.of(ticket));
         Page<TicketDto> expectedPageOfTicketsDto = new PageImpl<>(List.of(ticketDto));
-
         when(ticketsRepository.findAll(any(Specification.class), any(Pageable.class))).thenReturn(expectedPageOfTickets);
         when(ticketMapper.mapTicketInTicketDto(ticket)).thenReturn(ticketDto);
 
