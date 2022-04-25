@@ -22,6 +22,11 @@ pipeline {
       }
     }
   }
+  post {
+      always {
+        mail to: aliaksei.zuyeuski@innowise-group.com, subject: ‘The Pipeline success :(‘
+      }
+    }
   tools {
     jdk 'JDK_17_new'
   }
