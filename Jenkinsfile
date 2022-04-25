@@ -34,11 +34,14 @@ pipeline {
 
   post {
       always {
-            emailext
-            to: '${COMMITTER_EMAIL}',
-            subject: "jenkins build:${currentBuild.currentResult}: ${env.JOB_NAME}",
-            from: 'jenkinssmtp635@gmail.com',
-            body: '${env.BUILD_URL} has result ${currentBuild.result}'
+//             emailext
+//             to: '${COMMITTER_EMAIL}',
+//             subject: "jenkins build:${currentBuild.currentResult}: ${env.JOB_NAME}",
+//             from: 'jenkinssmtp635@gmail.com',
+//             body: '${env.BUILD_URL} has result ${currentBuild.result}'
+
+            mail (bcc: '${env.COMMITTER_EMAIL}', body: '${env.BUILD_URL} has result ${currentBuild.result}', cc: '${env.COMMITTER_EMAIL}', from: 'jenkinssmtp635@gmail.com', subject: 'build', to: '${env.COMMITTER_EMAIL}')
+
 
         junit 'build/test-results/**/*.xml'
       }
