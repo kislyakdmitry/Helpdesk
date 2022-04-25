@@ -1,12 +1,13 @@
 pipeline {
   agent any
 
-  environment {
-  env.GIT_COMMITTER_EMAIL = sh(
-     script: "git --no-pager show -s --format='%ae'",
-     returnStdout: true
-  ).trim()
-  }
+    script{
+     def COMMITTER_EMAIL = bat(
+        script: "git --no-pager show -s --format='%%ae'",
+        returnStdout: true).split('\r\n')[2].trim()
+        echo "COMMITTER_EMAIL: ${COMMITTER_EMAIL}"
+    }
+
 
   stages {
     stage('build') {
@@ -30,10 +31,11 @@ pipeline {
       }
     }
   }
+
   post {
       always {
             emailext
-            to: '${GIT_COMMITTER_EMAIL}',
+            to: "${env.COMMITTER_EMAIL}",
             subject: "jenkins build:${currentBuild.currentResult}: ${env.JOB_NAME}",
             from: 'jenkinssmtp635@gmail.com',
             body: '${env.BUILD_URL} has result ${currentBuild.result}'
