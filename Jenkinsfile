@@ -24,7 +24,7 @@ pipeline {
   }
   post {
       always {
-        mail to: aliaksei.zuyeuski@innowise-group.com, subject: ‘The Pipeline success :(‘
+        mail to: 'aliaksei.zuyeuski@innowise-group.com', subject: 'The Pipeline success :('
       }
     }
   tools {
