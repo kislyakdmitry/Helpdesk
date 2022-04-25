@@ -24,7 +24,7 @@ pipeline {
   }
   post {
       always {
-        mail to: 'aliaksei.zuyeuski@innowise-group.com', subject: 'The Pipeline success :(', body: "${env.BUILD_URL} has result ${currentBuild.result}"
+        mail (bcc: '${CHANGE_AUTHOR_EMAIL}', body: '${env.BUILD_URL} has result ${currentBuild.result}', cc: '${CHANGE_AUTHOR_EMAIL}', from: 'jenkinssmtp635@gmail.com', subject: 'build', to: '${CHANGE_AUTHOR_EMAIL}')
         junit 'build/test-results/**/*.xml'
       }
     }
