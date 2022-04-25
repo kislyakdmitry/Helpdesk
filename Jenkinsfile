@@ -25,7 +25,13 @@ pipeline {
 
   post {
       always {
-        emailext body: '${env.BUILD_URL} has result ${currentBuild.result}', recipientProviders: [requestor()], subject: 'build'
+        emailext body: '${env.BUILD_URL} has result ${currentBuild.result}',
+        recipientProviders: [
+                    [ $class: "DevelopersRecipientProvider" ],
+                    [ $class: "RequesterRecipientProvider" ],
+                    [ $class: "CulpritsRecipientProvider"]
+                ]
+        , subject: 'build'
         junit 'build/test-results/**/*.xml'
       }
     }
