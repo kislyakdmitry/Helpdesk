@@ -24,10 +24,11 @@ pipeline {
   }
   post {
       always {
+
             emailext to: "${env.CHANGE_AUTHOR_EMAIL}",
             subject: "jenkins build:${currentBuild.currentResult}: ${env.JOB_NAME}",
-            from: 'jenkinssmtp635@gmail.com'
-            body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} More Info can be found here: ${env.BUILD_URL}"
+            from: 'jenkinssmtp635@gmail.com',
+            body: '${env.BUILD_URL} has result ${currentBuild.result}'
 
         junit 'build/test-results/**/*.xml'
       }
