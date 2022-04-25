@@ -1,5 +1,13 @@
 pipeline {
   agent any
+
+  environment {
+  env.GIT_COMMITTER_EMAIL = sh(
+     script: "git --no-pager show -s --format='%ae'",
+     returnStdout: true
+  ).trim()
+  }
+
   stages {
     stage('build') {
       steps {
@@ -24,11 +32,12 @@ pipeline {
   }
   post {
       always {
-
-            emailext to: "${env.CHANGE_AUTHOR_EMAIL}",
+            emailext
+            to: "${env.GIT_COMMITTER_EMAIL}",
             subject: "jenkins build:${currentBuild.currentResult}: ${env.JOB_NAME}",
             from: 'jenkinssmtp635@gmail.com',
             body: '${env.BUILD_URL} has result ${currentBuild.result}'
+
 
         junit 'build/test-results/**/*.xml'
       }
