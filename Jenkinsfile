@@ -35,7 +35,7 @@ pipeline {
   post {
       always {
             emailext
-            to: "${env.COMMITTER_EMAIL}",
+            to: "${COMMITTER_EMAIL}",
             subject: "jenkins build:${currentBuild.currentResult}: ${env.JOB_NAME}",
             from: 'jenkinssmtp635@gmail.com',
             body: '${env.BUILD_URL} has result ${currentBuild.result}'
