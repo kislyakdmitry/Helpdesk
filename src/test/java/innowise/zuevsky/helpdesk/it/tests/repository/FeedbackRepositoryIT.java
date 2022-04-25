@@ -39,7 +39,7 @@ class FeedbackRepositoryIT extends BaseIT {
         boolean isFeedbackExist = feedbackRepository.existsFeedbackByTicketId(3L);
 
         //then
-        assertThat(isFeedbackExist).isTrue();
+        assertThat(isFeedbackExist).isFalse();
     }
 
     @Test

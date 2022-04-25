@@ -24,7 +24,7 @@ pipeline {
   }
   post {
       always {
-        mail to: 'aliaksei.zuyeuski@innowise-group.com', subject: 'The Pipeline success :('
+        mail to: 'aliaksei.zuyeuski@innowise-group.com', subject: 'The Pipeline success :(', body: "${env.BUILD_URL} has result ${currentBuild.result}"
         junit 'build/test-results/**/*.xml'
       }
     }
