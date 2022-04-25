@@ -24,16 +24,11 @@ pipeline {
   }
   post {
       always {
-        mail to: aliaksei.zuyeuski@innowise-group.com, subject: ‘The Pipeline success :(‘
+        mail to: 'aliaksei.zuyeuski@innowise-group.com', subject: 'The Pipeline success :('
+        junit 'build/test-results/**/*.xml'
       }
     }
   tools {
     jdk 'JDK_17_new'
-  }
-  post {
-    always {
-      junit 'build/test-results/**/*.xml'
-    }
-
   }
 }
