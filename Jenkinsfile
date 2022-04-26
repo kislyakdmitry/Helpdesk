@@ -28,7 +28,8 @@ pipeline {
 
         emailext body: '${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} More info at: ${env.BUILD_URL}',
          recipientProviders: [developers(), upstreamDevelopers(), buildUser(), requestor()],
-         subject: 'Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}'
+         subject: 'Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}',
+         to: '$DEFAULT_RECIPIENTS'
 
         junit 'build/test-results/**/*.xml'
       }
