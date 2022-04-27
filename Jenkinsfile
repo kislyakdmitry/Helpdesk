@@ -25,10 +25,11 @@ pipeline {
 
   post {
       always {
-
-        emailext body: '${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} More info at: ${env.BUILD_URL}',
-         recipientProviders: [developers(), upstreamDevelopers(), buildUser(), requestor()],
-         subject: 'Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}'
+        emailext(
+        subject: 'Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}',
+        body: '${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} More info at: ${env.BUILD_URL}',
+        recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+        )
         junit 'build/test-results/**/*.xml'
       }
     }
