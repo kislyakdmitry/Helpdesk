@@ -23,7 +23,6 @@ pipeline {
     }
   }
 
-
   post {
       always {
         emailext(
