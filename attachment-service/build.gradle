@@ -1,0 +1,47 @@
+plugins {
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
+    id 'java'
+    id "org.sonarqube"
+}
+
+group 'innowise.zuevsky'
+version '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    implementation('org.projectlombok:lombok:1.18.22')
+    annotationProcessor 'org.projectlombok:lombok:1.18.22'
+    testImplementation('org.projectlombok:lombok:1.18.22')
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
+    implementation platform('org.testcontainers:testcontainers-bom:1.16.3')
+    implementation 'org.testcontainers:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "kislyakdmitry_Helpdesk_AX__tPAjOMfz8VAl1un8"
+        property 'sonar.java.coveragePlugin', 'jacoco'
+        property 'sonar.coverage.jacoco.xmlReportPaths', 'build/reports/jacoco/test/jacocoTestReport.xml'
+    }
+}
