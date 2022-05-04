@@ -27,9 +27,11 @@ pipeline {
       always {
         emailext(
         subject: 'Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}',
-        body: '${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} More info at: ${env.BUILD_URL}',
-        recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+         body: """<p>STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+                              <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>""",
+          recipientProviders: [[$class: 'DevelopersRecipientProvider']]
         )
+
         junit 'build/test-results/**/*.xml'
       }
     }
