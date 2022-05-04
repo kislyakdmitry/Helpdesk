@@ -22,18 +22,15 @@ pipeline {
       }
     }
   }
-
-
-
-
   post {
       always {
         emailext(
-        subject: 'Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}',
-        body: """<p>STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
-                              <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>""",
-        recipientProviders: [buildUser(), developers(), requestor()]
+        subject: "Job ${env.JOB_NAME} ${env.BUILD_NUMBER}",
+        body: "<p>Check console output at <a href='${env.BUILD_URL}'></a></p>",
+        recipientProviders: [buildUser(), developers(), requestor()],
+        attachLog: true
         )
+
         junit 'build/test-results/**/*.xml'
       }
     }
