@@ -25,12 +25,10 @@ pipeline {
   post {
       always {
         emailext(
-        subject: "Job ${env.JOB_NAME} ${env.BUILD_NUMBER}",
-         body: """<p>Check console output at <a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>;</p>""",
+        subject: "Jenkins: ${env.JOB_NAME} ${env.BUILD_NUMBER} - ${currentBuild.currentResult}",
+        body: """<p>Build status is ${currentBuild.currentResult}. Check console output at <a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>;</p>""",
         recipientProviders: [buildUser(), developers(), requestor()],
-        attachLog: true
         )
-
         junit 'build/test-results/**/*.xml'
       }
     }
