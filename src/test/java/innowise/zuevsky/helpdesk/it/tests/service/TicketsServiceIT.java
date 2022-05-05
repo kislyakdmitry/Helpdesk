@@ -68,9 +68,6 @@ class TicketsServiceIT extends BaseIT {
 
         //then
         assertThat(allTicketsBeforeSaving.size() + 1).isEqualTo(allTicketsAfterSaving.size());
-//        assertNotNull(actualTicketDto);
-//        assertThat(actualTicketDto.getDesiredResolutionDate()).isEqualTo(ticketSaveDto.getDesiredResolutionDate());
-//        assertThat(actualTicketDto.getDescription()).isEqualTo(ticketSaveDto.getDescription());
     }
 
     @Test
