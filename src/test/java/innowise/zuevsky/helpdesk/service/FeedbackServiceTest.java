@@ -95,7 +95,7 @@ class FeedbackServiceTest {
         feedbackService.saveFeedback(feedbackSaveDto);
         // then
         verify(ticketsService).validateTicketStateDone(feedbackSaveDto.getTicketId());
-        verify(ticketsService).validateTicketOwnerBelongUser(feedbackSaveDto.getTicketId(), feedbackSaveDto.getUserId());
+        verify(ticketsService).validateTicketOwnerBelongUser(feedbackSaveDto.getTicketId(), feedbackSaveDto.getUserName());
         verify(feedbackRepository).existsFeedbackByTicketId(feedbackSaveDto.getTicketId());
         verify(feedbackMapper).mapFeedbackSaveDtoToFeedback(feedbackSaveDto);
     }
@@ -110,7 +110,7 @@ class FeedbackServiceTest {
                 .hasMessage(String.format("Feedback already exists! TicketId:%s", feedbackSaveDto.getTicketId()));
         // then
         verify(ticketsService).validateTicketStateDone(feedbackSaveDto.getTicketId());
-        verify(ticketsService).validateTicketOwnerBelongUser(feedbackSaveDto.getTicketId(), feedbackSaveDto.getUserId());
+        verify(ticketsService).validateTicketOwnerBelongUser(feedbackSaveDto.getTicketId(), feedbackSaveDto.getUserName());
         verify(feedbackRepository).existsFeedbackByTicketId(feedbackSaveDto.getTicketId());
     }
 }

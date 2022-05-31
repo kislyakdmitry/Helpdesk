@@ -42,7 +42,7 @@ public interface ITicketsController {
                                         @RequestParam(defaultValue = StringUtils.EMPTY) State[] states);
 
 
-    @ApiOperation(value = "Get all tickets")
+   /* @ApiOperation(value = "Get all tickets")
     Page<TicketDto> getAllTickets(@PageableDefault(value = 5) @SortDefault(sort = "urgency",
             direction = Sort.Direction.DESC) Pageable pageable,
                                          Long id,
@@ -50,5 +50,5 @@ public interface ITicketsController {
                                          @RequestParam(defaultValue = StringUtils.EMPTY) String desiredDate,
                                          @RequestParam(defaultValue = StringUtils.EMPTY) Urgency[] urgencies,
                                          @RequestParam(defaultValue = StringUtils.EMPTY) State[] states);
-
+*/
 }

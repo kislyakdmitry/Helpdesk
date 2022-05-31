@@ -16,6 +16,7 @@ public class FeedbackService {
     private final FeedbackRepository feedbackRepository;
     private final FeedbackMapper feedbackMapper;
     private final TicketsService ticketsService;
+    private final UsersService usersService;
 
     public FeedbackDto getFeedbackById(Long feedbackId) {
         return feedbackRepository.findById(feedbackId)
@@ -31,7 +32,7 @@ public class FeedbackService {
 
     public void saveFeedback(FeedbackSaveDto saveFeedbackDto) {
         ticketsService.validateTicketStateDone(saveFeedbackDto.getTicketId());
-        ticketsService.validateTicketOwnerBelongUser(saveFeedbackDto.getTicketId(), saveFeedbackDto.getUserId());
+        ticketsService.validateTicketOwnerBelongUser(saveFeedbackDto.getTicketId(), usersService.getCurrentUser().getUserName() );
         checkFeedbackIsNotExists(saveFeedbackDto.getTicketId());
         feedbackRepository.save(feedbackMapper.mapFeedbackSaveDtoToFeedback(saveFeedbackDto));
     }

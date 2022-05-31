@@ -21,6 +21,6 @@ public class FeedbackMapper {
                 .rate(saveDto.getRate())
                 .text(saveDto.getText())
                 .ticketId(saveDto.getTicketId())
-                .userId(saveDto.getUserId()).build();
+                .userName(saveDto.getUserName()).build();
     }
 }

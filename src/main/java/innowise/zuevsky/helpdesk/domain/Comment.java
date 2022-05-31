@@ -26,8 +26,8 @@ public class Comment {
 	@Column(name = "id", nullable = false)
 	private Long id;
 
-	@Column(name = "user_id")
-	private Long userId;
+	@Column(name = "username")
+	private String username;
 
 	@Column(name = "text")
 	private String text;

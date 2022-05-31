@@ -1,30 +1,6 @@
 spring:
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5433/helpdeskdb
-    username: helpdesk-user
-    password: "1234qwerty"
-  jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQL95Dialect
-        show_sql: false
-        temp:
-          use_jdbc_metadata_defaults: false
-        format_sql: false
-  liquibase:
-    change-log: classpath:/db/changelog/db.changelog.xml
-
-jwt:
-  header: Authorization
-  secret: helpdeskhelpdeskhelpdeskhelpdesk
-  expiration: 3600
-
-server:
-  error:
-    include-message: always
-    include-binding-errors: always
-    incude-exception: false
+  application:
+    name: helpdesk-service
+  config:
+    import: optional:configserver:http://localhost:8888
+    name: helpdesk-service

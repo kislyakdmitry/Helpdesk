@@ -50,11 +50,11 @@ public class Ticket {
 	@Column(name = "desired_resolution_date")
 	private LocalDate desiredResolutionDate;
 
-	@Column(name = "assignee_id", updatable = false)
-	private Long assigneeId;
+	@Column(name = "assignee_username", updatable = false)
+	private String assigneeUserName;
 
-	@Column(name = "owner_id", updatable = false)
-	private Long ownerId;
+	@Column(name = "owner_username", updatable = false)
+	private String ownerUserName;
 
 	@Enumerated(EnumType.ORDINAL)
 	@Column(name = "state")
@@ -68,14 +68,14 @@ public class Ticket {
 	@Column(name = "urgency")
 	private Urgency urgency;
 
-	@Column(name = "approver_id", updatable = false)
-	private Long approverId;
+	@Column(name = "approver_username", updatable = false)
+	private String approverUserName;
 
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ticket_id")
 	private List<Attachment> attachments;
 
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ticket_id")
-	private List<Comment> comments;
+//	@OneToMany(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "ticket_id")
+//	private List<Comment> comments;
 }

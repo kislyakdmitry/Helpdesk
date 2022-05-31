@@ -43,12 +43,12 @@ public class TicketTestUtil {
                 .name(NAME)
                 .description(DESCRIPTION)
                 .desiredResolutionDate(DESIRED_DATE)
-                .assigneeId(ASSIGNEE_ID)
-                .ownerId(OWNER_ID)
+                .assigneeUserName(ASSIGNEE_ID)
+                .ownerUserName(OWNER_ID)
                 .state(STATE)
                 .category(CATEGORY)
                 .urgency(URGENCY)
-                .approverId(APPROVER_ID)
+                .approverUserName(APPROVER_ID)
                 .attachments(ATTACHMENTS)
                 .build();
     }

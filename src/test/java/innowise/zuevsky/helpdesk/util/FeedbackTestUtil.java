@@ -33,7 +33,7 @@ public class FeedbackTestUtil {
 	}
 
 	public static FeedbackSaveDto createFeedbackSaveDtoForFeedback() {
-		return FeedbackSaveDto.builder().ticketId(TICKET_ID).userId(USER_ID).rate(RATE).text(TEXT).build();
+		return FeedbackSaveDto.builder().ticketId(TICKET_ID).userName(USER_ID).rate(RATE).text(TEXT).build();
 	}
 
 	public static Feedback createFeedbackSaveDtoToFeedback() {
@@ -41,19 +41,19 @@ public class FeedbackTestUtil {
 	}
 
 	public static FeedbackSaveDto createFeedbackSaveDtoIT(){
-		return FeedbackSaveDto.builder().ticketId(TICKET_ID).userId(USER_ID).rate(RATE).text("New feedback").build();
+		return FeedbackSaveDto.builder().ticketId(TICKET_ID).userName(USER_ID).rate(RATE).text("New feedback").build();
 	}
 
 	public static FeedbackSaveDto createFeedbackSaveDtoTicketOwnerNotBelongsToUser(){
-		return FeedbackSaveDto.builder().ticketId(TICKET_ID).userId(USER_ID_NOT_TICKET_OWNER).rate(RATE).text("New feedback").build();
+		return FeedbackSaveDto.builder().ticketId(TICKET_ID).userName(USER_ID_NOT_TICKET_OWNER).rate(RATE).text("New feedback").build();
 	}
 
 	public static FeedbackSaveDto createFeedbackSaveDtoTicketStateNotDone(){
-		return FeedbackSaveDto.builder().ticketId(TICKET_ID_STATE_NOT_DONE).userId(USER_ID).rate(RATE).text("New feedback").build();
+		return FeedbackSaveDto.builder().ticketId(TICKET_ID_STATE_NOT_DONE).userName(USER_ID).rate(RATE).text("New feedback").build();
 	}
 
 	public static FeedbackSaveDto createFeedbackSaveDtoToSaveFeedback(){
-		return FeedbackSaveDto.builder().ticketId(5L).userId(USER_ID).rate(RATE).text("New feedback").build();
+		return FeedbackSaveDto.builder().ticketId(5L).userName(USER_ID).rate(RATE).text("New feedback").build();
 	}
 
 

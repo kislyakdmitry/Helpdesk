@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+
+    <changeSet id="1" author="Svetlana Shishaeva">
+        <comment>Drop unnecessary table</comment>
+        <sql>
+            ALTER TABLE Comments DROP CONSTRAINT fk_comment_user_id;
+            ALTER TABLE feedbacks DROP CONSTRAINT fk_feedback_user_id;
+            ALTER TABLE histories DROP CONSTRAINT fk_history_user_id;
+            ALTER TABLE tickets DROP CONSTRAINT fk_ticket_approver_id;
+            ALTER TABLE tickets DROP CONSTRAINT fk_ticket_assignee_id;
+            ALTER TABLE tickets DROP CONSTRAINT fk_ticket_owner_id;
+            DROP TABLE Users;
+            DROP TABLE Histories;
+        </sql>
+    </changeSet>
+
+    <changeSet id="2" author="Svetlana Shishaeva">
+        <comment>Rename columns connected with user</comment>
+        <sql>
+            ALTER TABLE Tickets RENAME COLUMN approver_id TO approver_username;
+            ALTER TABLE Tickets RENAME COLUMN assignee_id TO assignee_username;
+            ALTER TABLE Tickets RENAME COLUMN owner_id TO owner_username;
+
+            ALTER TABLE Comments RENAME COLUMN user_id TO username;
+            ALTER TABLE Feedbacks RENAME COLUMN user_id TO username;
+
+            ALTER TABLE Tickets ALTER COLUMN approver_username SET DATA TYPE varchar(50);
+            ALTER TABLE Tickets ALTER COLUMN assignee_username SET DATA TYPE varchar(50);
+            ALTER TABLE Tickets ALTER COLUMN owner_username SET DATA TYPE varchar(50);
+            ALTER TABLE Feedbacks ALTER COLUMN username SET DATA TYPE varchar(50);
+            ALTER TABLE Comments ALTER COLUMN username SET DATA TYPE varchar(50);
+        </sql>
+    </changeSet>
+    <changeSet id="3" author="Svetlana Shishaeva">
+        <comment>Update data </comment>
+        <sql>
+            UPDATE feedbacks set username='user1_mogilev' where feedbacks.id = 1;
+            UPDATE Tickets SET owner_username = 'user1_mogilev'        WHERE tickets.owner_username like '1';
+            UPDATE Tickets SET owner_username = 'user2_mogilev'        WHERE tickets.owner_username like '2';
+            UPDATE Tickets SET approver_username = 'manager1_mogilev'  WHERE tickets.approver_username like '3';
+            UPDATE Tickets SET approver_username = 'manager2_mogilev'  WHERE tickets.approver_username like '4';
+            UPDATE Tickets SET assignee_username = 'engineer1_mogilev' WHERE tickets.assignee_username like '5';
+            UPDATE Tickets SET assignee_username = 'engineer2_mogilev' WHERE tickets.assignee_username like '6';
+        </sql>
+    </changeSet>
+</databaseChangeLog>

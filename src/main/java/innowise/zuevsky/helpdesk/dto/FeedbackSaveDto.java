@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Data
@@ -27,8 +28,8 @@ public class FeedbackSaveDto {
     @NotNull
     private Long ticketId;
 
-    @ApiModelProperty(notes = "User ID. User can be as an employee or a manager. "
+    @ApiModelProperty(notes = "UserName. User can be as an employee or a manager. "
             + "The user can leave feedback about the ticket with status DONE created by him")
-    @NotNull
-    private Long userId;
+    @NotEmpty
+    private String userName;
 }

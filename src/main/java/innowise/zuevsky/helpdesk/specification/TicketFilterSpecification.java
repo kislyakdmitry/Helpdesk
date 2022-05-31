@@ -12,7 +12,7 @@ public class TicketFilterSpecification {
 	private TicketFilterSpecification() {
 	}
 
-	public static Specification<Ticket> hasOwnerId(Long ownerId) {
+	public static Specification<Ticket> hasOwnerId(String ownerId) {
 		return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("ownerId"), ownerId);
 	}
 

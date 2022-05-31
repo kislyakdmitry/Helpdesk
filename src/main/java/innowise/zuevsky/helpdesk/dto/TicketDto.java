@@ -27,9 +27,9 @@ public class TicketDto {
 	private Urgency urgency;
 	private String description;
 	private LocalDate desiredResolutionDate;
-	private Long ownerId;
-	private Long approverId;
-	private Long assigneeId;
+	private String ownerId;
+	private String approverId;
+	private String assigneeId;
 	private List<Attachment> attachments;
 	private List<Comment> comments;
 }

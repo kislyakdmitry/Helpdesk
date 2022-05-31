@@ -14,32 +14,35 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface TicketsRepository extends JpaRepository<Ticket, Long>, JpaSpecificationExecutor<Ticket> {
 
-    @Query("""
+   /* @Query("""
             SELECT t FROM Ticket AS t
-            JOIN User AS o ON o.id = t.ownerId
-            JOIN User AS a ON a.id = t.approverId
-            WHERE ((t.ownerId = :userId) OR (o.role = 'ROLE_EMPLOYEE' AND t.state = 1) OR (t.approverId = :userId AND t.state IN :statesOfManagerApprover))
+            JOIN User AS o ON o.id = t.ownerUserName
+            JOIN User AS a ON a.id = t.approverUserName
+            WHERE ((t.ownerUserName = :userName) OR (o.role = 'ROLE_EMPLOYEE' AND t.state = 1) OR (t.approverUserName = :userId AND t.state IN :statesOfManagerApprover))
             AND (:ticketId IS NULL OR t.id = :ticketId)
             AND (:ticketName IS NULL OR t.name = :ticketName)
             AND ((CAST(:ticketDesiredDate as date) IS NULL) OR (t.desiredResolutionDate = :ticketDesiredDate))
             AND (t.state IN :ticketStates)
             AND (t.urgency IN :ticketUrgencies)
             """)
-    Page<Ticket> findTicketsForManager(Long userId, Collection<State> statesOfManagerApprover, Long ticketId,
+    Page<Ticket> findTicketsForManager(String userName, Collection<State> statesOfManagerApprover, Long ticketId,
                                        String ticketName, LocalDate ticketDesiredDate, List<State> ticketStates,
                                        List<Urgency> ticketUrgencies, Pageable pageable);
 
     @Query("""
             SELECT t FROM Ticket AS t
-            JOIN User AS o ON o.id = t.ownerId
-            WHERE ((o.role IN ('ROLE_EMPLOYEE', 'ROLE_MANAGER') AND t.state = 2) OR (t.assigneeId = :userId AND t.state IN :statesOfEngineerAssignee))
+            JOIN User AS o ON o.id = t.ownerUserName
+            WHERE ((o.role IN ('ROLE_EMPLOYEE', 'ROLE_MANAGER') AND t.state = 2) OR (t.assigneeUserName = :userName AND t.state IN :statesOfEngineerAssignee))
             AND (:ticketId IS NULL OR t.id = :ticketId)
             AND (:ticketName IS NULL OR t.name = :ticketName)
             AND ((CAST(:ticketDesiredDate as date) IS NULL) OR (t.desiredResolutionDate = :ticketDesiredDate))
             AND (t.state IN :ticketStates)
             AND (t.urgency IN :ticketUrgencies)
             """)
-    Page<Ticket> findTicketsForEngineer(Long userId, Collection<State> statesOfEngineerAssignee, Long ticketId,
+    Page<Ticket> findTicketsForEngineer(String userName, Collection<State> statesOfEngineerAssignee, Long ticketId,
                                         String ticketName, LocalDate ticketDesiredDate, List<State> ticketStates,
                                         List<Urgency> ticketUrgencies, Pageable pageable);
+
+
+    */
 }

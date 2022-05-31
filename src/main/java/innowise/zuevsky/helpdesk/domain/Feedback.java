@@ -28,8 +28,8 @@ public class Feedback {
 	@Column(name = "id", nullable = false)
 	private Long id;
 
-	@Column(name = "user_Id")
-	private Long userId;
+	@Column(name = "username")
+	private String userName;
 
 	@Column(name = "rate", nullable = false)
 	private Integer rate;

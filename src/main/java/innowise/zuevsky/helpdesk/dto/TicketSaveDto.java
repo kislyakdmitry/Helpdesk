@@ -10,10 +10,8 @@ import innowise.zuevsky.helpdesk.domain.enums.State;
 import innowise.zuevsky.helpdesk.domain.enums.Urgency;
 import java.time.LocalDate;
 import java.util.List;
-import javax.validation.constraints.FutureOrPresent;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -39,11 +37,11 @@ public class TicketSaveDto {
 	@FutureOrPresent
 	private LocalDate desiredResolutionDate;
 
-	@NotNull
-	private Long assigneeId;
+	@NotEmpty
+	private String assigneeUserName;
 
-	@NotNull
-	private Long ownerId;
+	@NotEmpty
+	private String ownerUserName;
 
 	@NotNull
 	private State state;
@@ -54,8 +52,8 @@ public class TicketSaveDto {
 	@NotNull
 	private Urgency urgency;
 
-	@NotNull
-	private Long approverId;
+	@NotEmpty
+	private String approverUserName;
 
 	private List<Attachment> attachments;
 }

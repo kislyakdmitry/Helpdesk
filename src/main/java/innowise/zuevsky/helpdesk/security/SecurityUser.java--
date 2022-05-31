@@ -1,6 +1,5 @@
 package innowise.zuevsky.helpdesk.security;
 
-import innowise.zuevsky.helpdesk.domain.User;
 import innowise.zuevsky.helpdesk.domain.enums.Status;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -58,10 +57,10 @@ public class SecurityUser implements UserDetails {
 		return isActive;
 	}
 
-	public static UserDetails fromUser(User user) {
-		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
-				user.getStatus().equals(Status.ACTIVE), user.getStatus().equals(Status.ACTIVE),
-				user.getStatus().equals(Status.ACTIVE), user.getStatus().equals(Status.ACTIVE),
-				user.getRole().getAuthorities());
-	}
+//	public static UserDetails fromUser(User user) {
+//		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
+//				user.getStatus().equals(Status.ACTIVE), user.getStatus().equals(Status.ACTIVE),
+//				user.getStatus().equals(Status.ACTIVE), user.getStatus().equals(Status.ACTIVE),
+//				user.getRole().getAuthorities());
+//	}
 }
