@@ -12,8 +12,8 @@ public class TicketFilterSpecification {
 	private TicketFilterSpecification() {
 	}
 
-	public static Specification<Ticket> hasOwnerId(String ownerId) {
-		return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("ownerId"), ownerId);
+	public static Specification<Ticket> hasOwnerUserName(String ownerUserName) {
+		return (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("ownerUserName"), ownerUserName);
 	}
 
 	public static Specification<Ticket> hasId(Long id) {

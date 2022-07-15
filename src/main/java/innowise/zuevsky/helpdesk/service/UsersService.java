@@ -1,29 +1,35 @@
 package innowise.zuevsky.helpdesk.service;
 
+import innowise.zuevsky.helpdesk.domain.enums.Role;
 import innowise.zuevsky.helpdesk.dto.CurrentUser;
-import lombok.AllArgsConstructor;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.KeycloakSecurityContext;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
-import org.keycloak.representations.IDToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Controller;
 
 import java.security.Principal;
+import java.util.List;
 
-@Service
-@AllArgsConstructor
+@Controller
 public class UsersService {
 
     public CurrentUser getCurrentUser() {
         CurrentUser currentUser = CurrentUser.builder().build();
-        KeycloakAuthenticationToken auth = (KeycloakAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-        Principal principal = (Principal) auth.getPrincipal();
+        KeycloakAuthenticationToken authentication = (KeycloakAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+        Principal principal = (Principal) authentication.getPrincipal();
         if (principal instanceof KeycloakPrincipal) {
             KeycloakPrincipal<KeycloakSecurityContext> kPrincipal = (KeycloakPrincipal<KeycloakSecurityContext>) principal;
-            IDToken token = kPrincipal.getKeycloakSecurityContext().getToken();
-            currentUser.setUserName(token.getNickName());
-            currentUser.setEmail(token.getEmail());
+            currentUser.setUserName(kPrincipal.getKeycloakSecurityContext().getToken().getPreferredUsername());
+
+            List<GrantedAuthority> roles = (List<GrantedAuthority>) authentication.getAuthorities();
+
+            roles.forEach(roleIn-> List.of(Role.values()).forEach(role -> {
+                if(role.name().equals(roleIn.getAuthority())){
+                    currentUser.setRole(role);
+                }
+            }));
         }
         return currentUser;
     }

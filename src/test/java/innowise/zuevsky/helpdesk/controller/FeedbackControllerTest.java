@@ -48,7 +48,7 @@ class FeedbackControllerTest {
     @WithMockUser
     void getFeedback_shouldReturnFeedbackDto_whenFeedbackExist() throws Exception {
         // given
-        String url = "/api/feedbacks/{feedbackId}";
+        String url = "/helpdesk-service/feedbacks/{feedbackId}";
         when(feedbackService.getFeedbackById(FeedbackTestUtil.FEEDBACK_ID)).thenReturn(feedbackDto);
         // when
         // then
@@ -64,7 +64,7 @@ class FeedbackControllerTest {
     @WithMockUser
     void getFeedback_shouldReturnFeedbackNotFoundException_whenFeedbackDoesNotExist() throws Exception {
         // given
-        String url = "/api/feedbacks/{feedbackId}";
+        String url = "/helpdesk-service/feedbacks/{feedbackId}";
         when(feedbackService.getFeedbackById(FeedbackTestUtil.FEEDBACK_ID)).thenThrow(new FeedbackNotFoundException(FeedbackTestUtil.FEEDBACK_ID));
 
         mockMvc.perform(get(url, FeedbackTestUtil.FEEDBACK_ID))
@@ -76,7 +76,7 @@ class FeedbackControllerTest {
     @Test
     void getFeedbackByTicketId_shouldReturnFeedback_whenExist() throws Exception {
         // given
-        String url = "/api/feedbacks/feedback/{ticketId}";
+        String url = "/helpdesk-service/feedbacks/feedback/{ticketId}";
         when(feedbackService.getFeedbackByTicketId(anyLong())).thenReturn(feedbackDto);
         // when
         // then
@@ -91,7 +91,7 @@ class FeedbackControllerTest {
     @Test
     void getFeedbackByTicketId_shouldReturnFeedbackNotFoundException_whenDoesNotExist() throws Exception {
         // given
-        String url = "/api/feedbacks/feedback/{ticketId}";
+        String url = "/helpdesk-service/feedbacks/feedback/{ticketId}";
         when(feedbackService.getFeedbackByTicketId(anyLong())).thenThrow(new FeedbackNotFoundException(FeedbackTestUtil.TICKET_ID));
         // when
         // then
@@ -103,7 +103,7 @@ class FeedbackControllerTest {
     @Test
     void saveFeedback_shouldSaveFeedback() throws Exception {
         // given
-        String url = "/api/feedbacks";
+        String url = "/helpdesk-service/feedbacks";
         // when
         // then
         mockMvc.perform(post(url).contentType(APPLICATION_JSON).accept(APPLICATION_JSON).content(asJson(feedbackSaveDto)))

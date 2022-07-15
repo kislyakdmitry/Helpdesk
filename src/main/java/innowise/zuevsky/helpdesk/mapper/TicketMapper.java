@@ -11,7 +11,8 @@ public class TicketMapper {
     public Ticket mapTicketSaveDtoInTicket(TicketSaveDto saveDto) {
         return Ticket.builder().name(saveDto.getName()).description(saveDto.getDescription())
                 .desiredResolutionDate(saveDto.getDesiredResolutionDate()).assigneeUserName(saveDto.getAssigneeUserName())
-                .ownerUserName(saveDto.getOwnerUserName()).state(saveDto.getState()).category(saveDto.getCategory())
+                .ownerUserName(saveDto.getOwnerUserName()).ownerRole(saveDto.getOwnerRole())
+                .state(saveDto.getState()).category(saveDto.getCategory())
                 .urgency(saveDto.getUrgency()).approverUserName(saveDto.getApproverUserName()).attachments(saveDto.getAttachments())
                 .build();
     }
@@ -20,7 +21,8 @@ public class TicketMapper {
         return TicketDto.builder().id(ticket.getId()).name(ticket.getName()).createdOn(ticket.getCreatedOn())
                 .state(ticket.getState()).category(ticket.getCategory()).urgency(ticket.getUrgency())
                 .description(ticket.getDescription()).desiredResolutionDate(ticket.getDesiredResolutionDate())
-                .ownerId(ticket.getOwnerUserName()).approverId(ticket.getApproverUserName()).assigneeId(ticket.getAssigneeUserName())
+                .ownerName(ticket.getOwnerUserName()).ownerRole(ticket.getOwnerRole())
+                .approverName(ticket.getApproverUserName()).assigneeName(ticket.getAssigneeUserName())
 //                .attachments(ticket.getAttachments()).comments(ticket.getComments())
                 .build();
     }

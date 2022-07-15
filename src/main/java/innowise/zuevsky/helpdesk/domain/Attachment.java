@@ -11,12 +11,14 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
+@DynamicUpdate
 @NoArgsConstructor
 @Table(name = "attachments")
 public class Attachment {

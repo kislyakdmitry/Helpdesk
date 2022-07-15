@@ -6,6 +6,7 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import innowise.zuevsky.helpdesk.domain.Attachment;
 import innowise.zuevsky.helpdesk.domain.enums.Category;
+import innowise.zuevsky.helpdesk.domain.enums.Role;
 import innowise.zuevsky.helpdesk.domain.enums.State;
 import innowise.zuevsky.helpdesk.domain.enums.Urgency;
 import java.time.LocalDate;
@@ -42,6 +43,9 @@ public class TicketSaveDto {
 
 	@NotEmpty
 	private String ownerUserName;
+
+	@NotNull
+	private Role ownerRole;
 
 	@NotNull
 	private State state;

@@ -3,6 +3,7 @@ package innowise.zuevsky.helpdesk.it.tests.repository;
 import innowise.zuevsky.helpdesk.domain.Feedback;
 import innowise.zuevsky.helpdesk.it.BaseIT;
 import innowise.zuevsky.helpdesk.repository.FeedbackRepository;
+import innowise.zuevsky.helpdesk.util.TicketTestUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
@@ -18,7 +19,7 @@ class FeedbackRepositoryIT extends BaseIT {
     @Autowired
     private FeedbackRepository feedbackRepository;
 
-    private final Feedback expectedFeedback = new Feedback(1L, 2L, 5, "Good job!", LocalDateTime.parse("2022-04-19T09:51:54.989423"), 3L);
+    private final Feedback expectedFeedback = new Feedback(1L, TicketTestUtil.OWNER_NAME, 5, "Good job!", LocalDateTime.parse("2022-04-19T09:51:54.989423"), 3L);
 
     @Test
     void findFeedbackByTicketId_ShouldPass_WhenCurrentFeedbackIsEqualToExpectedFeedback() {

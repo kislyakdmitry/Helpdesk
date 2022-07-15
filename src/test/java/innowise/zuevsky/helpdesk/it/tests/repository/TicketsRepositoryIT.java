@@ -28,7 +28,7 @@ class TicketsRepositoryIT extends BaseIT {
 
         //then
         assertNotNull(myTickets);
-        assertEquals(2, myTickets.getTotalElements());
+        assertEquals(7, myTickets.getTotalElements());
     }
 
     @Test
@@ -36,7 +36,7 @@ class TicketsRepositoryIT extends BaseIT {
 
         //when
         Page<Ticket> ticketsForManager = ticketsRepository.findTicketsForManager(
-                RepositoryTestUtil.MANAGER_ID, RepositoryTestUtil.STATES_OF_MANAGER_APPROVER,
+                RepositoryTestUtil.MANAGER_NAME, RepositoryTestUtil.STATES_OF_MANAGER_APPROVER,
                 RepositoryTestUtil.TICKET_ID, RepositoryTestUtil.TICKET_NAME, RepositoryTestUtil.TICKET_DESIRED_DATE,
                 RepositoryTestUtil.TICKET_STATES, RepositoryTestUtil.TICKET_URGENCIES, RepositoryTestUtil.PAGEABLE);
 
@@ -50,7 +50,7 @@ class TicketsRepositoryIT extends BaseIT {
 
         //when
         Page<Ticket> ticketsForEngineer = ticketsRepository.findTicketsForEngineer(
-                RepositoryTestUtil.MANAGER_ID, RepositoryTestUtil.STATES_OF_ENGINEER_ASSIGNEE,
+                RepositoryTestUtil.MANAGER_NAME, RepositoryTestUtil.STATES_OF_ENGINEER_ASSIGNEE,
                 RepositoryTestUtil.TICKET_ID, RepositoryTestUtil.TICKET_NAME, RepositoryTestUtil.TICKET_DESIRED_DATE,
                 RepositoryTestUtil.TICKET_STATES, RepositoryTestUtil.TICKET_URGENCIES, RepositoryTestUtil.PAGEABLE);
 

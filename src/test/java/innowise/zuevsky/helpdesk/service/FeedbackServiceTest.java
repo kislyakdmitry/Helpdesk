@@ -1,6 +1,8 @@
 package innowise.zuevsky.helpdesk.service;
 
 import innowise.zuevsky.helpdesk.domain.Feedback;
+import innowise.zuevsky.helpdesk.domain.enums.Role;
+import innowise.zuevsky.helpdesk.dto.CurrentUser;
 import innowise.zuevsky.helpdesk.dto.FeedbackDto;
 import innowise.zuevsky.helpdesk.dto.FeedbackSaveDto;
 import innowise.zuevsky.helpdesk.exception.FeedbackExistException;
@@ -36,6 +38,10 @@ class FeedbackServiceTest {
     @Mock
     private TicketsService ticketsService;
 
+    @Mock
+    private UsersService usersService;
+
+    private static final CurrentUser user = CurrentUser.builder().userName("user1_mogilev").role(Role.ROLE_EMPLOYEE).build();
     private static final Feedback feedback = FeedbackTestUtil.createFeedback();
     private static final FeedbackSaveDto feedbackSaveDto = FeedbackTestUtil.createFeedbackSaveDtoForFeedback();
 
@@ -92,6 +98,7 @@ class FeedbackServiceTest {
     @Test
     void saveFeedback_shouldSave_whenFeedbackSaved() {
         // when
+        when(usersService.getCurrentUser()).thenReturn(user);
         feedbackService.saveFeedback(feedbackSaveDto);
         // then
         verify(ticketsService).validateTicketStateDone(feedbackSaveDto.getTicketId());
@@ -103,6 +110,7 @@ class FeedbackServiceTest {
     @Test
     void saveFeedback_shouldThrowFeedbackExistException_whenFeedbackExist() {
         // given
+        when(usersService.getCurrentUser()).thenReturn(user);
         when(feedbackRepository.existsFeedbackByTicketId(feedbackSaveDto.getTicketId())).thenReturn(true);
         // when
         assertThatThrownBy(()->feedbackService.saveFeedback(feedbackSaveDto))

@@ -1,18 +1,13 @@
 package innowise.zuevsky.helpdesk.it.tests.service;
 
 import innowise.zuevsky.helpdesk.domain.Ticket;
-import innowise.zuevsky.helpdesk.domain.User;
 import innowise.zuevsky.helpdesk.domain.enums.Role;
 import innowise.zuevsky.helpdesk.domain.enums.State;
-import innowise.zuevsky.helpdesk.dto.FilterParamsDto;
-import innowise.zuevsky.helpdesk.dto.TicketDto;
-import innowise.zuevsky.helpdesk.dto.TicketSaveDto;
-import innowise.zuevsky.helpdesk.dto.TicketUpdateDto;
+import innowise.zuevsky.helpdesk.dto.*;
 import innowise.zuevsky.helpdesk.it.BaseIT;
 import innowise.zuevsky.helpdesk.repository.TicketsRepository;
 import innowise.zuevsky.helpdesk.service.TicketsService;
 import innowise.zuevsky.helpdesk.util.TicketTestUtil;
-import innowise.zuevsky.helpdesk.util.UserTestUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -38,7 +33,10 @@ class TicketsServiceIT extends BaseIT {
 
     private final TicketUpdateDto ticketUpdateDto = TicketTestUtil.createTicketUpdateDto();
 
-    private final User user = UserTestUtil.createTestUser();
+    private final CurrentUser user = CurrentUser.builder()
+            .userName("user1_mogilev")
+            .role(Role.ROLE_EMPLOYEE)
+            .build();
 
     private final Pageable pageable = TicketTestUtil.createPageable();
 
@@ -93,40 +91,40 @@ class TicketsServiceIT extends BaseIT {
 
         //then
         assertNotNull(actualPage);
-        assertThat(actualPage.getTotalElements()).isEqualTo(1);
+        assertThat(actualPage.getTotalElements()).isEqualTo(7);
     }
 
     @Test
     void getMyTickets_ShouldPass_WhenSizeOfTicketPageIsCorrect() {
 
         //when
-        Page<TicketDto> actualPage = ticketsService.getMyTickets(user, pageable, emptyFilterParams);
+        Page<TicketDto> actualPage = ticketsService.getMyTickets(user.getUserName(), pageable, emptyFilterParams);
 
         //then
         assertNotNull(actualPage);
-        assertThat(actualPage.getTotalElements()).isEqualTo(1);
+        assertThat(actualPage.getTotalElements()).isEqualTo(7);
     }
 
     @Test
     void getTicketsForManager_ShouldPass_WhenSizeOfTicketPageIsCorrect() {
 
         //when
-        Page<TicketDto> actualPage = ticketsService.getTicketsForManager(user, pageable, emptyFilterParams);
+        Page<TicketDto> actualPage = ticketsService.getTicketsForManager(user.getUserName(), pageable, emptyFilterParams);
 
         //then
         assertNotNull(actualPage);
-        assertThat(actualPage.getTotalElements()).isEqualTo(1);
+        assertThat(actualPage.getTotalElements()).isEqualTo(7);
     }
 
     @Test
     void getTicketsForEngineer_ShouldPass_WhenSizeOfTicketPageIsCorrect() {
 
         //when
-        Page<TicketDto> actualPage = ticketsService.getTicketsForManager(user, pageable, emptyFilterParams);
+        Page<TicketDto> actualPage = ticketsService.getTicketsForManager(user.getUserName(), pageable, emptyFilterParams);
 
         //then
         assertNotNull(actualPage);
-        assertThat(actualPage.getTotalElements()).isEqualTo(1);
+        assertThat(actualPage.getTotalElements()).isEqualTo(7);
     }
 
     @Test
@@ -158,10 +156,10 @@ class TicketsServiceIT extends BaseIT {
     void validateTicketOwnerBelongUser_ShouldPass_WhenTicketBelongToUser() {
 
         //when
-        ticketsService.validateTicketOwnerBelongUser(7L, user.getId());
+        ticketsService.validateTicketOwnerBelongUser(7L, user.getUserName());
         TicketDto actualTicket = ticketsService.getTicket(7L);
 
         //then
-        assertThat(actualTicket.getOwnerId()).isEqualTo(user.getId());
+        assertThat(actualTicket.getOwnerName()).isEqualTo(user.getUserName());
     }
 }

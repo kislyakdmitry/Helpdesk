@@ -1,6 +1,7 @@
 package innowise.zuevsky.helpdesk.domain;
 
 import innowise.zuevsky.helpdesk.domain.enums.Category;
+import innowise.zuevsky.helpdesk.domain.enums.Role;
 import innowise.zuevsky.helpdesk.domain.enums.State;
 import innowise.zuevsky.helpdesk.domain.enums.Urgency;
 import java.time.LocalDate;
@@ -57,6 +58,9 @@ public class Ticket {
 	private String ownerUserName;
 
 	@Enumerated(EnumType.ORDINAL)
+	private Role ownerRole;
+
+	@Enumerated(EnumType.ORDINAL)
 	@Column(name = "state")
 	private State state;
 
@@ -74,8 +78,4 @@ public class Ticket {
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ticket_id")
 	private List<Attachment> attachments;
-
-//	@OneToMany(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "ticket_id")
-//	private List<Comment> comments;
 }

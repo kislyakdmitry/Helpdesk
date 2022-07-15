@@ -1,10 +1,18 @@
-INSERT INTO public.users (id, first_name, last_name, role, email, password, status) VALUES (2, 'user2', 'user2', 'ROLE_EMPLOYEE', 'user2_mogilev@yopmail.com', '$2a$12$UBXPkMHbwkC5ZFUWrInSKu65ba.joR3ZsVv2BoMhHH.GXtFsHR4p2', 'ACTIVE');
-INSERT INTO public.users (id, first_name, last_name, role, email, password, status) VALUES (666, 'user23', 'user23', 'ROLE_EMPLOYEE', 'user23_mogilev@yopmail.com', '$2a$12$UBXPkMHbwkC5ZFUWrInSKu65ba.joR3ZsVv2BoMhHH.GXtFsHR4p2', 'ACTIVE');
-INSERT INTO public.users (id, first_name, last_name, role, email, password, status) VALUES (4, 'manager2', 'manager2', 'ROLE_MANAGER', 'manager2_mogilev@yopmail.com', '$2a$12$UBXPkMHbwkC5ZFUWrInSKu65ba.joR3ZsVv2BoMhHH.GXtFsHR4p2', 'ACTIVE');
-INSERT INTO public.users (id, first_name, last_name, role, email, password, status) VALUES (6, 'engineer2', 'engineer2', 'ROLE_ENGINEER', 'engineer2_mogilev@yopmail.com', '$2a$12$UBXPkMHbwkC5ZFUWrInSKu65ba.joR3ZsVv2BoMhHH.GXtFsHR4p2', 'ACTIVE');
-
-INSERT INTO public.tickets (id, name, description, created_on, desired_resolution_date, assignee_id, owner_id, state, category, urgency, approver_id) VALUES (3, 'Ticket 3', 'Third ticket', '2022-03-17 10:00:00.000000', '2022-03-20', 6, 2, 3, 2, 2, 4);
-INSERT INTO public.tickets (id, name, description, created_on, desired_resolution_date, assignee_id, owner_id, state, category, urgency, approver_id) VALUES (4, 'Ticket 3', 'Third ticket', '2022-03-17 10:00:00.000000', '2022-03-20', 6, 2, 3, 2, 2, 4);
-INSERT INTO public.tickets (id, name, description, created_on, desired_resolution_date, assignee_id, owner_id, state, category, urgency, approver_id) VALUES (5, 'Ticket 3', 'Third ticket', '2022-03-17 10:00:00.000000', '2022-03-20', 6, 4, 5, 2, 2, 4);
-INSERT INTO public.tickets (id, name, description, created_on, desired_resolution_date, assignee_id, owner_id, state, category, urgency, approver_id) VALUES (6, 'Ticket 3', 'Third ticket', '2022-03-17 10:00:00.000000', '2022-03-20', 6, 4, 2, 2, 2, 4);
-INSERT INTO public.tickets (id, name, description, created_on, desired_resolution_date, assignee_id, owner_id, state, category, urgency, approver_id) VALUES (7, 'Ticket 3', 'Third ticket', '2022-03-17 10:00:00.000000', '2022-03-20', 6, 666, 2, 2, 2, 4);
+INSERT INTO public.tickets (id, "name", description, created_on, desired_resolution_date, assignee_username,
+                            owner_username, state, category, urgency, approver_username, owner_role)
+VALUES (10, 'Ticket 10', 'Ten ticket', '2022-03-14 10:00:00', '2022-03-25', 'engineer2_mogilev', 'user1_mogilev', 3, 3,3, 'manager1_mogilev', 0),
+       (3, 'Ticket 3', 'Third ticket', '2022-03-17 10:00:00', '2022-03-20', 'engineer2_mogilev', 'user2_mogilev', 3, 2,2, 'manager2_mogilev', 0),
+       (11, 'Ticket 2', 'Second ticket', '2022-03-17 10:00:00', '2022-03-20', 'engineer1_mogilev', 'user1_mogilev', 2, 1,
+        1, 'manager1_mogilev', 0),
+       (9, 'Ticket 9', 'Nine ticket', '2022-03-15 10:00:00', '2022-04-02', 'engineer1_mogilev', 'user1_mogilev', 2, 2,
+        0, 'manager1_mogilev', 0),
+       (5, 'Ticket 5', 'Fourth ticket', '2022-03-17 10:00:00', '2022-03-20', 'engineer1_mogilev', 'user1_mogilev', 5, 4,
+        3, 'manager2_mogilev', 0),
+       (6, 'Ticket 6', 'Six ticket', '2022-03-17 10:00:00', '2022-03-20', 'engineer1_mogilev', 'user1_mogilev', 6, 5, 2,
+        'manager2_mogilev', 0),
+       (7, 'Ticket 7', 'Seven ticket', '2022-03-17 10:00:00', '2022-03-20', 'engineer2_mogilev', 'user1_mogilev', 1, 0,
+        1, 'manager1_mogilev', 0),
+       (8, 'Ticket 8', 'Eight ticket', '2022-03-13 10:00:00', '2022-03-20', 'engineer2_mogilev', 'user1_mogilev', 0, 1,
+        2, 'manager1_mogilev', 0),
+       (4, 'Ticket 4', 'Fourth ticket', '2022-03-17 10:00:00', '2022-03-20', 'engineer2_mogilev', 'manager1_mogilev', 4,
+        3, 3, 'manager1_mogilev', 1);

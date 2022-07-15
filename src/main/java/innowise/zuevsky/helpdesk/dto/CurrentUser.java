@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 public class CurrentUser {
 
     private String userName;
-    private String email;
     private Role role;
 
 }

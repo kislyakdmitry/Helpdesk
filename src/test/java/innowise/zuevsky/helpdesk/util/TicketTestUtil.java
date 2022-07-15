@@ -3,6 +3,7 @@ package innowise.zuevsky.helpdesk.util;
 import innowise.zuevsky.helpdesk.domain.Attachment;
 import innowise.zuevsky.helpdesk.domain.Ticket;
 import innowise.zuevsky.helpdesk.domain.enums.Category;
+import innowise.zuevsky.helpdesk.domain.enums.Role;
 import innowise.zuevsky.helpdesk.domain.enums.State;
 import innowise.zuevsky.helpdesk.domain.enums.Urgency;
 import innowise.zuevsky.helpdesk.dto.FilterParamsDto;
@@ -25,9 +26,10 @@ public class TicketTestUtil {
     public static final String UPDATED_DESCRIPTION = "updated description";
     public static final LocalDate DESIRED_DATE = LocalDate.parse("2070-01-01");
     public static final LocalDate DESIRED_UPDATED_DATE = LocalDate.parse("2099-01-01");
-    public static final Long OWNER_ID = 666L;
-    public static final Long ASSIGNEE_ID = 666L;
-    public static final Long APPROVER_ID = 666L;
+    public static final String OWNER_NAME = "user1_mogilev";
+    public static final Role OWNER_ROLE = Role.ROLE_EMPLOYEE;
+    public static final String ASSIGNEE_NAME = "manager1_mogilev";
+    public static final String APPROVER_NAME = "engineer1_mogilev";
     public static final State STATE = State.NEW;
     public static final Category CATEGORY = Category.BENEFITS_AND_PAPER_WORK;
     public static final Category UPDATED_CATEGORY = Category.HARDWARE_AND_SOFTWARE;
@@ -43,12 +45,13 @@ public class TicketTestUtil {
                 .name(NAME)
                 .description(DESCRIPTION)
                 .desiredResolutionDate(DESIRED_DATE)
-                .assigneeUserName(ASSIGNEE_ID)
-                .ownerUserName(OWNER_ID)
+                .assigneeUserName(ASSIGNEE_NAME)
+                .ownerUserName(OWNER_NAME)
+                .ownerRole(OWNER_ROLE)
                 .state(STATE)
                 .category(CATEGORY)
                 .urgency(URGENCY)
-                .approverUserName(APPROVER_ID)
+                .approverUserName(APPROVER_NAME)
                 .attachments(ATTACHMENTS)
                 .build();
     }
@@ -62,10 +65,11 @@ public class TicketTestUtil {
                 .urgency(URGENCY)
                 .description(DESCRIPTION)
                 .desiredResolutionDate(DESIRED_DATE)
-                .ownerId(OWNER_ID)
-                .approverId(APPROVER_ID)
-                .assigneeId(ASSIGNEE_ID)
-                .attachments(ATTACHMENTS)
+                .ownerName(OWNER_NAME)
+                .ownerRole(OWNER_ROLE)
+                .approverName(APPROVER_NAME)
+                .assigneeName(ASSIGNEE_NAME)
+//                .attachments(ATTACHMENTS)
                 .build();
     }
 
@@ -76,7 +80,7 @@ public class TicketTestUtil {
                 .desiredResolutionDate(DESIRED_UPDATED_DATE)
                 .category(UPDATED_CATEGORY)
                 .urgency(UPDATED_URGENCY)
-                .attachments(ATTACHMENTS)
+//                .attachments(ATTACHMENTS)
                 .build();
     }
 
@@ -86,12 +90,13 @@ public class TicketTestUtil {
             .name(UPDATED_NAME)
             .description(UPDATED_DESCRIPTION)
             .desiredResolutionDate(DESIRED_UPDATED_DATE)
-            .assigneeId(ASSIGNEE_ID)
-            .ownerId(OWNER_ID)
+            .assigneeUserName(ASSIGNEE_NAME)
+            .ownerUserName(OWNER_NAME)
+            .ownerRole(OWNER_ROLE)
             .state(STATE)
             .category(UPDATED_CATEGORY)
             .urgency(UPDATED_URGENCY)
-            .approverId(APPROVER_ID)
+            .approverUserName(APPROVER_NAME)
             .attachments(ATTACHMENTS)
             .build();
     }
@@ -103,12 +108,13 @@ public class TicketTestUtil {
                 .name(NAME)
                 .description(DESCRIPTION)
                 .desiredResolutionDate(DESIRED_DATE)
-                .assigneeId(ASSIGNEE_ID)
-                .ownerId(OWNER_ID)
+                .assigneeUserName(ASSIGNEE_NAME)
+                .ownerUserName(OWNER_NAME)
+                .ownerRole(OWNER_ROLE)
                 .state(STATE)
                 .category(CATEGORY)
                 .urgency(URGENCY)
-                .approverId(APPROVER_ID)
+                .approverUserName(APPROVER_NAME)
                 .attachments(ATTACHMENTS)
                 .build();
     }
@@ -118,12 +124,13 @@ public class TicketTestUtil {
                 .name(NAME)
                 .description(DESCRIPTION)
                 .desiredResolutionDate(DESIRED_DATE)
-                .assigneeId(ASSIGNEE_ID)
-                .ownerId(OWNER_ID)
+                .assigneeUserName(ASSIGNEE_NAME)
+                .ownerUserName(OWNER_NAME)
+                .ownerRole(OWNER_ROLE)
                 .state(STATE)
                 .category(CATEGORY)
                 .urgency(URGENCY)
-                .approverId(APPROVER_ID)
+                .approverUserName(APPROVER_NAME)
                 .attachments(ATTACHMENTS)
                 .build();
     }

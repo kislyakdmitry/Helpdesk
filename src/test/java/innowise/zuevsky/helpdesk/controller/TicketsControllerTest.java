@@ -1,11 +1,8 @@
 package innowise.zuevsky.helpdesk.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import innowise.zuevsky.helpdesk.domain.User;
-import innowise.zuevsky.helpdesk.dto.FilterParamsDto;
-import innowise.zuevsky.helpdesk.dto.TicketDto;
-import innowise.zuevsky.helpdesk.dto.TicketSaveDto;
-import innowise.zuevsky.helpdesk.dto.TicketUpdateDto;
+import innowise.zuevsky.helpdesk.domain.enums.Role;
+import innowise.zuevsky.helpdesk.dto.*;
 import innowise.zuevsky.helpdesk.exception.GlobalExceptionHandler;
 import innowise.zuevsky.helpdesk.exception.TicketNotFoundException;
 import innowise.zuevsky.helpdesk.mapper.TicketMapper;
@@ -13,7 +10,6 @@ import innowise.zuevsky.helpdesk.repository.TicketsRepository;
 import innowise.zuevsky.helpdesk.service.TicketsService;
 import innowise.zuevsky.helpdesk.service.UsersService;
 import innowise.zuevsky.helpdesk.util.TicketTestUtil;
-import innowise.zuevsky.helpdesk.util.UserTestUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,9 +24,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -54,10 +48,11 @@ class TicketsControllerTest {
 
     MockMvc mockMvc;
 
+
     TicketDto ticketDto = TicketTestUtil.createTicketDto();
     TicketUpdateDto ticketUpdateDto = TicketTestUtil.createTicketUpdateDto();
     TicketSaveDto ticketSaveDto = TicketTestUtil.createTicketSaveDto();
-    User user = UserTestUtil.createTestUser();
+    CurrentUser user = CurrentUser.builder().userName(TicketTestUtil.OWNER_NAME).role(Role.ROLE_EMPLOYEE).build();
     Pageable pageable = TicketTestUtil.createPageable();
     FilterParamsDto filterParamsDto = TicketTestUtil.createFilterParamsDto();
 
@@ -74,7 +69,8 @@ class TicketsControllerTest {
     void getTicket_ShouldPass_WhenTicketExist() throws Exception {
 
         //given
-        String url = "/api/tickets/{ticketId}";
+        String url = "/helpdesk-service/tickets/get/{ticketId}";
+//        when(usersService.getCurrentUser()).thenReturn(user);
         when(ticketsService.getTicket(TicketTestUtil.TICKET_ID)).thenReturn(ticketDto);
 
         //then
@@ -87,7 +83,7 @@ class TicketsControllerTest {
     @WithMockUser
     void getTicket_shouldReturnTicketNotFoundException_whenTicketDoesNotExist() throws Exception {
         // given
-        String url = "/api/tickets/{ticketId}";
+        String url = "/helpdesk-service/tickets/get/{ticketId}";
         when(ticketsService.getTicket(TicketTestUtil.TICKET_ID))
                 .thenThrow(new TicketNotFoundException(TicketTestUtil.TICKET_ID));
         // then
@@ -98,7 +94,7 @@ class TicketsControllerTest {
     @WithMockUser
     void updateTicket_shouldUpdateTicket() throws Exception {
         //given
-        String url = "/api/tickets/{ticketId}";
+        String url = "/helpdesk-service/tickets/update/{ticketId}";
         //when
         //then
         mockMvc.perform(put(url, TicketTestUtil.TICKET_ID).contentType(APPLICATION_JSON).accept(APPLICATION_JSON)
@@ -109,7 +105,7 @@ class TicketsControllerTest {
     @Test
     @WithMockUser
     void createTicket_shouldCreateTicket() throws Exception {
-        String url = "/api/tickets/";
+        String url = "/helpdesk-service/tickets/";
 
         mockMvc.perform(post(url).contentType(APPLICATION_JSON).accept(APPLICATION_JSON)
                         .content(asJson(ticketSaveDto)))
@@ -119,7 +115,7 @@ class TicketsControllerTest {
 
     @Test
     void getAllTickets_shouldReturnAllTickets()throws Exception{
-        String url = "/api/tickets/all";
+        String url = "/helpdesk-service/tickets/all";
         mockMvc.perform(get(url).contentType(APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
@@ -127,7 +123,10 @@ class TicketsControllerTest {
 
     @Test
     void getMyTickets_shouldReturnMyTickets()throws Exception{
-        String url = "/api/tickets/my";
+        String url = "/helpdesk-service/tickets/my";
+
+        //when
+        when(usersService.getCurrentUser()).thenReturn(user);
 
         mockMvc.perform(get(url).contentType(APPLICATION_JSON))
                 .andExpect(status().isOk());

@@ -1,1 +1,0 @@
-INSERT INTO public.users (id, first_name, last_name, role, email, password, status) VALUES (2, 'user2', 'user2', 'ROLE_EMPLOYEE', 'user2_mogilev@yopmail.com', '$2a$12$UBXPkMHbwkC5ZFUWrInSKu65ba.joR3ZsVv2BoMhHH.GXtFsHR4p2', 'ACTIVE');

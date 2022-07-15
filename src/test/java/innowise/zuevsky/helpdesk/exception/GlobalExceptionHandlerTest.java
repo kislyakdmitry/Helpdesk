@@ -50,7 +50,7 @@ class GlobalExceptionHandlerTest {
     void handleTicketOwnerNotBelongsToUserException_shouldReturnErrorResponse() {
         // given
         TicketOwnerNotBelongsToUserException exception = new TicketOwnerNotBelongsToUserException(TicketTestUtil.TICKET_ID,
-                TicketTestUtil.OWNER_ID);
+                TicketTestUtil.OWNER_NAME);
         ErrorResponse expected = ErrorResponse.builder().message(exception.getMessage()).status(HttpStatus.BAD_REQUEST)
                 .timestamp(LocalDateTime.now()).build();
 
@@ -78,21 +78,6 @@ class GlobalExceptionHandlerTest {
     }
 
     @Test
-    void handleJwtFilterException_shouldReturnErrorResponse() {
-        // given
-        JwtFilterException exception = new JwtFilterException("Error", HttpStatus.UNAUTHORIZED);
-        ErrorResponse expected = ErrorResponse.builder().message(exception.getMessage()).status(HttpStatus.UNAUTHORIZED)
-                .timestamp(LocalDateTime.now()).build();
-
-        // when
-        ErrorResponse actual = globalExceptionHandler.handleJwtFilterException(exception);
-        // then
-        assertThat(actual).isNotNull();
-        assertThat(expected.getMessage()).isEqualTo(actual.getMessage());
-        assertThat(expected.getStatus()).isEqualTo(actual.getStatus());
-    }
-
-    @Test
     void handleTicketNotFoundException_shouldReturnTicketNotFoundException() {
         // given
         TicketNotFoundException exception = new TicketNotFoundException(TicketTestUtil.TICKET_ID);
@@ -103,35 +88,6 @@ class GlobalExceptionHandlerTest {
         // then
         assertThat(actual).isNotNull();
         assertThat(expected.getMessage()).isEqualTo(actual.getMessage());
-        assertThat(expected.getStatus()).isEqualTo(actual.getStatus());
-    }
-
-    @Test
-    void handleAuthenticationTokenNotFoundException_shouldReturnAuthenticationTokenNotFoundException() {
-        AuthenticationTokenNotFoundException exception = new AuthenticationTokenNotFoundException("Error");
-        ErrorResponse expected = ErrorResponse.builder().message(exception.getMessage()).status(HttpStatus.NOT_FOUND)
-                .timestamp(LocalDateTime.now()).build();
-        // when
-        ErrorResponse actual = globalExceptionHandler.handleAuthenticationTokenNotFoundException(exception);
-        // then
-        assertThat(expected).isNotNull();
-        assertThat(expected.getMessage()).isEqualTo(actual.getMessage());
-        assertThat(expected.getStatus()).isEqualTo(actual.getStatus());
-    }
-
-    @Test
-    void handleJwtAuthenticationException_shouldReturnJwtAuthenticationException(){
-        JwtAuthenticationException exception =  new JwtAuthenticationException("Error", HttpStatus.UNAUTHORIZED);
-        ErrorResponse expected = ErrorResponse.builder()
-                .message(exception.getMessage()).status(HttpStatus.UNAUTHORIZED)
-                .timestamp(LocalDateTime.now())
-                .build();
-
-        ErrorResponse actual = globalExceptionHandler.handleJwtAuthenticationException(exception);
-
-        //then
-        assertThat(expected).isNotNull();
-        assertThat(exception.getMessage()).isEqualTo(actual.getMessage());
         assertThat(expected.getStatus()).isEqualTo(actual.getStatus());
     }
 

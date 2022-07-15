@@ -1,18 +1,18 @@
 package innowise.zuevsky.helpdesk.dto;
 
-import innowise.zuevsky.helpdesk.domain.Attachment;
 import innowise.zuevsky.helpdesk.domain.Comment;
 import innowise.zuevsky.helpdesk.domain.enums.Category;
+import innowise.zuevsky.helpdesk.domain.enums.Role;
 import innowise.zuevsky.helpdesk.domain.enums.State;
 import innowise.zuevsky.helpdesk.domain.enums.Urgency;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -27,9 +27,9 @@ public class TicketDto {
 	private Urgency urgency;
 	private String description;
 	private LocalDate desiredResolutionDate;
-	private String ownerId;
-	private String approverId;
-	private String assigneeId;
-	private List<Attachment> attachments;
+	private String ownerName;
+	private Role ownerRole;
+	private String approverName;
+	private String assigneeName;
 	private List<Comment> comments;
 }

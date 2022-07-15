@@ -14,16 +14,14 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface TicketsRepository extends JpaRepository<Ticket, Long>, JpaSpecificationExecutor<Ticket> {
 
-   /* @Query("""
+    @Query("""
             SELECT t FROM Ticket AS t
-            JOIN User AS o ON o.id = t.ownerUserName
-            JOIN User AS a ON a.id = t.approverUserName
-            WHERE ((t.ownerUserName = :userName) OR (o.role = 'ROLE_EMPLOYEE' AND t.state = 1) OR (t.approverUserName = :userId AND t.state IN :statesOfManagerApprover))
+            WHERE ((t.ownerUserName = :userName) OR (t.ownerRole = 0 AND t.state = 1) OR (t.approverUserName = :userName AND t.state IN (:statesOfManagerApprover)))
             AND (:ticketId IS NULL OR t.id = :ticketId)
             AND (:ticketName IS NULL OR t.name = :ticketName)
             AND ((CAST(:ticketDesiredDate as date) IS NULL) OR (t.desiredResolutionDate = :ticketDesiredDate))
-            AND (t.state IN :ticketStates)
-            AND (t.urgency IN :ticketUrgencies)
+            AND (t.state IN (:ticketStates))
+            AND (t.urgency IN (:ticketUrgencies))
             """)
     Page<Ticket> findTicketsForManager(String userName, Collection<State> statesOfManagerApprover, Long ticketId,
                                        String ticketName, LocalDate ticketDesiredDate, List<State> ticketStates,
@@ -31,8 +29,7 @@ public interface TicketsRepository extends JpaRepository<Ticket, Long>, JpaSpeci
 
     @Query("""
             SELECT t FROM Ticket AS t
-            JOIN User AS o ON o.id = t.ownerUserName
-            WHERE ((o.role IN ('ROLE_EMPLOYEE', 'ROLE_MANAGER') AND t.state = 2) OR (t.assigneeUserName = :userName AND t.state IN :statesOfEngineerAssignee))
+            WHERE ((t.ownerRole IN (0, 1) AND t.state = 2) OR (t.assigneeUserName = :userName AND t.state IN :statesOfEngineerAssignee))
             AND (:ticketId IS NULL OR t.id = :ticketId)
             AND (:ticketName IS NULL OR t.name = :ticketName)
             AND ((CAST(:ticketDesiredDate as date) IS NULL) OR (t.desiredResolutionDate = :ticketDesiredDate))
@@ -42,7 +39,4 @@ public interface TicketsRepository extends JpaRepository<Ticket, Long>, JpaSpeci
     Page<Ticket> findTicketsForEngineer(String userName, Collection<State> statesOfEngineerAssignee, Long ticketId,
                                         String ticketName, LocalDate ticketDesiredDate, List<State> ticketStates,
                                         List<Urgency> ticketUrgencies, Pageable pageable);
-
-
-    */
 }

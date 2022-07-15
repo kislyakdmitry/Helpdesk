@@ -3,7 +3,7 @@ package innowise.zuevsky.helpdesk.service;
 import static innowise.zuevsky.helpdesk.specification.TicketFilterSpecification.hasDesiredDate;
 import static innowise.zuevsky.helpdesk.specification.TicketFilterSpecification.hasId;
 import static innowise.zuevsky.helpdesk.specification.TicketFilterSpecification.hasName;
-import static innowise.zuevsky.helpdesk.specification.TicketFilterSpecification.hasOwnerId;
+import static innowise.zuevsky.helpdesk.specification.TicketFilterSpecification.hasOwnerUserName;
 import static innowise.zuevsky.helpdesk.specification.TicketFilterSpecification.hasState;
 import static innowise.zuevsky.helpdesk.specification.TicketFilterSpecification.hasUrgency;
 import static innowise.zuevsky.helpdesk.util.Validators.validateThat;
@@ -19,6 +19,7 @@ import innowise.zuevsky.helpdesk.exception.TicketStateNotDoneException;
 import innowise.zuevsky.helpdesk.mapper.FilterParamsMapper;
 import innowise.zuevsky.helpdesk.mapper.TicketMapper;
 import innowise.zuevsky.helpdesk.repository.TicketsRepository;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -51,19 +52,19 @@ public class TicketsService {
             new TicketNotFoundException(id));
     ticketsRepository.save(ticketUpdateService.updateTicket(updateDto, ticket));
   }
-/*
+
   public Page<TicketDto> getAllTickets(CurrentUser user, Pageable pageable, FilterParamsDto filterParams) {
     return switch (user.getRole()) {
-      case EMPLOYEE -> getMyTickets(user.getUserName(), pageable, filterParams);
-      case MANAGER -> getTicketsForManager(user.getUserName(), pageable, filterParams);
-      case ENGINEER -> getTicketsForEngineer(user.getUserName(), pageable, filterParams);
+      case ROLE_EMPLOYEE -> getMyTickets(user.getUserName(), pageable, filterParams);
+      case ROLE_MANAGER -> getTicketsForManager(user.getUserName(), pageable, filterParams);
+      case ROLE_ENGINEER -> getTicketsForEngineer(user.getUserName(), pageable, filterParams);
     };
-  }*/
+  }
 
   public Page<TicketDto> getMyTickets(String userName, Pageable pageable, FilterParamsDto filterParams) {
 
     return ticketsRepository.findAll(
-                    where(hasOwnerId(userName)
+                    where(hasOwnerUserName(userName)
                             .and(hasUrgency(filterParams.getUrgencies().isEmpty() ? List.of(Urgency.values())
                                     : filterParams.getUrgencies())))
                             .and(hasState(filterParams.getStates().isEmpty() ? List.of(State.values())
@@ -76,7 +77,7 @@ public class TicketsService {
             .map(ticketMapper::mapTicketInTicketDto);
   }
 
-/*
+
   public Page<TicketDto> getTicketsForManager(String userName, Pageable pageable,
       FilterParamsDto filterParams) {
     return ticketsRepository.findTicketsForManager(
@@ -109,7 +110,7 @@ public class TicketsService {
         .map(ticketMapper::mapTicketInTicketDto);
   }
 
-  */
+
   public FilterParamsDto getFilterParamsDto(Long id, String name, String desiredDate,
       Urgency[] urgencies, State[] states) {
     return filterParamsMapper.mapParamsInFilterParamsDto(id, name, desiredDate, urgencies, states);
@@ -120,9 +121,9 @@ public class TicketsService {
     validateThat(State.DONE.equals(ticketDto.getState()), () -> new TicketStateNotDoneException(ticketId));
   }
 
-  public void validateTicketOwnerBelongUser(Long ticketId, String userId) {
+  public void validateTicketOwnerBelongUser(Long ticketId, String userName) {
     TicketDto ticketDto = getTicket(ticketId);
-    validateThat(Objects.equals(ticketDto.getOwnerId(), userId),
-                 () -> new TicketOwnerNotBelongsToUserException(ticketId, userId));
+    validateThat(Objects.equals(ticketDto.getOwnerName(), userName),
+                 () -> new TicketOwnerNotBelongsToUserException(ticketId, userName));
   }
 }

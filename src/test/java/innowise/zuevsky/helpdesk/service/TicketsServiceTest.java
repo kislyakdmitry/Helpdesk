@@ -1,12 +1,8 @@
 package innowise.zuevsky.helpdesk.service;
 
 import innowise.zuevsky.helpdesk.domain.Ticket;
-import innowise.zuevsky.helpdesk.domain.User;
 import innowise.zuevsky.helpdesk.domain.enums.Role;
-import innowise.zuevsky.helpdesk.dto.FilterParamsDto;
-import innowise.zuevsky.helpdesk.dto.TicketDto;
-import innowise.zuevsky.helpdesk.dto.TicketSaveDto;
-import innowise.zuevsky.helpdesk.dto.TicketUpdateDto;
+import innowise.zuevsky.helpdesk.dto.*;
 import innowise.zuevsky.helpdesk.exception.TicketNotFoundException;
 import innowise.zuevsky.helpdesk.exception.TicketOwnerNotBelongsToUserException;
 import innowise.zuevsky.helpdesk.exception.TicketStateNotDoneException;
@@ -14,7 +10,6 @@ import innowise.zuevsky.helpdesk.mapper.FilterParamsMapper;
 import innowise.zuevsky.helpdesk.mapper.TicketMapper;
 import innowise.zuevsky.helpdesk.repository.TicketsRepository;
 import innowise.zuevsky.helpdesk.util.TicketTestUtil;
-import innowise.zuevsky.helpdesk.util.UserTestUtil;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -51,6 +46,7 @@ class TicketsServiceTest {
 
     private static final TicketDto ticketDto = TicketTestUtil.createTicketDto();
     private static final Ticket ticket = TicketTestUtil.createTicketForTicketDto();
+    private static final CurrentUser user = CurrentUser.builder().userName(TicketTestUtil.OWNER_NAME).role(TicketTestUtil.OWNER_ROLE).build();
 
     @Test
     void getTicket_ShouldPass_WhenTicketExist() {
@@ -142,7 +138,7 @@ class TicketsServiceTest {
     void getAllTickets_ShouldPass_WhenActualPageOfTicketsDtoIsValid_ForRoleEmployee() {
 
         //given
-        User user = UserTestUtil.createTestUser();
+        CurrentUser user = CurrentUser.builder().userName("user1_mogilev").role(Role.ROLE_EMPLOYEE).build();
         Pageable pageable = TicketTestUtil.createPageable();
         FilterParamsDto filterParamsDto = TicketTestUtil.createFilterParamsDto();
         Ticket ticket = TicketTestUtil.createTicketForTicketDto();
@@ -163,8 +159,7 @@ class TicketsServiceTest {
     void getAllTickets_ShouldPass_WhenActualPageOfTicketsDtoIsValid_ForRoleManager() {
 
         //given
-        User user = UserTestUtil.createTestUser();
-        user.setRole(Role.ROLE_MANAGER);
+        CurrentUser user = CurrentUser.builder().userName("manager1_mogilev").role(Role.ROLE_MANAGER).build();
         Pageable pageable = TicketTestUtil.createPageable();
         FilterParamsDto filterParamsDto = TicketTestUtil.createFilterParamsDto();
         Ticket ticket = TicketTestUtil.createTicketForTicketDto();
@@ -173,7 +168,7 @@ class TicketsServiceTest {
         Page<TicketDto> expectedPageOfTicketsDto = new PageImpl<>(List.of(ticketDto));
 
         when(ticketsRepository.findTicketsForManager(
-            user.getId(), TicketServiceUtil.statesOfManagerApprover, filterParamsDto.getId(),
+            user.getUserName(), TicketServiceUtil.statesOfManagerApprover, filterParamsDto.getId(),
             filterParamsDto.getName(), filterParamsDto.getDesiredDate(), filterParamsDto.getStates(),
             filterParamsDto.getUrgencies(), pageable))
             .thenReturn(expectedPageOfTickets);
@@ -190,8 +185,7 @@ class TicketsServiceTest {
     void getAllTickets_ShouldPass_WhenActualPageOfTicketsDtoIsValid_ForRoleEngineer() {
 
         //given
-        User user = UserTestUtil.createTestUser();
-        user.setRole(Role.ROLE_ENGINEER);
+        CurrentUser user = CurrentUser.builder().userName("engineer1_mogilev").role(Role.ROLE_EMPLOYEE).build();
         Pageable pageable = TicketTestUtil.createPageable();
         FilterParamsDto filterParamsDto = TicketTestUtil.createFilterParamsDto();
         Ticket ticket = TicketTestUtil.createTicketForTicketDto();
@@ -200,14 +194,14 @@ class TicketsServiceTest {
         Page<TicketDto> expectedPageOfTicketsDto = new PageImpl<>(List.of(ticketDto));
 
         when(ticketsRepository.findTicketsForEngineer(
-            user.getId(), TicketServiceUtil.statesOfEngineerAssignee, filterParamsDto.getId(),
+            user.getUserName(), TicketServiceUtil.statesOfEngineerAssignee, filterParamsDto.getId(),
             filterParamsDto.getName(), filterParamsDto.getDesiredDate(), filterParamsDto.getStates(),
             filterParamsDto.getUrgencies(), pageable))
             .thenReturn(expectedPageOfTickets);
         when(ticketMapper.mapTicketInTicketDto(ticket)).thenReturn(ticketDto);
 
         //when
-        Page<TicketDto> actualPageOfTicketsDto = ticketsService.getTicketsForEngineer(user, pageable, filterParamsDto);
+        Page<TicketDto> actualPageOfTicketsDto = ticketsService.getTicketsForEngineer(user.getUserName(), pageable, filterParamsDto);
 
         //then
         assertThat(actualPageOfTicketsDto).isEqualTo(expectedPageOfTicketsDto);
@@ -217,7 +211,7 @@ class TicketsServiceTest {
     void getMyTickets_ShouldPass_WhenActualPageOfTicketsDtoIsValid() {
 
         //given
-        User user = UserTestUtil.createTestUser();
+        CurrentUser user = CurrentUser.builder().userName("user1_mogilev").role(Role.ROLE_EMPLOYEE).build();
         Pageable pageable = TicketTestUtil.createPageable();
         FilterParamsDto filterParamsDto = TicketTestUtil.createFilterParamsDto();
         Ticket ticket = TicketTestUtil.createTicketForTicketDto();
@@ -229,7 +223,7 @@ class TicketsServiceTest {
         when(ticketMapper.mapTicketInTicketDto(ticket)).thenReturn(ticketDto);
 
         //when
-        Page<TicketDto> actualPageOfTicketsDto = ticketsService.getMyTickets(user, pageable, filterParamsDto);
+        Page<TicketDto> actualPageOfTicketsDto = ticketsService.getMyTickets(user.getUserName(), pageable, filterParamsDto);
 
         //then
         assertThat(actualPageOfTicketsDto).isEqualTo(expectedPageOfTicketsDto);
@@ -239,7 +233,7 @@ class TicketsServiceTest {
     void getTicketsForManager_ShouldPass_WhenActualPageOfTicketsDtoIsValid() {
 
         //given
-        User user = UserTestUtil.createTestUser();
+        CurrentUser user = CurrentUser.builder().userName("manager1_mogilev").role(Role.ROLE_MANAGER).build();
         Pageable pageable = TicketTestUtil.createPageable();
         FilterParamsDto filterParamsDto = TicketTestUtil.createFilterParamsDto();
         Ticket ticket = TicketTestUtil.createTicketForTicketDto();
@@ -248,14 +242,14 @@ class TicketsServiceTest {
         Page<TicketDto> expectedPageOfTicketsDto = new PageImpl<>(List.of(ticketDto));
 
         when(ticketsRepository.findTicketsForManager(
-            user.getId(), TicketServiceUtil.statesOfManagerApprover, filterParamsDto.getId(),
+            user.getUserName(), TicketServiceUtil.statesOfManagerApprover, filterParamsDto.getId(),
             filterParamsDto.getName(), filterParamsDto.getDesiredDate(), filterParamsDto.getStates(),
             filterParamsDto.getUrgencies(), pageable))
             .thenReturn(expectedPageOfTickets);
         when(ticketMapper.mapTicketInTicketDto(ticket)).thenReturn(ticketDto);
 
         //when
-        Page<TicketDto> actualPageOfTicketsDto = ticketsService.getTicketsForManager(user, pageable, filterParamsDto);
+        Page<TicketDto> actualPageOfTicketsDto = ticketsService.getTicketsForManager(user.getUserName(), pageable, filterParamsDto);
 
         //then
         assertThat(actualPageOfTicketsDto).isEqualTo(expectedPageOfTicketsDto);
@@ -265,7 +259,7 @@ class TicketsServiceTest {
     void getTicketsForEngineer_ShouldPass_WhenActualPageOfTicketsDtoIsValid() {
 
         //given
-        User user = UserTestUtil.createTestUser();
+        CurrentUser user = CurrentUser.builder().userName("engineer1_mogilev").role(Role.ROLE_ENGINEER).build();
         Pageable pageable = TicketTestUtil.createPageable();
         FilterParamsDto filterParamsDto = TicketTestUtil.createFilterParamsDto();
         Ticket ticket = TicketTestUtil.createTicketForTicketDto();
@@ -274,14 +268,14 @@ class TicketsServiceTest {
         Page<TicketDto> expectedPageOfTicketsDto = new PageImpl<>(List.of(ticketDto));
 
         when(ticketsRepository.findTicketsForEngineer(
-            user.getId(), TicketServiceUtil.statesOfEngineerAssignee, filterParamsDto.getId(),
+            user.getUserName(), TicketServiceUtil.statesOfEngineerAssignee, filterParamsDto.getId(),
             filterParamsDto.getName(), filterParamsDto.getDesiredDate(), filterParamsDto.getStates(),
             filterParamsDto.getUrgencies(), pageable))
             .thenReturn(expectedPageOfTickets);
         when(ticketMapper.mapTicketInTicketDto(ticket)).thenReturn(ticketDto);
 
         //when
-        Page<TicketDto> actualPageOfTicketsDto = ticketsService.getTicketsForEngineer(user, pageable, filterParamsDto);
+        Page<TicketDto> actualPageOfTicketsDto = ticketsService.getTicketsForEngineer(user.getUserName(), pageable, filterParamsDto);
 
         //then
         assertThat(actualPageOfTicketsDto).isEqualTo(expectedPageOfTicketsDto);
@@ -324,15 +318,15 @@ class TicketsServiceTest {
     @Test
     void validateTicketOwnerBelongUser_shouldThrowTicketOwnerNotBelongsToUserException() {
         //given
-        Long differentUserId = 667L;
+        String differentUserName = "differentUserName";
 
         when(ticketsRepository.findById(ticket.getId())).thenReturn(Optional.of(ticket));
         when(ticketMapper.mapTicketInTicketDto(ticket)).thenReturn(ticketDto);
         //when
         //then
-        assertThatThrownBy(() -> ticketsService.validateTicketOwnerBelongUser(TicketTestUtil.TICKET_ID, differentUserId))
+        assertThatThrownBy(() -> ticketsService.validateTicketOwnerBelongUser(TicketTestUtil.TICKET_ID, "differentUserName"))
                 .isInstanceOf(TicketOwnerNotBelongsToUserException.class)
-                .hasMessage(String.format("Ticket owner not belongs to user for ticket! ticketId=%s, userId:%s", TicketTestUtil.TICKET_ID, differentUserId));
+                .hasMessage(String.format("Ticket owner not belongs to user for ticket! ticketId=%s, userName:%s", TicketTestUtil.TICKET_ID, differentUserName));
 
         verify(ticketMapper).mapTicketInTicketDto(ticket);
         verify(ticketsRepository).findById(ticket.getId());

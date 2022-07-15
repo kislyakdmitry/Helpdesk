@@ -7,20 +7,19 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.test.context.jdbc.Sql;
 
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 
-import static innowise.zuevsky.helpdesk.specification.TicketFilterSpecification.hasOwnerId;
+import static innowise.zuevsky.helpdesk.specification.TicketFilterSpecification.hasOwnerUserName;
 import static org.springframework.data.jpa.domain.Specification.where;
 
 public class RepositoryTestUtil {
 
-    public static final Long EMPLOYEE_ID = 2L;
-    public static final Long MANAGER_ID = 4L;
-    public static final Specification<Ticket> SPECIFICATION = where(hasOwnerId(EMPLOYEE_ID));
+    public static final String EMPLOYEE_NAME = "user1_mogilev";
+    public static final String MANAGER_NAME = "manager1_mogilev";
+    public static final Specification<Ticket> SPECIFICATION = where(hasOwnerUserName(EMPLOYEE_NAME));
     public static final Collection<State> STATES_OF_MANAGER_APPROVER = List.of(State.APPROVED, State.DECLINED, State.CANCELED,
             State.IN_PROGRESS, State.DONE);
     public static final Collection<State> STATES_OF_ENGINEER_ASSIGNEE = List.of(State.IN_PROGRESS, State.DONE);
