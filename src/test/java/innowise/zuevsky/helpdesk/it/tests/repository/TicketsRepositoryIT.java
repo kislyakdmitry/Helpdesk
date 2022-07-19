@@ -17,6 +17,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @Sql({"/data/clear_tickets.sql", "/data/insert_tickets.sql"})
 class TicketsRepositoryIT extends BaseIT {
 
+
+
     @Autowired
     private TicketsRepository ticketsRepository;
 

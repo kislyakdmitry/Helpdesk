@@ -69,7 +69,6 @@ public class TicketTestUtil {
                 .ownerRole(OWNER_ROLE)
                 .approverName(APPROVER_NAME)
                 .assigneeName(ASSIGNEE_NAME)
-//                .attachments(ATTACHMENTS)
                 .build();
     }
 
@@ -80,7 +79,6 @@ public class TicketTestUtil {
                 .desiredResolutionDate(DESIRED_UPDATED_DATE)
                 .category(UPDATED_CATEGORY)
                 .urgency(UPDATED_URGENCY)
-//                .attachments(ATTACHMENTS)
                 .build();
     }
 
