@@ -27,7 +27,6 @@ public class UsersService {
         Principal principal = (Principal) authentication.getPrincipal();
         if (principal instanceof KeycloakPrincipal) {
 
-            @SuppressWarnings("unchecked")
             KeycloakPrincipal<KeycloakSecurityContext> kPrincipal = (KeycloakPrincipal<KeycloakSecurityContext>) principal;
 
             currentUser.setUserName(kPrincipal.getKeycloakSecurityContext().getToken().getPreferredUsername());
