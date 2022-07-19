@@ -3,7 +3,6 @@ package innowise.zuevsky.helpdesk.service;
 import innowise.zuevsky.helpdesk.domain.enums.Role;
 import innowise.zuevsky.helpdesk.dto.CurrentUser;
 import org.keycloak.KeycloakPrincipal;
-import org.keycloak.KeycloakSecurityContext;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
@@ -26,10 +25,8 @@ public class UsersService {
         KeycloakAuthenticationToken authentication = (KeycloakAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
         Principal principal = (Principal) authentication.getPrincipal();
         if (principal instanceof KeycloakPrincipal) {
-
-            KeycloakPrincipal<KeycloakSecurityContext> kPrincipal = (KeycloakPrincipal<KeycloakSecurityContext>) principal;
-
-            currentUser.setUserName(kPrincipal.getKeycloakSecurityContext().getToken().getPreferredUsername());
+            String userName = ((KeycloakPrincipal<?>) principal).getKeycloakSecurityContext().getToken().getPreferredUsername();
+            currentUser.setUserName(userName);
 
             List<GrantedAuthority> roles = (List<GrantedAuthority>) authentication.getAuthorities();
 
